@@ -4,15 +4,15 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using Microsoft.Scripting;
+using Microsoft.Scripting.Hosting;
 using Application=Autodesk.Revit.Application;
 
 namespace RevitPythonShell
 {    
     public partial class ScriptInput : Form
     {
-        
-
         private static Application _application;
         private static ScriptInput _instance;
         
@@ -39,10 +39,7 @@ namespace RevitPythonShell
             try
             {                
                 var engine = IronPython.Hosting.Python.CreateEngine();
-                var searchPaths = engine.GetSearchPaths();
-                searchPaths.Add(@"C:\Python25\Lib");
-                searchPaths.Add(@"C:\RevitPythonShell");
-                engine.SetSearchPaths(searchPaths);
+                AddSearchPaths(engine);
                 var scope = engine.CreateScope();
                 scope.SetVariable("revit", _application);
                 engine.Runtime.IO.SetOutput(new ScriptOutputStream(_instance), Encoding.UTF8);
@@ -54,6 +51,21 @@ namespace RevitPythonShell
             {
                 MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }            
+        }
+
+        /// <summary>
+        /// Add the search paths defined in the ini file to the engine.
+        /// </summary>
+        private static void AddSearchPaths(ScriptEngine engine)
+        {
+            var searchPaths = engine.GetSearchPaths();
+
+            var settings = XDocument.Load("RevitPythonShell.xml");
+            foreach (var searchPathNode in settings.Root.Descendants("SearchPath"))
+            {
+                searchPaths.Add(searchPathNode.Attribute("name").Value);
+            }
+            engine.SetSearchPaths(searchPaths);
         }
 
         /// <summary>

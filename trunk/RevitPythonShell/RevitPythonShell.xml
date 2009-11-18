@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RevitPythonShell>
+  <SearchPaths>
+    <!-- a list of paths to add to the engines search path -->
+    <SearchPath name="C:\Python25\Lib" />
+    <SearchPath name="C:\RevitPythonShell" />
+  </SearchPaths>
+  <Commands>
+    <!-- a list of preconfigured commands -->
+    <Command name="dumpdpvfolder" src="C:\RevitPythonShell\Commands\dpvdumpfolder.py"/>
+  </Commands>
+</RevitPythonShell>
