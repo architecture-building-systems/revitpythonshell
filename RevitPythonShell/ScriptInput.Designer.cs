@@ -28,39 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.txtSource = new System.Windows.Forms.TextBox();
-            this.txtStdOut = new System.Windows.Forms.TextBox();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptInput));
             this.cmdExecute = new System.Windows.Forms.Button();
-            this.cmdClear = new System.Windows.Forms.Button();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.txtSource = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // txtSource
-            // 
-            this.txtSource.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtSource.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSource.Location = new System.Drawing.Point(0, 0);
-            this.txtSource.Multiline = true;
-            this.txtSource.Name = "txtSource";
-            this.txtSource.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtSource.Size = new System.Drawing.Size(792, 226);
-            this.txtSource.TabIndex = 0;
-            this.txtSource.Text = "# assumes the following file exists: C:\\RevitPythonShell\\current.py\r\ntry:\r\n    im" +
-                "port current\r\n    reload(current)\r\n\r\n    current.main(revit)\r\nexcept:\r\n    impor" +
-                "t traceback\r\n    traceback.print_exc()";
-            this.txtSource.WordWrap = false;
-            // 
-            // txtStdOut
-            // 
-            this.txtStdOut.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtStdOut.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtStdOut.Location = new System.Drawing.Point(0, 224);
-            this.txtStdOut.Multiline = true;
-            this.txtStdOut.Name = "txtStdOut";
-            this.txtStdOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtStdOut.Size = new System.Drawing.Size(792, 302);
-            this.txtStdOut.TabIndex = 3;
             // 
             // cmdExecute
             // 
@@ -73,29 +45,39 @@
             this.cmdExecute.UseVisualStyleBackColor = true;
             this.cmdExecute.Click += new System.EventHandler(this.cmdExecute_Click);
             // 
-            // cmdClear
+            // toolStrip
             // 
-            this.cmdClear.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdClear.Location = new System.Drawing.Point(0, 523);
-            this.cmdClear.Name = "cmdClear";
-            this.cmdClear.Size = new System.Drawing.Size(792, 23);
-            this.cmdClear.TabIndex = 4;
-            this.cmdClear.Text = "Clear";
-            this.cmdClear.UseVisualStyleBackColor = true;
-            this.cmdClear.Click += new System.EventHandler(this.cmdClear_Click);
+            this.toolStrip.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip.Name = "toolStrip";
+            this.toolStrip.Size = new System.Drawing.Size(792, 25);
+            this.toolStrip.TabIndex = 6;
+            this.toolStrip.Text = "toolStrip";
+            // 
+            // txtSource
+            // 
+            this.txtSource.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtSource.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSource.Location = new System.Drawing.Point(0, 25);
+            this.txtSource.Multiline = true;
+            this.txtSource.Name = "txtSource";
+            this.txtSource.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtSource.Size = new System.Drawing.Size(792, 521);
+            this.txtSource.TabIndex = 7;
+            this.txtSource.Text = "(this will be filled with the DefaultScript in the XML file)";
+            this.txtSource.WordWrap = false;
             // 
             // ScriptInput
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(792, 572);
-            this.Controls.Add(this.cmdClear);
-            this.Controls.Add(this.cmdExecute);
-            this.Controls.Add(this.txtStdOut);
             this.Controls.Add(this.txtSource);
+            this.Controls.Add(this.toolStrip);
+            this.Controls.Add(this.cmdExecute);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "ScriptInput";
-            this.Text = "ScriptInput";
+            this.Text = "RevitPythonShell - Input";
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ScriptInput_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -104,9 +86,8 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox txtSource;
-        public System.Windows.Forms.TextBox txtStdOut;
         private System.Windows.Forms.Button cmdExecute;
-        private System.Windows.Forms.Button cmdClear;
+        private System.Windows.Forms.ToolStrip toolStrip;
+        private System.Windows.Forms.TextBox txtSource;
     }
 }
