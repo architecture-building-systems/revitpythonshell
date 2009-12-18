@@ -2,6 +2,6 @@
 
 = The MainWindow (RevitPythonShell - Input) =
 
-[MainWindowScreenshot.Png]
+<img src="MainWindowScreenshot.Png"/>
 
 = The OutputWindow (RevitPythonShell - Output) =
