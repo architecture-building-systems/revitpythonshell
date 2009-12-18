@@ -1,5 +1,7 @@
 #summary tips on how to get it up and running on your system.
 
+<wiki:toc max_depth="3" />
+
 = Introduction =
 
 RevitPythonShell is still a work-in-progress. I have only a first rough cut at an installer, so you are going to get your hands slightly dirty here.
@@ -15,8 +17,6 @@ The installation breaks down to following steps:
   * configure {{{RevitPythonShell.xml}}}
     * set up
     * add your own canned scripts
-
-<wiki:toc max_depth="3" />
 
 = Details =
 
