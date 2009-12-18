@@ -22,4 +22,4 @@ The _Interactive_ command is rather usefull, as it enters a REPL (Read, Execute,
 
 This screenshot shows the output window where all python script output goes. It is currently running the _Interactive_ canned command that provides an interpreter loop. This is handy for exploration tasks.
 
-The {{{revitutil}}} module adds some wrapper functionality for making it easier to work with the RevitAPI in python.
+The [ModuleRevitutil {{{revitutil}}} module] adds some wrapper functionality for making it easier to work with the RevitAPI in python.
