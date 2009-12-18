@@ -4,6 +4,8 @@
 
 This is the source of a module I use to make certain operations with the RevitAPI easier to access from IronPython. This will probably grow as time goes on and eventually will be part of an Installer mechanism for sharing useful RevitPythonShell scripts.
 
+It expects the presense of the [ModuleGeomutil geomutil module].
+
 = Details =
 
 Copy this code into a file called {{{revitutil.py}}} in your search path (e.g. {{{C:\RevitPython\revitutil.py}}}:
