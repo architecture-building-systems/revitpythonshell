@@ -2,7 +2,7 @@
 
 = The MainWindow (RevitPythonShell - Input) =
 
-[http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png Screenshot of the main window]
+<img src="http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png" alt="Screenshot of the main window"/>
 
 The main window is displayed when the plugin is started. This is a very rudimentary editor (a TextBox control) where you can type a python script.
 
