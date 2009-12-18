@@ -2,13 +2,15 @@
 
 = Introduction =
 
-RevitPythonShell is still a work-in-progress. I have not created an Installer yet, so you are going to get your hands slightly dirty here.
+RevitPythonShell is still a work-in-progress. I have only a first rough cut at an installer, so you are going to get your hands slightly dirty here.
 
-Oh, you will definitely want to install IronPython first. (NOTE: add instructions here) 
+Oh, you will definitely want to install IronPython first. (NOTE: add instructions here)
 
 The installation breaks down to following steps:
 
-  * build the {{{RevitPythonShell.dll}}}
+  * either
+    * run the installer
+    * build the {{{RevitPythonShell.dll}}}    
   * register it as an external application in Autodesk Revit Architecture 2010
   * configure {{{RevitPythonShell.xml}}}
     * set up
