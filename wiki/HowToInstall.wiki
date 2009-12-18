@@ -72,3 +72,5 @@ code.interact(None, None,
 }}}
 
 === The Default Script ===
+
+The shipped default script loads a file called {{{current.py}}} in the search path (on my machine, it loads {{{C:\RevitPythonShell\current.py}}} and runs its main method. This is handy, as {{{current.py}}} can be edited in your favorite editor (as opposed to the crappy interface provided by RevitPythonShell). But you can set it to whatever you like.
