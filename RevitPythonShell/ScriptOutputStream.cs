@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace RevitPythonShell
@@ -45,6 +46,13 @@ namespace RevitPythonShell
                 line.Seek(0, SeekOrigin.Begin); // rewind the line for later reading...
                 _completedLines.Enqueue(line);
                 _inputBuffer = new MemoryStream();
+            }            
+            else if (e.KeyCode == Keys.Back)
+            {
+                // remove last character from input buffer
+                var line = new MemoryStream();
+                line.Write(_inputBuffer.GetBuffer(), 0, (int) (_inputBuffer.Position - 1));
+                _inputBuffer = line;
             }
         }
 
@@ -82,6 +90,7 @@ namespace RevitPythonShell
             _gui.txtStdOut.AppendText(text);
             _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
             _gui.txtStdOut.ScrollToCaret();
+            Application.DoEvents();
         }
 
         public override void Flush()
@@ -107,6 +116,7 @@ namespace RevitPythonShell
             {
                 // wait for user to complete a line
                 Application.DoEvents();
+                Thread.Sleep(10);
             }
             var line = _completedLines.Dequeue();
             return line.Read(buffer, offset, count);
