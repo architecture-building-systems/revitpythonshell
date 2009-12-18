@@ -16,9 +16,11 @@ The installation breaks down to following steps:
     * set up
     * add your own canned scripts
 
+<wiki:toc max_depth="3" />
+
 = Details =
 
-== Build the {{{RevitPythonShell.dll}}}
+== Build the {{{RevitPythonShell.dll}}} ==
 
   # check out the source code (see http://code.google.com/p/revitpythonshell/source/checkout)
   # open the solution in Visual Studio 2008 and build it
