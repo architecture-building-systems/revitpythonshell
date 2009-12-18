@@ -2,6 +2,18 @@
 
 = The MainWindow (RevitPythonShell - Input) =
 
-http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png
+[http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png Screenshot of the main window]
+
+The main window is displayed when the plugin is started. This is a very rudimentary editor (a TextBox control) where you can type a python script.
+
+  * the button _Execute_ starts the script in a fresh interpreter
+  * output of the script is shown in the OutputWindow (see below)
+  * a special variable {{{__revit__}}} can be used. It contains a reference to the {{{Autodesk.Revit.Application}}} object
+
+== Canned commands ==
+
+In the top row of the MainWindow, you can see a button _Interactive_. This is just an example of a canned command - you can add as many as you like. Each such command starts in a now OutputWindow and runs a file as defined in the {{{RevitPythonShell.xml}}} configuration file.
+
+The _Interactive_ command is rather usefull, as it enters a REPL (Read, Execute, Print, Loop) and allows interactive exploration of the RevitAPI.
 
 = The OutputWindow (RevitPythonShell - Output) =
