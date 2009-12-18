@@ -1,0 +1,35 @@
+#summary tips on how to get it up and running on your system.
+
+= Introduction =
+
+RevitPythonShell is still a work-in-progress. I have not created an Installer yet, so you are going to get your hands slightly dirty here.
+
+The installation breaks down to following steps:
+
+  * build the {{{RevitPythonShell.dll}}}
+  * register it as an external application in Autodesk Revit Architecture 2010
+  * configure {{{RevitPythonShell.xml}}}
+    * set up
+    * add your own canned scripts
+
+= Details =
+
+== Build the {{{RevitPythonShell.dll}}}
+
+  # check out the source code (see http://code.google.com/p/revitpythonshell/source/checkout)
+  # open the solution in Visual Studio 2008 and build it
+  # remember the output directory of the build (something like 'projectlocation\bin\Debug'
+
+== Register it as an external application in Autodesk Revit Architecture 2010 ==
+
+add something like this to your {{{Revit.ini}}} file (see Revits developer documentation on how to do this):
+{{{
+[ExternalApplications]
+EACount=1
+EAName1=RevitPythonShell
+EADescription1=
+EAAssembly1=C:\Visual Studio 2008\Projects\revitpythonshell\RevitPythonShell\bin\Debug\RevitPythonShell.dll
+EAClassName1=RevitPythonShell.RevitPythonShellApplication
+}}}
+
+== Configure the {{{RevitPythonShell.xml}}} ==
