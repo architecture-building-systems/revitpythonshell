@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RevitPythonShell>
+  <SearchPaths>
+    <!-- a list of paths to add to the engines search path -->
+    <SearchPath name="C:\Python25\Lib" />
+    <SearchPath name="C:\RevitPythonShell" />
+  </SearchPaths>
+  <Commands>
+    <!-- a list of preconfigured commands -->
+    <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/> 
+  </Commands>
+  <DefaultScript>
+# type in a python script to run here...
+try:
+  # assumes the following file exists: C:\RevitPythonShell\current.py
+  import current  
+  reload(current)
+  
+  current.main(__revit__)
+except:
+  import traceback
+  traceback.print_exc()
+  </DefaultScript>
+</RevitPythonShell>
