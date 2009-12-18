@@ -1,4 +1,4 @@
-#summary a utility module for providing geometry classes (point, line etc.)
+#summary Some utility methods for working with 3d vectors
 
 = Introduction =
 
