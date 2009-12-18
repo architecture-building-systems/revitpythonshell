@@ -9,7 +9,7 @@ Oh, you will definitely want to install IronPython first. (NOTE: add instruction
 The installation breaks down to following steps:
 
   * either
-    * run the installer
+    * run the [http://revitpythonshell.googlecode.com/files/Setup_RevitPythonShell_1.0.msi installer]
     * build the {{{RevitPythonShell.dll}}}    
   * register it as an external application in Autodesk Revit Architecture 2010
   * configure {{{RevitPythonShell.xml}}}
