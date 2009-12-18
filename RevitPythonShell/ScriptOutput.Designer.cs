@@ -29,20 +29,8 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScriptOutput));
-            this.cmdCopyToClipboard = new System.Windows.Forms.Button();
             this.txtStdOut = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // cmdCopyToClipboard
-            // 
-            this.cmdCopyToClipboard.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.cmdCopyToClipboard.Location = new System.Drawing.Point(0, 357);
-            this.cmdCopyToClipboard.Name = "cmdCopyToClipboard";
-            this.cmdCopyToClipboard.Size = new System.Drawing.Size(774, 23);
-            this.cmdCopyToClipboard.TabIndex = 5;
-            this.cmdCopyToClipboard.Text = "Copy text to clipboard";
-            this.cmdCopyToClipboard.UseVisualStyleBackColor = true;
-            this.cmdCopyToClipboard.Click += new System.EventHandler(this.cmdCopyToClipboard_Click);
             // 
             // txtStdOut
             // 
@@ -52,7 +40,7 @@
             this.txtStdOut.Multiline = true;
             this.txtStdOut.Name = "txtStdOut";
             this.txtStdOut.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtStdOut.Size = new System.Drawing.Size(774, 357);
+            this.txtStdOut.Size = new System.Drawing.Size(774, 380);
             this.txtStdOut.TabIndex = 6;
             // 
             // ScriptOutput
@@ -61,7 +49,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(774, 380);
             this.Controls.Add(this.txtStdOut);
-            this.Controls.Add(this.cmdCopyToClipboard);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ScriptOutput";
             this.Text = "RevitPythonShell - Output";
@@ -72,7 +59,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button cmdCopyToClipboard;
         public System.Windows.Forms.TextBox txtStdOut;
 
     }

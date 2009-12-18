@@ -13,7 +13,7 @@ namespace RevitPythonShell
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
             ribbonPanel.AddPushButton("RevitPythonShell", "Open Python Shell",
                                       typeof (RevitPythonShellApplication).Assembly.Location,
-                                      "RevitPythonShell.StartShellCommand");
+                                      "RevitPythonShell.StartShellCommand");            
             return IExternalApplication.Result.Succeeded;
         }
 

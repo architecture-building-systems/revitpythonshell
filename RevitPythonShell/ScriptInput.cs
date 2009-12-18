@@ -14,7 +14,7 @@ namespace RevitPythonShell
 {    
     public partial class ScriptInput : Form
     {
-        private Application _application;
+        private readonly Application _application;
         
 
         public ScriptInput(Application application)
@@ -101,16 +101,18 @@ namespace RevitPythonShell
         {
             try
             {                
-                var engine = IronPython.Hosting.Python.CreateEngine();
+                var engine = IronPython.Hosting.Python.CreateEngine();                
                 AddSearchPaths(engine);
                 var scope = engine.CreateScope();
                 scope.SetVariable("__revit__", _application);
 
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
+                var outputStream = new ScriptOutputStream(scriptOutput);                
 
-                engine.Runtime.IO.SetOutput(new ScriptOutputStream(scriptOutput), Encoding.UTF8);
-                engine.Runtime.IO.SetErrorOutput(new ScriptOutputStream(scriptOutput), Encoding.UTF8);    
+                engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
+                engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
+                engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
                 var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
                 script.Execute(scope);
             }
@@ -146,7 +148,9 @@ namespace RevitPythonShell
         }
 
         // set tab stops to a width of 4
+// ReSharper disable InconsistentNaming
         private const int EM_SETTABSTOPS = 0x00CB;
+// ReSharper restore InconsistentNaming
 
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
