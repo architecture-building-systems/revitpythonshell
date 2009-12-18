@@ -7,16 +7,14 @@
   </SearchPaths>
   <Commands>
     <!-- a list of preconfigured commands -->
-    <Command name="dumpdpvfolder" src="C:\RevitPythonShell\Commands\dpvdumpfolder.py"/>
-    <Command name="read model" src="C:\RevitPythonShell\Commands\readmodel.py"/>
-    <Command name="Report" src="C:\RevitPythonShell\Commands\report.py"/>
+    
     <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/>
   </Commands>
   <DefaultScript>
 # type in a python script to run here...
-# assumes the following file exists: C:\RevitPythonShell\current.py
 try:
-  import current
+  # assumes the following file exists: C:\RevitPythonShell\current.py
+  import current  
   reload(current)
   
   current.main(__revit__)
