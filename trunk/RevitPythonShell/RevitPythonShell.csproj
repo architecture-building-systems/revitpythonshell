@@ -93,6 +93,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RevitPythonShell_Deploy.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ipy.ico" />
     <Content Include="RevitPythonShell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
