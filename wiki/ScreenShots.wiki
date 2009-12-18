@@ -1,6 +1,7 @@
-#summary A few screenshots of the plugin
+﻿#summary A few screenshots of the plugin
 
 = The MainWindow (RevitPythonShell - Input) =
 
+[MainWindowScreenshot.Png]
 
 = The OutputWindow (RevitPythonShell - Output) =
