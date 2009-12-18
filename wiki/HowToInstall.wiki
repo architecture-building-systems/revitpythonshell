@@ -4,6 +4,8 @@
 
 RevitPythonShell is still a work-in-progress. I have not created an Installer yet, so you are going to get your hands slightly dirty here.
 
+Oh, you will definitely want to install IronPython first. (NOTE: add instructions here) 
+
 The installation breaks down to following steps:
 
   * build the {{{RevitPythonShell.dll}}}
@@ -33,3 +35,40 @@ EAClassName1=RevitPythonShell.RevitPythonShellApplication
 }}}
 
 == Configure the {{{RevitPythonShell.xml}}} ==
+
+The {{{RevitPythonShell.xml}}} file contains some information read at startup time:
+
+  * a list of search paths to be added to the interpreter
+  * a list of canned commands (to be accessed via a button)
+  * a default script to show in the input window
+
+=== Search Paths ===
+
+The version of this file in source control adds two search paths by default:
+
+  * {{{C:\Python25\Lib}}}
+  * {{{C:\RevitPythonShell}}}
+
+You will obviously want to set the path to the CPython library on your system for access to the standard library functions (quite handy...)
+
+I use the folder {{{C:\RevitPythonShell}}} for all my own scripts, as it is easy to locate when I open these files in an editor etc.
+
+=== Canned Commands ===
+
+The _name_ attribute will be displayed as a button text on top of the input window. Clicking on it will execute the command specified by the _src_ attribute.
+
+The shipped command {{{C:\RevitPythonShell\Commands\interactive.py}}} provides an interpreter loop (REPL - Read, Execute, Print, Loop) that has a variable {{{__revit__}}} that can be used to access the RevitAPI interface.
+
+The file should have following contents:
+
+{{{
+import code
+code.interact(None, None, 
+        {
+            '__name__': '__console__', 
+            '__doc__':None, 
+            '__revit__': __revit__
+        })
+}}}
+
+=== The Default Script ===
