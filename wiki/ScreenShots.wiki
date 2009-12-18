@@ -17,3 +17,7 @@ In the top row of the MainWindow, you can see a button _Interactive_. This is ju
 The _Interactive_ command is rather usefull, as it enters a REPL (Read, Execute, Print, Loop) and allows interactive exploration of the RevitAPI.
 
 = The OutputWindow (RevitPythonShell - Output) =
+
+<img src="http://revitpythonshell.googlecode.com/svn/wiki/OutputWindowScreenshot.png" alt="Screenshot of the output window"/>
+
+This screenshot shows the output window where all python script output goes. It is currently running the _Interactive_ canned command that provides an interpreter loop. This is handy for exploration tasks.
