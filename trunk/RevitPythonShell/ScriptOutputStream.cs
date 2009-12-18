@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Windows.Forms;
 
 namespace RevitPythonShell
 {
@@ -14,12 +16,52 @@ namespace RevitPythonShell
     {
         private readonly ScriptOutput _gui;
         private int _bomCharsLeft; // we want to get rid of pesky UTF8-BOM-Chars on write
+        private readonly Queue<MemoryStream> _completedLines; // one memorystream per line of input
+        private MemoryStream _inputBuffer;
 
         public ScriptOutputStream(ScriptOutput gui)
         {
             _gui = gui;
+            _gui.txtStdOut.KeyPress += KeyPressEventHandler;
+            _gui.txtStdOut.KeyDown += KeyDownEventHandler;
+            _gui.txtStdOut.Focus();
+
+            _completedLines = new Queue<MemoryStream>();
+            _inputBuffer = new MemoryStream();
+
             _bomCharsLeft = 3; //0xef, 0xbb, 0xbf for UTF-8 (see http://en.wikipedia.org/wiki/Byte_order_mark#Representations_of_byte_order_marks_by_encoding)
         }
+
+        /// <summary>
+        /// Complete a line when the enter key is pressed...
+        /// </summary>
+        void KeyDownEventHandler(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter || e.KeyCode == Keys.Return)
+            {
+                var line = _inputBuffer;
+                var newLine = new byte[] {/*0x0d,*/ 0x0a};
+                line.Write(newLine, 0, newLine.Length); // append new-line
+                line.Seek(0, SeekOrigin.Begin); // rewind the line for later reading...
+                _completedLines.Enqueue(line);
+                _inputBuffer = new MemoryStream();
+            }
+        }
+
+        /// <summary>
+        /// Stash away any printable characters for later...
+        /// </summary>
+        void KeyPressEventHandler(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar))
+            {
+                var bytes = Encoding.UTF8.GetBytes(new[] {e.KeyChar});
+                _inputBuffer.Write(bytes, 0, bytes.Length);
+                _gui.txtStdOut.Focus();
+            }
+        }
+
+
 
         /// <summary>
         /// Append the text in the buffer to gui.txtStdOut
@@ -56,15 +98,24 @@ namespace RevitPythonShell
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Read from the _inputBuffer, block until a new line has been entered...
+        /// </summary>
         public override int Read(byte[] buffer, int offset, int count)
         {
-            throw new NotImplementedException();
+            while (_completedLines.Count < 1)
+            {
+                // wait for user to complete a line
+                Application.DoEvents();
+            }
+            var line = _completedLines.Dequeue();
+            return line.Read(buffer, offset, count);
         }
 
        
         public override bool CanRead
         {
-            get { return false; }
+            get { return true; }
         }
 
         public override bool CanSeek

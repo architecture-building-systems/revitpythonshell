@@ -10,6 +10,7 @@
     <Command name="dumpdpvfolder" src="C:\RevitPythonShell\Commands\dpvdumpfolder.py"/>
     <Command name="read model" src="C:\RevitPythonShell\Commands\readmodel.py"/>
     <Command name="Report" src="C:\RevitPythonShell\Commands\report.py"/>
+    <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/>
   </Commands>
   <DefaultScript>
 # type in a python script to run here...
