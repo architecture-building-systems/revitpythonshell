@@ -1,6 +1,12 @@
 #summary tips on how to get it up and running on your system.
+#labels Featured
 
 <wiki:toc max_depth="3" />
+
+= TLDR (Too Long Didn't Read) ==
+
+  # Use the [http://revitpythonshell.googlecode.com/files/Setup_RevitPythonShell_1.0.msi installer]
+  # Start Autodesk Revit Architecture 2010
 
 = Introduction =
 
