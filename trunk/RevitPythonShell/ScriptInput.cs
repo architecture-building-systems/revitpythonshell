@@ -114,7 +114,8 @@ namespace RevitPythonShell
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
                 var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
-                script.Execute(scope);
+                script.Execute(scope);          
+                
             }
             catch (Exception ex)
             {

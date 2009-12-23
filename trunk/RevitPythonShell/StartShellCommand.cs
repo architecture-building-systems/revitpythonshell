@@ -15,8 +15,7 @@ namespace RevitPythonShell
         public IExternalCommand.Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {            
             var gui = new ScriptInput(commandData.Application);
-            gui.Show();
-            gui.BringToFront();
+            gui.ShowDialog();
             return IExternalCommand.Result.Succeeded;
         }
     }

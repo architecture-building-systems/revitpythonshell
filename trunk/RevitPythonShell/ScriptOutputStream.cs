@@ -19,18 +19,29 @@ namespace RevitPythonShell
         private int _bomCharsLeft; // we want to get rid of pesky UTF8-BOM-Chars on write
         private readonly Queue<MemoryStream> _completedLines; // one memorystream per line of input
         private MemoryStream _inputBuffer;
+        private bool _isClosing = false;
 
         public ScriptOutputStream(ScriptOutput gui)
         {
             _gui = gui;
             _gui.txtStdOut.KeyPress += KeyPressEventHandler;
             _gui.txtStdOut.KeyDown += KeyDownEventHandler;
+            _gui.Closing += ClosingEventHandler;
+
             _gui.txtStdOut.Focus();
 
             _completedLines = new Queue<MemoryStream>();
             _inputBuffer = new MemoryStream();
 
             _bomCharsLeft = 3; //0xef, 0xbb, 0xbf for UTF-8 (see http://en.wikipedia.org/wiki/Byte_order_mark#Representations_of_byte_order_marks_by_encoding)
+        }
+
+        /// <summary>
+        /// Terminate reading from STDIN.
+        /// </summary>
+        private void ClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            _isClosing = true;
         }
 
         /// <summary>
@@ -50,9 +61,17 @@ namespace RevitPythonShell
             else if (e.KeyCode == Keys.Back)
             {
                 // remove last character from input buffer
-                var line = new MemoryStream();
-                line.Write(_inputBuffer.GetBuffer(), 0, (int) (_inputBuffer.Position - 1));
-                _inputBuffer = line;
+                if (_inputBuffer.Position > 0)
+                {
+                    var line = new MemoryStream();
+                    line.Write(_inputBuffer.GetBuffer(), 0, (int)(_inputBuffer.Position - 1));
+                    _inputBuffer = line;    
+                }
+                else
+                {
+                    // do not pass backspace on to txtStdOut
+                    e.Handled = true;
+                }
             }
         }
 
@@ -76,6 +95,12 @@ namespace RevitPythonShell
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
+            if (_isClosing)
+            {
+                // just send it to nirvana...
+                return;
+            }
+
             while (_bomCharsLeft > 0 && count > 0)
             {
                 _bomCharsLeft--;
@@ -86,7 +111,7 @@ namespace RevitPythonShell
             var actualBuffer = new byte[count]; 
             Array.Copy(buffer, offset, actualBuffer, 0, count);
             var text = Encoding.UTF8.GetString(actualBuffer);            
-
+            
             _gui.txtStdOut.AppendText(text);
             _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
             _gui.txtStdOut.ScrollToCaret();
@@ -117,6 +142,15 @@ namespace RevitPythonShell
                 // wait for user to complete a line
                 Application.DoEvents();
                 Thread.Sleep(10);
+
+                if (_isClosing)
+                {
+                    // send EOF sequence to the interpreters STDIN
+                    buffer[offset + 0] = 26;   // CTRL+Z
+                    buffer[offset + 1] = 0x0d; // CR
+                    buffer[offset + 1] = 0x0a; // LF
+                    return 3;
+                }
             }
             var line = _completedLines.Dequeue();
             return line.Read(buffer, offset, count);
