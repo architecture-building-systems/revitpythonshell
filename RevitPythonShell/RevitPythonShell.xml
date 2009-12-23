@@ -13,15 +13,17 @@
     <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/> 
   </Commands>
   <DefaultScript>
-# type in a python script to run here...
-try:
-  # assumes the following file exists: C:\RevitPythonShell\current.py
-  import current  
-  reload(current)
-  
-  current.main(__revit__)
-except:
-  import traceback
-  traceback.print_exc()
+    <![CDATA[
+# type in a python script to run here and click "Execute"
+# you can access the Autodesk.Revit.Application object with the variable __revit__
+# the default script (shown below) opens up an interactive interpreter
+
+import code
+code.interact(None, None,
+{
+'__name__' : '__console__',
+'__doc__'  : None,
+'__revit__': __revit__
+})]]>
   </DefaultScript>
 </RevitPythonShell>
