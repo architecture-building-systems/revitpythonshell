@@ -108,13 +108,23 @@ namespace RevitPythonShell
 
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
-                var outputStream = new ScriptOutputStream(scriptOutput);                
+                var outputStream = new ScriptOutputStream(scriptOutput, engine);                
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
-                engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
+                engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);                
                 var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
-                script.Execute(scope);          
+
+                try
+                {
+                    script.Execute(scope);
+                }
+                catch
+                {                    
+                    // hide any errors here, the user must make sure he catches them
+                    // himself...
+                }
+                
                 
             }
             catch (Exception ex)
