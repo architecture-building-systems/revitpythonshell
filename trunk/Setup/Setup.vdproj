@@ -147,6 +147,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_A70421DECE1E406EB20DD9ABE9AFA68C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B00ACBFB3159C4EFB78E192FADD84963"
         "OwnerKey" = "8:_910FC983AA154AF4921A41692DFE3A16"
         "MsmSig" = "8:_UNDEFINED"
@@ -266,6 +272,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -297,6 +316,34 @@
     {
         "CustomAction"
         {
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_64FBF584DAD44A6ABA2F56BDB7A05D6E"
+            {
+            "Name" = "8:addrevitplugin.exe"
+            "Condition" = "8:"
+            "Object" = "8:_A70421DECE1E406EB20DD9ABE9AFA68C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:1"
+            "Arguments" = "8:RevitPythonShell.RevitPythonShellApplication \"[TARGETDIR]RevitPythonShell.dll\""
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_E1D5F8CB_C4BC_4577_B9BC_247528F66866"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_EE3CD9FE091244C2AD27D54A97EACA5E"
+            {
+            "Name" = "8:addrevitplugin.exe"
+            "Condition" = "8:"
+            "Object" = "8:_A70421DECE1E406EB20DD9ABE9AFA68C"
+            "FileType" = "3:2"
+            "InstallAction" = "3:4"
+            "Arguments" = "8:RevitPythonShell.RevitPythonShellApplication"
+            "EntryPoint" = "8:"
+            "Sequence" = "3:1"
+            "Identifier" = "8:_F6EC2104_8209_4365_8968_245E6C867C4C"
+            "InstallerClass" = "11:FALSE"
+            "CustomActionData" = "8:"
+            }
         }
         "DefaultFeature"
         {
@@ -568,6 +615,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A70421DECE1E406EB20DD9ABE9AFA68C"
+            {
+            "SourcePath" = "8:..\\addrevitplugin\\addrevitplugin.exe"
+            "TargetName" = "8:addrevitplugin.exe"
+            "Tag" = "8:"
+            "Folder" = "8:_24B2DD7EE95E494795B532A95B2C53A8"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B00ACBFB3159C4EFB78E192FADD84963"
             {
             "AssemblyRegister" = "3:1"
@@ -707,7 +774,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RevitPythonShell"
         "ProductCode" = "8:{642ACDF3-33CC-42B7-B1B4-8BCFCD90E859}"
-        "PackageCode" = "8:{0E87DF98-9584-433A-8B03-5064C2D21391}"
+        "PackageCode" = "8:{E325412A-FA01-416D-BC3F-C19E6511AAD3}"
         "UpgradeCode" = "8:{1676AD19-A091-4F4A-906A-361327C917FC}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
