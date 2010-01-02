@@ -6,6 +6,7 @@
 = TLDR (Too Long Didn't Read) ==
 
   # Use the [http://revitpythonshell.googlecode.com/files/Setup_RevitPythonShell_1.0.msi installer]
+    * *NOTE*: presently, the installer only works with the 32bit version of Autodesk Revit Architecture 2010
   # Start Autodesk Revit Architecture 2010
 
 = Introduction =
