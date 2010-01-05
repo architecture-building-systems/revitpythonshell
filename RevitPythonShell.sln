@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitPythonShell", "RevitPythonShell\RevitPythonShell.csproj", "{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{D8E3F0D4-6FE8-41CE-8737-CE12C61C2658}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_RAC64", "Setup_RAC64\Setup_RAC64.vdproj", "{C57A2530-C815-48C8-AFC1-A13A3871855F}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_RAC32", "Setup_RAC32\Setup_RAC32.vdproj", "{C89DE1DE-9507-4D71-B6D5-E6191583B96C}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
@@ -19,8 +21,10 @@ Global
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D8E3F0D4-6FE8-41CE-8737-CE12C61C2658}.Debug|Any CPU.ActiveCfg = Debug
-		{D8E3F0D4-6FE8-41CE-8737-CE12C61C2658}.Release|Any CPU.ActiveCfg = Release
+		{C57A2530-C815-48C8-AFC1-A13A3871855F}.Debug|Any CPU.ActiveCfg = Debug
+		{C57A2530-C815-48C8-AFC1-A13A3871855F}.Release|Any CPU.ActiveCfg = Release
+		{C89DE1DE-9507-4D71-B6D5-E6191583B96C}.Debug|Any CPU.ActiveCfg = Debug
+		{C89DE1DE-9507-4D71-B6D5-E6191583B96C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
