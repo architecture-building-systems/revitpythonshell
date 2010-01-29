@@ -14,7 +14,7 @@ namespace RevitPythonShell
 {    
     public partial class ScriptInput : Form
     {
-        private readonly Application _application;
+        private readonly Application    _application;
         
 
         public ScriptInput(Application application)
@@ -109,6 +109,7 @@ namespace RevitPythonShell
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
                 var outputStream = new ScriptOutputStream(scriptOutput, engine);                
+                scope.SetVariable("__window__", scriptOutput);
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
@@ -124,8 +125,6 @@ namespace RevitPythonShell
                     // hide any errors here, the user must make sure he catches them
                     // himself...
                 }
-                
-                
             }
             catch (Exception ex)
             {
