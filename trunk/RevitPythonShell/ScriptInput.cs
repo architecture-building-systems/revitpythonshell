@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Application=Autodesk.Revit.Application;
@@ -111,19 +112,24 @@ namespace RevitPythonShell
                 var outputStream = new ScriptOutputStream(scriptOutput, engine);                
                 scope.SetVariable("__window__", scriptOutput);
 
+
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
-                engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);                
-                var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
+                engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
 
+                var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);                
                 try
                 {
                     script.Execute(scope);
+                }              
+                catch (SystemExitException exception)
+                {
+                    // ok, so the system exited. That was bound to happen...
                 }
-                catch
-                {                    
-                    // hide any errors here, the user must make sure he catches them
-                    // himself...
+                catch (Exception exception)
+                {
+                    // show (power) user everything!
+                    MessageBox.Show(exception.ToString());
                 }
             }
             catch (Exception ex)
