@@ -105,9 +105,16 @@ namespace RevitPythonShell
                 var bytes = Encoding.UTF8.GetBytes(new[] {e.KeyChar});
                 _inputBuffer.Write(bytes, 0, bytes.Length);
                 _gui.txtStdOut.Focus();
-            }
+            }            
             else
             {
+                if (e.KeyChar == '\r')
+                {
+                    // user pressed enter
+                    _gui.txtStdOut.Text += "\r\n";
+                    _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
+                    _gui.txtStdOut.Focus();
+                }
                 // pretend we have handled this key (so using arrows does not confuse the user)
                 e.Handled = true;
             }

@@ -20,10 +20,10 @@
 
 import code
 code.interact(None, None,
-{
-'__name__' : '__console__',
-'__doc__'  : None,
-'__revit__': __revit__
-})]]>
+  {
+    '__name__' : '__console__',
+    '__doc__'  : None,
+    '__revit__': __revit__
+  })]]>
   </DefaultScript>
 </RevitPythonShell>
