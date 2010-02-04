@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 
 namespace RevitPythonShell
@@ -47,15 +49,18 @@ namespace RevitPythonShell
 
         /// <summary>
         /// Terminate reading from STDIN.
+        /// FIXME: this doesn't work!
         /// </summary>
         private void ClosingEventHandler(object sender, System.ComponentModel.CancelEventArgs e)
         {        
-            _engine.Runtime.Shutdown();
+            _engine.Runtime.Shutdown();            
             _completedLines.Enqueue(new MemoryStream());
         }
 
         /// <summary>
-        /// Complete a line when the enter key is pressed...
+        /// Complete a line when the enter key is pressed. Also
+        /// try to emulate a nice control window. This is going to be a big gigantic pile
+        /// of ifs, sigh.
         /// </summary>
         void KeyDownEventHandler(object sender, KeyEventArgs e)
         {
@@ -68,20 +73,25 @@ namespace RevitPythonShell
                 _completedLines.Enqueue(line);
                 _inputBuffer = new MemoryStream();
             }            
-            else if (e.KeyCode == Keys.Back)
+            else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Left)
             {
                 // remove last character from input buffer
                 if (_inputBuffer.Position > 0)
                 {
                     var line = new MemoryStream();
                     line.Write(_inputBuffer.GetBuffer(), 0, (int)(_inputBuffer.Position - 1));
-                    _inputBuffer = line;    
-                }
-                else
-                {
-                    // do not pass backspace on to txtStdOut
-                    e.Handled = true;
-                }
+                    _inputBuffer = line;
+                    _gui.txtStdOut.Text = _gui.txtStdOut.Text.Substring(0, _gui.txtStdOut.Text.Length - 1);
+                    _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
+                    _gui.txtStdOut.ScrollToCaret();
+                }                
+                // do not pass backspace / left on to txtStdOut
+                e.Handled = true;                
+            }
+            else if (e.KeyCode == Keys.Right)
+            {                
+                // do not move right ever...
+                e.Handled = true;
             }
         }
 
@@ -96,6 +106,11 @@ namespace RevitPythonShell
                 _inputBuffer.Write(bytes, 0, bytes.Length);
                 _gui.txtStdOut.Focus();
             }
+            else
+            {
+                // pretend we have handled this key (so using arrows does not confuse the user)
+                e.Handled = true;
+            }
         }
 
 
@@ -105,6 +120,11 @@ namespace RevitPythonShell
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
+            if (_gui.IsDisposed)
+            {
+                return;
+            }
+
             while (_bomCharsLeft > 0 && count > 0)
             {
                 _bomCharsLeft--;
@@ -114,12 +134,13 @@ namespace RevitPythonShell
 
             var actualBuffer = new byte[count]; 
             Array.Copy(buffer, offset, actualBuffer, 0, count);
-            var text = Encoding.UTF8.GetString(actualBuffer);            
-            
+            var text = Encoding.UTF8.GetString(actualBuffer);
+            Debug.WriteLine(text);
             _gui.txtStdOut.AppendText(text);
             _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
             _gui.txtStdOut.ScrollToCaret();
-            Application.DoEvents();
+            Application.DoEvents();    
+        
         }
 
         public override void Flush()
@@ -140,9 +161,13 @@ namespace RevitPythonShell
         /// Read from the _inputBuffer, block until a new line has been entered...
         /// </summary>
         public override int Read(byte[] buffer, int offset, int count)
-        {
+        {                     
             while (_completedLines.Count < 1)
             {
+                if (_gui.Visible == false)
+                {
+                    throw new SystemExitException();
+                }
                 // wait for user to complete a line
                 Application.DoEvents();
                 Thread.Sleep(10);
@@ -154,7 +179,7 @@ namespace RevitPythonShell
        
         public override bool CanRead
         {
-            get { return true; }
+            get { return !_gui.IsDisposed; }
         }
 
         public override bool CanSeek
