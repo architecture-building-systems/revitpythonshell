@@ -173,7 +173,7 @@ namespace RevitPythonShell
             {
                 if (_gui.Visible == false)
                 {
-                    throw new SystemExitException();
+                    throw new EndOfStreamException();
                 }
                 // wait for user to complete a line
                 Application.DoEvents();
