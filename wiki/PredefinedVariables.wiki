@@ -10,4 +10,5 @@ This page provides a list of variables supplied by RevitPythonShell. These are i
 || {{{__revit__}}} || a reference to the {{{Autodesk.Revit.Application}}} instance, obtained from the {{{ExternalCommandData}}} argument passed to plugins. ||
 || {{{__commandData__}}} || the actual {{{ExternalCommandData}}} argument passed to the RevitPythonShell plugin when you clicked "Open Python Shell" ||
 || {{{__message__}}} || contains the contents of the {{{message}}} parameter passed to the RevitPythonShell plugin when you clicked "Open Python Shell". On closing the InteractiveShell window, the contents of {{{__message__}}} will be assigned back, so Revit has access to it ||
-|| {{{__elements__}}} || 
+|| {{{__elements__}}} || the {{{ElementSet}}} passed to the RevitPythonShell plugin when you clicked "Open Python Shell". ||
+|| {{{__result__}}} || This is set to {{{IExternalCommand.Result.Succeeded}}}, but you can change it if you want. When the InteractiveShell is closed, the RevitPythonShell returns the contents of this variable as the result of the {{{IExternalCommand.Execute}}} method. ||
