@@ -3,24 +3,16 @@
   <SearchPaths>
     <!-- a list of paths to add to the engines search path -->
     <SearchPath name="C:\Python25\Lib" />
-    <SearchPath name="C:\RevitPythonShell" />
+    <!-- <SearchPath name="C:\RevitPythonShell" /> -->
   </SearchPaths>
   <Commands>
-    <!-- a list of preconfigured commands -->
-    <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/> 
+    <!-- a list of preconfigured commands, entries here will show up in the toolbar 
+         of the interactive shell.
+    -->
+    <!-- <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/> -->
   </Commands>
-  <DefaultScript>
-<![CDATA[
-# type in a python script to run here and click "Execute"
-# you can access the Autodesk.Revit.Application object with the variable __revit__
-# the default script (shown below) opens up an interactive interpreter
-
-import code
-code.interact(None, None,
-  {
-    '__name__' : '__console__',
-    '__doc__'  : None,
-    '__revit__': __revit__
-  })]]>
-  </DefaultScript>
+  <Variables>
+    <!-- a list of preconfigured variables, available to your scripts via the __vars__ dictionary -->
+    <StringVariable name="example" value="hello, world"/>
+  </Variables>
 </RevitPythonShell>
