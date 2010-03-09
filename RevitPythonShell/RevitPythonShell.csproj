@@ -76,20 +76,20 @@
       <DependentUpon>ScriptOutput.cs</DependentUpon>
     </Compile>
     <Compile Include="ScriptOutputStream.cs" />
-    <Compile Include="StartShellCommand.cs" />
-    <Compile Include="ScriptInput.cs">
+    <Compile Include="ShellForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ScriptInput.Designer.cs">
-      <DependentUpon>ScriptInput.cs</DependentUpon>
+    <Compile Include="ShellForm.Designer.cs">
+      <DependentUpon>ShellForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="StartShellCommand.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ScriptInput.resx">
-      <DependentUpon>ScriptInput.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="ScriptOutput.resx">
       <DependentUpon>ScriptOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShellForm.resx">
+      <DependentUpon>ShellForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +100,12 @@
     <Content Include="RevitPythonShell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IronTextBox\IronTextBox.csproj">
+      <Project>{101A59A8-D2CA-48C3-869C-C580A4A091F2}</Project>
+      <Name>IronTextBox</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
