@@ -1,32 +1,25 @@
 ﻿using System;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using Autodesk.Revit;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
-using Application=Autodesk.Revit.Application;
 
 namespace RevitPythonShell
-{    
-    public partial class ScriptInput : Form
+{
+    public partial class ShellForm : Form
     {
-        private readonly Application    _application;
-        
+        private ExternalCommandData _commandData;
+        private string _message;
+        private ElementSet _elements;
 
-        public ScriptInput(Application application)
+        public ShellForm()
         {
-            _application = application;
-
             InitializeComponent();
-            SetTabWidth(txtSource, 1);
-
             LoadCommands();
-            LoadDefaultScript();
         }
 
         /// <summary>
@@ -35,7 +28,7 @@ namespace RevitPythonShell
         /// save frequently used commands.
         /// </summary>
         private void LoadCommands()
-        {            
+        {
             foreach (var commandNode in GetSettings().Root.Descendants("Command"))
             {
                 var commandName = commandNode.Attribute("name").Value;
@@ -47,27 +40,9 @@ namespace RevitPythonShell
             }
         }
 
-        private XDocument GetSettings()
-        {
-            string assemblyFolder = new FileInfo(GetType().Assembly.Location).DirectoryName;
-            string settingsFile = Path.Combine(assemblyFolder, "RevitPythonShell.xml");
-            return XDocument.Load(settingsFile);
-        }
-
-        /// <summary>
-        /// Loads a default script from the XML file.
-        /// </summary>
-        private void LoadDefaultScript()
-        {            
-            var defaultScripts = GetSettings().Root.Descendants("DefaultScript");
-            txtSource.Text = defaultScripts.Count() > 0 ? defaultScripts.First().Value.Replace("\n", "\r\n") : "";
-        }
-
         /// <summary>
         /// Run one of the configured scripts.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         void ToolStripItemClick(object sender, EventArgs e)
         {
             try
@@ -82,17 +57,9 @@ namespace RevitPythonShell
             }
             catch (Exception ex)
             {
-
+                // FIXME: we want to show exceptions in the toobar thingy...
                 MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        /// <summary>
-        /// Execute the piece of code.
-        /// </summary>
-        private void cmdExecute_Click(object sender, EventArgs e)
-        {
-            ExecuteScript(txtSource.Text);
         }
 
         /// <summary>
@@ -101,27 +68,27 @@ namespace RevitPythonShell
         private void ExecuteScript(string source)
         {
             try
-            {                
+            {
                 var engine = IronPython.Hosting.Python.CreateEngine();                
-                AddSearchPaths(engine);
                 var scope = engine.CreateScope();
-                scope.SetVariable("__revit__", _application);
+                SetupEnvironment(scope, engine);
 
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
-                var outputStream = new ScriptOutputStream(scriptOutput, engine);                
-                scope.SetVariable("__window__", scriptOutput);
+                var outputStream = new ScriptOutputStream(scriptOutput, engine);
 
+                // FIXME: do we really need this?
+                scope.SetVariable("__window__", scriptOutput);
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
 
-                var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);                
+                var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
                 try
                 {
                     script.Execute(scope);
-                }              
+                }
                 catch (SystemExitException exception)
                 {
                     // ok, so the system exited. That was bound to happen...
@@ -135,7 +102,51 @@ namespace RevitPythonShell
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            }
+        }
+
+        private XDocument GetSettings()
+        {
+            string assemblyFolder = new FileInfo(GetType().Assembly.Location).DirectoryName;
+            string settingsFile = Path.Combine(assemblyFolder, "RevitPythonShell.xml");
+            return XDocument.Load(settingsFile);
+        }
+
+        /// <summary>
+        /// Displays the shell form modally until the user closes it.
+        /// Provides the user with access to the parameters passed to the IExternalCommand implementation
+        /// in RevitPythonShell so that it can be passed on.
+        /// 
+        /// For convenience and backwards compatibility, commandData.Application is mapped to the variable "__revit__"
+        /// </summary>
+        public int ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            _elements = elements;
+            _message = message;
+            _commandData = commandData;
+
+            // provide a hook into Autodesk Revit
+            SetupEnvironment(ironTextBoxControl.Scope, ironTextBoxControl.Engine);
+
+            ShowDialog();
+
+            message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
+            return (int) (ironTextBoxControl.Scope.GetVariable("__result__") ?? IExternalCommand.Result.Succeeded);
+        }
+
+        /// <summary>
+        /// Set up an IronPython environment - for interactive shell or for canned scripts
+        /// </summary>
+        private void SetupEnvironment(ScriptScope scope, ScriptEngine engine)
+        {
+            scope.SetVariable("__revit__", _commandData.Application);
+            scope.SetVariable("__commandData__", _commandData);
+            scope.SetVariable("__message__", _message);
+            scope.SetVariable("__elements__", _elements);
+            scope.SetVariable("__result__", (int)IExternalCommand.Result.Succeeded);
+
+            // add the paths
+            AddSearchPaths(engine);
         }
 
         /// <summary>
@@ -150,33 +161,5 @@ namespace RevitPythonShell
             }
             engine.SetSearchPaths(searchPaths);
         }
-
-        /// <summary>
-        /// Use CTRL+ENTER to execute the current script.
-        /// </summary>
-        private void ScriptInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Control && e.KeyCode == Keys.Enter)
-            {
-                ExecuteScript(txtSource.Text);
-                e.SuppressKeyPress = true;
-            }
-        }
-
-        // set tab stops to a width of 4
-// ReSharper disable InconsistentNaming
-        private const int EM_SETTABSTOPS = 0x00CB;
-// ReSharper restore InconsistentNaming
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessage(IntPtr h, int msg, int wParam, int[] lParam);
-
-        public static void SetTabWidth(TextBox textbox, int tabWidth)
-        {
-            Graphics graphics = textbox.CreateGraphics();
-            var characterWidth = (int)graphics.MeasureString("M", textbox.Font).Width;
-
-            SendMessage(textbox.Handle, EM_SETTABSTOPS, 1, new[] { tabWidth * characterWidth });
-        }        
     }
 }

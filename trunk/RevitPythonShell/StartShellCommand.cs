@@ -13,10 +13,10 @@ namespace RevitPythonShell
         /// </summary>
         /// <returns></returns>
         public IExternalCommand.Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
-        {            
-            var gui = new ScriptInput(commandData.Application);
-            gui.ShowDialog();
-            return IExternalCommand.Result.Succeeded;
+        {
+            var gui = new ShellForm();
+
+            return (IExternalCommand.Result) gui.ShowShell(commandData, ref message, elements);
         }
     }
 }
