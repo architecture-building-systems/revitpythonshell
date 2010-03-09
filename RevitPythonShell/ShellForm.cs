@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -113,6 +115,16 @@ namespace RevitPythonShell
         }
 
         /// <summary>
+        /// Returns the list of variables to be included with the scope in RevitPythonShell scripts.
+        /// </summary>
+        /// <returns></returns>
+        private IDictionary<string, string> ReadConfigVariables()
+        {
+            return GetSettings().Root.Descendants("StringVariable").ToDictionary(v => v.Attribute("name").Value,
+                                                                                  v => v.Attribute("value").Value);
+        }
+
+        /// <summary>
         /// Displays the shell form modally until the user closes it.
         /// Provides the user with access to the parameters passed to the IExternalCommand implementation
         /// in RevitPythonShell so that it can be passed on.
@@ -139,13 +151,17 @@ namespace RevitPythonShell
         /// </summary>
         private void SetupEnvironment(ScriptScope scope, ScriptEngine engine)
         {
+            // add variables from Revit
             scope.SetVariable("__revit__", _commandData.Application);
             scope.SetVariable("__commandData__", _commandData);
             scope.SetVariable("__message__", _message);
             scope.SetVariable("__elements__", _elements);
             scope.SetVariable("__result__", (int)IExternalCommand.Result.Succeeded);
 
-            // add the paths
+            // add preconfigures variables
+            scope.SetVariable("__vars__", ReadConfigVariables());
+
+            // add the search paths
             AddSearchPaths(engine);
         }
 

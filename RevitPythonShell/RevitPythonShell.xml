@@ -13,6 +13,10 @@
     <Command name="View Model" src="C:\RevitPythonShell\Commands\viewmodel.py"/>
     <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/>
   </Commands>
+  <Variables>
+    <!-- a list of string variables to add to the scope -->
+    <StringVariable name="test" value="hello, world"/>
+  </Variables>
   <DefaultScript>
     <![CDATA[
 # type in a python script to run here and click "Execute"
