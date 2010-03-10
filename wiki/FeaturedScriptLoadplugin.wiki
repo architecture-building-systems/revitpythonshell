@@ -29,13 +29,15 @@ You can then import {{{loadplugin.py}}} in your scripts / commands or in the int
 
 {{{
 >>>import loadplugin
-
+>>># use actual path here...
 >>>assembly = loadplugin.loadAssembly(r'C:\...\Visual Studio 2008\Projects\RvtMgdDbg\bin\RvtMgdDbg.dll')
-
+>>># result is an assembly object
 >>>assembly
 
 <Assembly RvtMgdDbg, Version=1.0.3671.26458, Culture=neutral, PublicKeyToken=null>
 
+>>># pretty cool: IronPython lets you use the assembly like a namespace
+>>># also note the use of the special predefined variables for executing plugins!
 >>>assembly.RvtMgdDbg.CmdSnoopDb().Execute(__commandData__, __message__, __elements__)
 
 (<Autodesk.Revit.IExternalCommand+Result object at 0x000000000000002D [Succeeded]>, '')
