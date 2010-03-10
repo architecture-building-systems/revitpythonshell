@@ -11,6 +11,39 @@ This script is slightly better than John Morse's version, since it also register
 
 = Details =
 
+Save the script (see below) into your search path. Your search path is defined in the {{{RevitPythonShell.xml}}} file found in the installation directory:
+
+{{{
+<?xml version="1.0" encoding="UTF-8"?>
+<RevitPythonShell>
+  <SearchPaths>
+    <!-- a list of paths to add to the engines search path -->
+    <SearchPath name="C:\Python25\Lib"/>
+    <SearchPath name="C:\RevitPythonShell"/>
+  </SearchPaths>
+  <!-- ... other stuff ... -->
+</RevitPythonShell>
+}}}
+
+You can then import {{{loadplugin.py}}} in your scripts / commands or in the interactive shell:
+
+{{{
+>>>import loadplugin
+
+>>>assembly = loadplugin.loadAssembly(r'C:\...\Visual Studio 2008\Projects\RvtMgdDbg\bin\RvtMgdDbg.dll')
+
+>>>assembly
+
+<Assembly RvtMgdDbg, Version=1.0.3671.26458, Culture=neutral, PublicKeyToken=null>
+
+>>>assembly.RvtMgdDbg.CmdSnoopDb().Execute(__commandData__, __message__, __elements__)
+
+(<Autodesk.Revit.IExternalCommand+Result object at 0x000000000000002D [Succeeded]>, '')
+>>>
+}}}
+
+= The Script =
+
 {{{
 '''
 loadplugin.py
