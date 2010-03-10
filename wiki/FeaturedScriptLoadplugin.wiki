@@ -29,7 +29,7 @@ You can then import {{{loadplugin.py}}} in your scripts / commands or in the int
 
 {{{
 >>>import loadplugin
->>># use actual path here...
+>>># use actual path here... (if you don't already have RvtMgdDbg.dll installed, you probably want to go and do so right no - check ADN!)
 >>>assembly = loadplugin.loadAssembly(r'C:\...\Visual Studio 2008\Projects\RvtMgdDbg\bin\RvtMgdDbg.dll')
 >>># result is an assembly object
 >>>assembly
