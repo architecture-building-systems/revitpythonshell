@@ -1,4 +1,4 @@
-#summary A script to load an assembly, without locking it on disc
+#summary A script to dynamically load an assembly into Revit for debugging, without locking it on disk
 #labels Featured,Script
 
 = Introduction =
