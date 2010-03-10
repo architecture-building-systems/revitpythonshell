@@ -1,0 +1,52 @@
+#summary A script to load an assembly, without locking it on disc
+#labels Featured,Script
+
+= Introduction =
+
+Jeremy Tammik mentions a solution by John Morse for [http://thebuildingcoder.typepad.com/blog/2010/03/reload-an-addin-to-debug.html reloading an addin to debug]. That solution requires a plugin to do some bridge work and basically just loads the assembly as a byte array.
+
+Using RevitPythonShell and the script {{{loadplugin.py}}}, you can do that without installing a separate plugin - and get python scripting functionality for your assembly at the same time!
+
+This script is slightly better than John Morse's version, since it also registers for assembly resolution - this is necessary for multi-assembly-projects.
+
+= Details =
+
+{{{
+'''
+loadplugin.py
+
+Using the technique described here: 
+http://thebuildingcoder.typepad.com/blog/2010/03/reload-an-addin-to-debug.html,
+load a revit plugin for scripting.
+'''
+import clr
+clr.AddReference('mscorlib')
+clr.AddReference('System')
+
+import System
+import System.Reflection
+
+def loadAssembly(path):
+    # load the assembly into a byte array
+    assemblyBytes = System.IO.File.ReadAllBytes(path)
+    assembly = System.Reflection.Assembly.Load(assemblyBytes)
+    # make sure we can resolve assemblies from that directory
+    folder = System.IO.Path.GetDirectoryName(path)
+    System.AppDomain.CurrentDomain.AssemblyResolve += resolveAssemblyGenerator(folder)
+    return assembly
+
+def resolveAssemblyGenerator(folder):
+    '''
+    returns a function that loads assemblies when needed from the folder 'folder'.
+    '''
+    def result(sender, args):
+        name = args.Name.split(',')[0]
+        try:            
+            path = System.IO.Path.Combine(folder, name + '.dll')
+            if not System.IO.Path.Exists(path):
+                return None
+            return loadAssembly(path)
+        except:
+            return None
+    return result
+}}}
