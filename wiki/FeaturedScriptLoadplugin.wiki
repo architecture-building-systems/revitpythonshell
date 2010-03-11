@@ -90,6 +90,4 @@ def resolveAssemblyGenerator(folder):
 
 = Changelog =
 
-== 11.03.2010 ==
-
-Fixed a bug in `resolveAssemblyGenerator` (s/System.IO.Path.Exists/System.IO.*File*.Exists)
+  * 11.03.2010 Fixed a bug in `resolveAssemblyGenerator` (s/System.IO.Path.Exists/System.IO.*File*.Exists)
