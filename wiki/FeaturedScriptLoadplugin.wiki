@@ -78,10 +78,18 @@ def resolveAssemblyGenerator(folder):
         name = args.Name.split(',')[0]
         try:            
             path = System.IO.Path.Combine(folder, name + '.dll')
-            if not System.IO.Path.Exists(path):
+            if not System.IO.File.Exists(path):
                 return None
             return loadAssembly(path)
         except:
+            import traceback
+            traceback.print_exc()
             return None
     return result
 }}}
+
+= Changelog =
+
+== 11.03.2010 ==
+
+Fixed a bug in `resolveAssemblyGenerator` (s/System.IO.Path.Exists/System.IO.*File*.Exists)
