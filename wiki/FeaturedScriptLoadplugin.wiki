@@ -9,6 +9,8 @@ Using RevitPythonShell and the script {{{loadplugin.py}}}, you can do that witho
 
 This script is slightly better than John Morse's version, since it also registers for assembly resolution - this is necessary for multi-assembly-projects.
 
+Additionally (as of 12 march 2010), debugging symbols are loaded from the PDB file if present.
+
 = Details =
 
 Save the script (see below) into your search path. Your search path is defined in the {{{RevitPythonShell.xml}}} file found in the installation directory:
@@ -64,7 +66,14 @@ import System.Reflection
 def loadAssembly(path):
     # load the assembly into a byte array
     assemblyBytes = System.IO.File.ReadAllBytes(path)
-    assembly = System.Reflection.Assembly.Load(assemblyBytes)
+    pdbPath = path[:-3] + 'pdb'
+    if System.IO.File.Exists(pdbPath):
+        # load debugging symbols
+        pdbBytes = System.IO.File.ReadAllBytes(pdbPath)
+        assembly = System.Reflection.Assembly.Load(assemblyBytes, pdbBytes)
+    else:
+        # no debugging symbols found
+        assembly = System.Reflection.Assembly.Load(assemblyBytes)
     # make sure we can resolve assemblies from that directory
     folder = System.IO.Path.GetDirectoryName(path)
     System.AppDomain.CurrentDomain.AssemblyResolve += resolveAssemblyGenerator(folder)
@@ -90,4 +99,7 @@ def resolveAssemblyGenerator(folder):
 
 = Changelog =
 
+(dates are in format dd.mm.yyyy)
+  
+  * 12.03.2010 added loading of debugging symbols if present
   * 11.03.2010 Fixed a bug in `resolveAssemblyGenerator` (s/System.IO.Path.Exists/System.IO.*File*.Exists)
