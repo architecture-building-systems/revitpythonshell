@@ -67,8 +67,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandLoaderBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevitPythonShellApplication.cs" />
+    <Compile Include="ScriptExecutor.cs" />
     <Compile Include="ScriptOutput.cs">
       <SubType>Form</SubType>
     </Compile>
