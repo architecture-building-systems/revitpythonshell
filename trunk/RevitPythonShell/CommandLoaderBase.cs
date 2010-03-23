@@ -56,10 +56,4 @@ namespace RevitPythonShell
             }
         }
     }
-    public class TestInheritor: CommandLoaderBase
-    {
-        public TestInheritor(): base("test")
-        {
-        }
-    }
 }
