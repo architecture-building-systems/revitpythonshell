@@ -1,6 +1,9 @@
 ﻿using System;
 using System.IO;
 using Autodesk.Revit;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.Attributes;
 
 namespace RevitPythonShell
 {
@@ -10,7 +13,9 @@ namespace RevitPythonShell
     /// It is expected that this will be inherited by dynamic types that have the field
     /// _scriptSource set to point to a python file that will be executed in the constructor.
     /// </summary>
-    public abstract class CommandLoaderBase: IExternalCommand
+    [Regeneration(RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    public abstract class CommandLoaderBase : IExternalCommand
     {
         protected string _scriptSource = "";
 
@@ -30,7 +35,7 @@ namespace RevitPythonShell
         /// needed by external command.</param><param name="message">Error message can be returned by external command. This will be displayed only if the command status
         /// was "Failed".  There is a limit of 1023 characters for this message; strings longer than this will be truncated.</param><param name="elements">Element set indicating problem elements to display in the failure dialog.  This will be used
         /// only if the command status was "Failed".</param>
-        public IExternalCommand.Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // FIXME: somehow fetch back message after script execution...
             var executor = new ScriptExecutor(commandData, message, elements);
@@ -45,14 +50,14 @@ namespace RevitPythonShell
             message = executor.Message;
             switch (result)
             {
-                case (int)IExternalCommand.Result.Succeeded:
-                    return IExternalCommand.Result.Succeeded;
-                case (int)IExternalCommand.Result.Cancelled:
-                    return IExternalCommand.Result.Cancelled;
-                case (int)IExternalCommand.Result.Failed:
-                    return IExternalCommand.Result.Failed;
+                case (int)Result.Succeeded:
+                    return Result.Succeeded;
+                case (int)Result.Cancelled:
+                    return Result.Cancelled;
+                case (int)Result.Failed:
+                    return Result.Failed;
                 default:
-                    return IExternalCommand.Result.Succeeded;
+                    return Result.Succeeded;
             }
         }
     }

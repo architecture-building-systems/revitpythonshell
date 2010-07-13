@@ -7,22 +7,32 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Xml.Linq;
 using Autodesk.Revit;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.Attributes;
 
 namespace RevitPythonShell
 {
-    class RevitPythonShellApplication: IExternalApplication
+    [Regeneration(RegenerationOption.Manual)]
+    [Transaction(TransactionMode.Manual)]
+    class RevitPythonShellApplication : IExternalApplication
     {
         /// <summary>
         /// Hook into Revit to allow starting a command.
         /// </summary>
-        IExternalApplication.Result IExternalApplication.OnStartup(ControlledApplication application)
+        Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
-            ribbonPanel.AddPushButton("RevitPythonShell", "Open Python Shell",
-                                      typeof (RevitPythonShellApplication).Assembly.Location,
+            PushButtonData pb = new PushButtonData("RevitPythonShell", "Open Python Shell",
+                                      typeof(RevitPythonShellApplication).Assembly.Location,
                                       "RevitPythonShell.StartShellCommand");
-         
-            // add canned commands as stacked pushbuttons
+            ribbonPanel.AddItem(pb);
+
+            var dllfolder = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            var dllname = "CommandLoaderAssembly.dll";
+            var dllfullpath = Path.Combine(dllfolder, dllname);
+
+            // add canned commands as stacked pushbuttons (try to pack 3 commands per pushbutton, then 2)
             var commands = GetCommands().ToList();
             while (commands.Count > 4 || commands.Count == 3)
             {
@@ -33,10 +43,11 @@ namespace RevitPythonShell
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
-                ribbonPanel.AddStackedButtons(
-                    new PushButtonData(command0.Name, command0.Name, "CommandLoaderAssembly.dll", "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, "CommandLoaderAssembly.dll", "Command" + command1.Index),
-                    new PushButtonData(command2.Name, command2.Name, "CommandLoaderAssembly.dll", "Command" + command2.Index));
+
+                ribbonPanel.AddStackedItems(
+                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
+                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index),
+                    new PushButtonData(command2.Name, command2.Name, dllfullpath, "Command" + command2.Index));
             }
             if (commands.Count == 4)
             {
@@ -45,9 +56,9 @@ namespace RevitPythonShell
                 var command1 = commands[1];
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
-                ribbonPanel.AddStackedButtons(
-                    new PushButtonData(command0.Name, command0.Name, "CommandLoaderAssembly.dll", "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, "CommandLoaderAssembly.dll", "Command" + command1.Index));
+                ribbonPanel.AddStackedItems(
+                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
+                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index));
             }
             if (commands.Count == 2)
             {
@@ -56,22 +67,22 @@ namespace RevitPythonShell
                 var command1 = commands[1];
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
-                ribbonPanel.AddStackedButtons(
-                    new PushButtonData(command0.Name, command0.Name, "CommandLoaderAssembly.dll", "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, "CommandLoaderAssembly.dll", "Command" + command1.Index));
+                ribbonPanel.AddStackedItems(
+                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
+                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index));
             }
-            CreateCommandLoaderAssembly();
-            return IExternalApplication.Result.Succeeded;
+            CreateCommandLoaderAssembly(dllfolder, dllname);
+            return Result.Succeeded;
         }
 
         /// <summary>
         /// Creates a dynamic assembly that contains types for starting the canned commands.
         /// </summary>
-        private static void CreateCommandLoaderAssembly()
+        private static void CreateCommandLoaderAssembly(string dllfolder, string dllname)
         {
-            var assemblyName = new AssemblyName {Name = "CommandLoaderAssembly", Version = new Version(1, 0, 0, 0)};
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", "CommandLoaderAssembly.dll");
+            var assemblyName = new AssemblyName { Name = "CommandLoaderAssembly", Version = new Version(1, 0, 0, 0) };
+            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllfolder);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", dllname);
 
             foreach (var command in GetCommands())
             {
@@ -79,6 +90,17 @@ namespace RevitPythonShell
                                                         TypeAttributes.Class | TypeAttributes.Public,
                                                         typeof(CommandLoaderBase));
 
+                // add RegenerationAttribute to type
+                var regenerationConstrutorInfo = typeof(RegenerationAttribute).GetConstructor(new Type[] { typeof(RegenerationOption) });                
+                var regenerationAttributeBuilder = new CustomAttributeBuilder(regenerationConstrutorInfo, new object[] {RegenerationOption.Manual});
+                typebuilder.SetCustomAttribute(regenerationAttributeBuilder);
+
+                // add TransactionAttribute to type
+                var transactionConstructorInfo = typeof(TransactionAttribute).GetConstructor(new Type[] { typeof(TransactionMode) });
+                var transactionAttributeBuilder = new CustomAttributeBuilder(transactionConstructorInfo, new object[] { TransactionMode.Manual });
+                typebuilder.SetCustomAttribute(transactionAttributeBuilder);
+
+                // call base constructor with script path
                 var ci = typeof(CommandLoaderBase).GetConstructor(new[] { typeof(string) });
 
                 var constructorBuilder = typebuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, new Type[0]);
@@ -92,13 +114,13 @@ namespace RevitPythonShell
                 gen.Emit(OpCodes.Ret);                    // return from constructor
                 typebuilder.CreateType();
             }
-            assemblyBuilder.Save("CommandLoaderAssembly.dll");            
+            assemblyBuilder.Save(dllname);
         }
 
-        IExternalApplication.Result IExternalApplication.OnShutdown(ControlledApplication application)
+        Result IExternalApplication.OnShutdown(UIControlledApplication application)
         {
             // FIXME: deallocate the python shell...
-            return IExternalApplication.Result.Succeeded;
+            return Result.Succeeded;
         }
 
         /// <summary>
@@ -124,7 +146,7 @@ namespace RevitPythonShell
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
 
-                yield return new Command {Name = commandName, Source = commandSrc, Index = i++};
+                yield return new Command { Name = commandName, Source = commandSrc, Index = i++ };
             }
         }
 

@@ -29,7 +29,6 @@ using System.Collections.Specialized;
 using System.Text;
 using IronPython.Hosting;
 
-
 namespace UIIronTextBox
 {
     namespace Paths

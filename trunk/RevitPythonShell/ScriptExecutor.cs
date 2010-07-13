@@ -4,6 +4,8 @@ using Autodesk.Revit;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.DB;
 
 namespace RevitPythonShell
 {
@@ -25,7 +27,8 @@ namespace RevitPythonShell
 
         public string Message
         {
-            get {
+            get
+            {
                 return _message;
             }
         }
@@ -58,25 +61,25 @@ namespace RevitPythonShell
                     script.Execute(scope);
 
                     _message = (scope.GetVariable("__message__") ?? "").ToString();
-                    return (int)(scope.GetVariable("__result__") ?? IExternalCommand.Result.Succeeded);
+                    return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
                 }
                 catch (SystemExitException)
                 {
                     // ok, so the system exited. That was bound to happen...
-                    return (int) IExternalCommand.Result.Succeeded;
+                    return (int)Result.Succeeded;
                 }
                 catch (Exception exception)
                 {
                     // show (power) user everything!
                     _message = exception.ToString();
-                    return (int) IExternalCommand.Result.Failed;
+                    return (int)Result.Failed;
                 }
 
             }
             catch (Exception ex)
             {
                 _message = ex.ToString();
-                return (int)IExternalCommand.Result.Failed;
+                return (int)Result.Failed;
             }
         }
 
@@ -90,7 +93,7 @@ namespace RevitPythonShell
             scope.SetVariable("__commandData__", _commandData);
             scope.SetVariable("__message__", _message);
             scope.SetVariable("__elements__", _elements);
-            scope.SetVariable("__result__", (int)IExternalCommand.Result.Succeeded);
+            scope.SetVariable("__result__", (int)Result.Succeeded);
 
             // add preconfigures variables
             scope.SetVariable("__vars__", RevitPythonShellApplication.GetVariables());
