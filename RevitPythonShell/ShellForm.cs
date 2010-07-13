@@ -9,10 +9,12 @@ using Autodesk.Revit;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.DB;
 
 namespace RevitPythonShell
 {
-    public partial class ShellForm : Form
+    public partial class ShellForm : System.Windows.Forms.Form
     {
         private ExternalCommandData _commandData;
         private string _message;
@@ -32,7 +34,7 @@ namespace RevitPythonShell
         private void LoadCommands()
         {
             foreach (var command in RevitPythonShellApplication.GetCommands())
-            {                
+            {
                 var button = toolStrip.Items.Add(command.Name);
                 button.Tag = command.Source;
                 button.Click += ToolStripItemClick;
@@ -60,7 +62,7 @@ namespace RevitPythonShell
                 MessageBox.Show(ex.ToString(), ex.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-               
+
         /// <summary>
         /// Displays the shell form modally until the user closes it.
         /// Provides the user with access to the parameters passed to the IExternalCommand implementation
@@ -80,7 +82,7 @@ namespace RevitPythonShell
             ShowDialog();
 
             message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
-            return (int) (ironTextBoxControl.Scope.GetVariable("__result__") ?? IExternalCommand.Result.Succeeded);
-        }                
+            return (int)(ironTextBoxControl.Scope.GetVariable("__result__") ?? Result.Succeeded);
+        }
     }
 }
