@@ -5,30 +5,11 @@
     <SearchPath name="C:\Python25\Lib" />
     <SearchPath name="C:\RevitPythonShell" />
   </SearchPaths>
-  <Commands>
-    <!-- a list of preconfigured commands -->
-    <Command name="dumpdpvfolder" src="C:\RevitPythonShell\Commands\dpvdumpfolder.py"/>
-    <Command name="read model" src="C:\RevitPythonShell\Commands\readmodel.py"/>
-    <Command name="Report" src="C:\RevitPythonShell\Commands\report.py"/>
-    <Command name="View Model" src="C:\RevitPythonShell\Commands\viewmodel.py"/>
-    <Command name="Interactive" src="C:\RevitPythonShell\Commands\interactive.py"/>
-  </Commands>
   <Variables>
     <!-- a list of string variables to add to the scope -->
     <StringVariable name="test" value="hello, world"/>
   </Variables>
-  <DefaultScript>
-    <![CDATA[
-# type in a python script to run here and click "Execute"
-# you can access the Autodesk.Revit.Application object with the variable __revit__
-# the default script (shown below) opens up an interactive interpreter
-
-import code
-code.interact(None, None,
-  {
-    '__name__' : '__console__',
-    '__doc__'  : None,
-    '__revit__': __revit__
-  })]]>
-  </DefaultScript>
+  <Commands>
+    <!-- a list of preconfigured commands -->
+  </Commands>  
 </RevitPythonShell>

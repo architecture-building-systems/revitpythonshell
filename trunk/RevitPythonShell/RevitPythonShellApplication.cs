@@ -129,10 +129,15 @@ namespace RevitPythonShell
         /// <returns></returns>
         public static XDocument GetSettings()
         {
-            string assemblyFolder = new FileInfo(typeof(RevitPythonShellApplication).Assembly.Location ?? ".").DirectoryName ?? ".";
-            string settingsFile = Path.Combine(assemblyFolder, "RevitPythonShell.xml");
+            string settingsFile = GetSettingsFile();
             return XDocument.Load(settingsFile);
         }
+
+        private static string GetSettingsFile()
+        {
+            string assemblyFolder = new FileInfo(typeof(RevitPythonShellApplication).Assembly.Location ?? ".").DirectoryName ?? ".";            
+            return Path.Combine(assemblyFolder, "RevitPythonShell.xml");
+        }      
 
         /// <summary>
         /// Returns a list of commands as defined in the settings file.
@@ -141,13 +146,73 @@ namespace RevitPythonShell
         public static IEnumerable<Command> GetCommands()
         {
             int i = 0;
-            foreach (var commandNode in GetSettings().Root.Descendants("Command"))
+            foreach (var commandNode in GetSettings().Root.Descendants("Command") ?? new List<XElement>())
             {
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
 
-                yield return new Command { Name = commandName, Source = commandSrc, Index = i++ };
+                yield return new Command { Name = commandName, Source = commandSrc, Index = i++ };                
             }
+        }
+
+        /// <summary>
+        /// Saves a list of Command objects to the settings file, replacing the old commands.
+        /// </summary>
+        public static void SetCommands(
+            IEnumerable<Command> commands, IEnumerable<string> searchPaths, IEnumerable<KeyValuePair<string, string>> variables)
+        {
+            var doc = GetSettings();
+
+            // clean out current stuff
+            foreach (var xmlExistingCommands in (doc.Root.Descendants("Commands") ?? new List<XElement>()).ToList())
+            {
+                xmlExistingCommands.Remove();
+            }
+            foreach (var xmlExistingSearchPaths in doc.Root.Descendants("SearchPaths").ToList())
+            {
+                xmlExistingSearchPaths.Remove();
+            }
+            foreach (var xmlExistingVariables in doc.Root.Descendants("Variables").ToList())
+            {
+                xmlExistingVariables.Remove();
+            }
+
+            // add commnads
+            var xmlCommands = new XElement("Commands");
+            foreach (var command in commands)
+            {
+                xmlCommands.Add(new XElement(
+                    "Command", 
+                        new XAttribute("name", command.Name), 
+                        new XAttribute("src", command.Source)));
+
+            }
+            doc.Root.Add(xmlCommands);
+
+            // add search paths
+            var xmlSearchPaths = new XElement("SearchPaths");
+            foreach (var path in searchPaths)
+            {
+                xmlSearchPaths.Add(new XElement(
+                    "SearchPath",
+                        new XAttribute("name", path)));
+
+            }
+            doc.Root.Add(xmlSearchPaths);
+
+            // add variables
+            var xmlVariables = new XElement("Variables");
+            foreach (var variable in variables)
+            {
+                xmlVariables.Add(new XElement(
+                    "StringVariable",
+                        new XAttribute("name", variable.Key),
+                        new XAttribute("value", variable.Value)));
+
+            }
+            doc.Root.Add(xmlVariables);
+
+            doc.Save(GetSettingsFile());
         }
 
         /// <summary>
@@ -175,10 +240,15 @@ namespace RevitPythonShell
     /// <summary>
     /// A simple structure to hold information about canned commands.
     /// </summary>
-    internal struct Command
+    internal class Command
     {
         public string Name;
         public string Source;
         public int Index;
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

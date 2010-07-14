@@ -84,5 +84,21 @@ namespace RevitPythonShell
             message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
             return (int)(ironTextBoxControl.Scope.GetVariable("__result__") ?? Result.Succeeded);
         }
+
+        /// <summary>
+        /// Show the dialog for configuring scripts.
+        /// </summary>
+        private void btnConfigureScripts_Click(object sender, EventArgs e)
+        {
+            var dialog = new ConfigureCommandsForm();
+            dialog.ShowDialog(this);
+
+            // reset toolbar (remove script buttons, then re-add them)
+            while (toolStrip.Items.Count > 2) // leave "Configure Commands" and the separator
+            {
+                toolStrip.Items.RemoveAt(2);
+            }
+            LoadCommands();
+        }
     }
 }

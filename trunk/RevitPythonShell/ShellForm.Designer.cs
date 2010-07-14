@@ -1,6 +1,4 @@
-﻿using IronTextBox;
-
-namespace RevitPythonShell
+﻿namespace RevitPythonShell
 {
     partial class ShellForm
     {
@@ -32,11 +30,17 @@ namespace RevitPythonShell
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ShellForm));
             this.toolStrip = new System.Windows.Forms.ToolStrip();
-            this.ironTextBoxControl = new IronTextBoxControl();
+            this.ironTextBoxControl = new IronTextBox.IronTextBoxControl();
+            this.btnConfigureScripts = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip
             // 
+            this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnConfigureScripts,
+            this.toolStripSeparator1});
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.Size = new System.Drawing.Size(633, 25);
@@ -56,6 +60,21 @@ namespace RevitPythonShell
             this.ironTextBoxControl.Size = new System.Drawing.Size(633, 395);
             this.ironTextBoxControl.TabIndex = 1;
             // 
+            // btnConfigureScripts
+            // 
+            this.btnConfigureScripts.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnConfigureScripts.Image = ((System.Drawing.Image)(resources.GetObject("btnConfigureScripts.Image")));
+            this.btnConfigureScripts.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnConfigureScripts.Name = "btnConfigureScripts";
+            this.btnConfigureScripts.Size = new System.Drawing.Size(129, 22);
+            this.btnConfigureScripts.Text = "Configure Commands";
+            this.btnConfigureScripts.Click += new System.EventHandler(this.btnConfigureScripts_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
             // ShellForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -66,6 +85,8 @@ namespace RevitPythonShell
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ShellForm";
             this.Text = "RevitPythonShell";
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -74,6 +95,8 @@ namespace RevitPythonShell
         #endregion
 
         private System.Windows.Forms.ToolStrip toolStrip;
-        private IronTextBoxControl ironTextBoxControl;
+        private IronTextBox.IronTextBoxControl ironTextBoxControl;
+        private System.Windows.Forms.ToolStripButton btnConfigureScripts;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

@@ -44,40 +44,7 @@ using Microsoft.Scripting.Hosting;
     //ScriptDomainManager
 
 namespace IronTextBox
-{
-    /// <summary>
-    /// 
-    /// </summary>
-    public class Converts
-    {
-        /// <summary>
-        /// Custom MessageBox call. Excepts some random objects from IronPython and converts to string.
-        /// </summary>
-        /// <param name="inobject">Output object from IronPython.</param>
-        public static void MessageBoxIronPy(Object inobject)
-        {
-            Type itstype = inobject.GetType();
-
-            switch (itstype.FullName)
-            {                
-                case "System.Int32":
-                    MessageBox.Show(Convert.ToString(inobject));
-                    break;
-                case "System.Collections.Specialized.StringCollection":
-                    StringCollection IPSC = (StringCollection) inobject;
-                    StringEnumerator SCE = IPSC.GetEnumerator();
-                    string output = "";
-                    while (SCE.MoveNext())
-                        output += SCE.Current.ToString();
-                    MessageBox.Show(output);
-                    break;
-                default:
-                    MessageBox.Show(inobject.ToString());
-                    break;
-            }
-        }
-    }
-
+{    
     [ToolboxItem(true)]
     [ToolboxBitmap(typeof (IronTextBox))]
     [Designer(typeof (IronTextBoxControl))]
@@ -1663,6 +1630,39 @@ namespace IronTextBox
         public string Command
         {
             get { return command; }
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public class Converts
+    {
+        /// <summary>
+        /// Custom MessageBox call. Excepts some random objects from IronPython and converts to string.
+        /// </summary>
+        /// <param name="inobject">Output object from IronPython.</param>
+        public static void MessageBoxIronPy(Object inobject)
+        {
+            Type itstype = inobject.GetType();
+
+            switch (itstype.FullName)
+            {
+                case "System.Int32":
+                    MessageBox.Show(Convert.ToString(inobject));
+                    break;
+                case "System.Collections.Specialized.StringCollection":
+                    StringCollection IPSC = (StringCollection)inobject;
+                    StringEnumerator SCE = IPSC.GetEnumerator();
+                    string output = "";
+                    while (SCE.MoveNext())
+                        output += SCE.Current.ToString();
+                    MessageBox.Show(output);
+                    break;
+                default:
+                    MessageBox.Show(inobject.ToString());
+                    break;
+            }
         }
     }
 
