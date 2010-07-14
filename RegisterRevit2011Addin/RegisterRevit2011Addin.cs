@@ -18,9 +18,7 @@ namespace RegisterRevit2011Addin
 
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Install(IDictionary stateSaver)
-        {
-            Debugger.Break();
-
+        {            
             // make sure addin manifest is written
             var assemblyFolder = Path.GetDirectoryName(Context.Parameters["assemblypath"]);
             var assemblyPath = Path.Combine(assemblyFolder, "RevitPythonShell.dll");
@@ -29,7 +27,14 @@ namespace RegisterRevit2011Addin
             var application = new RevitAddInApplication("RevitPythonShell", assemblyPath, Guid.NewGuid(), 
                 "RevitPythonShell.RevitPythonShellApplication");
             manifest.AddInApplications.Add(application);
-            var revitProduct = RevitProductUtility.GetAllInstalledRevitProducts();
+            var revitProducts = RevitProductUtility.GetAllInstalledRevitProducts();
+
+            if (revitProducts.Count < 1)
+            {
+                throw new InvalidOperationException("No Autodesk Revit products found");
+            }
+
+            manifest.SaveAs(Path.Combine(revitProducts[0].CurrentUserAddInFolder, "RevitPythonShell.addin"));
 
             base.Install(stateSaver);
         }
@@ -50,6 +55,12 @@ namespace RegisterRevit2011Addin
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Uninstall(IDictionary savedState)
         {
+            // remove addin manifest
+            var revitProducts = RevitProductUtility.GetAllInstalledRevitProducts();
+            if (revitProducts.Count > 0)
+            {
+                File.Delete(Path.Combine(revitProducts[0].CurrentUserAddInFolder, "RevitPythonShell.addin"));
+            }
             base.Uninstall(savedState);
         }
     }
