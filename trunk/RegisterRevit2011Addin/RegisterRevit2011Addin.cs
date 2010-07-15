@@ -55,6 +55,8 @@ namespace RegisterRevit2011Addin
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Uninstall(IDictionary savedState)
         {
+            Debugger.Break();
+
             // remove addin manifest
             var revitProducts = RevitProductUtility.GetAllInstalledRevitProducts();
             if (revitProducts.Count > 0)

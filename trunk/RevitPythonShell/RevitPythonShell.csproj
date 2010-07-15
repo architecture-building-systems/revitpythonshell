@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLoaderBase.cs" />
+    <Compile Include="ConfigureCommand.cs" />
     <Compile Include="ConfigureCommandsForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -149,11 +150,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RevitPythonShell_Deploy.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="ipy.ico" />
+    <None Include="ipy.ico" />
     <Content Include="RevitPythonShell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

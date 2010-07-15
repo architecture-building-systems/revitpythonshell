@@ -2,12 +2,9 @@
 <RevitPythonShell>
   <SearchPaths>
     <!-- a list of paths to add to the engines search path -->
-    <SearchPath name="C:\Python25\Lib" />
-    <SearchPath name="C:\RevitPythonShell" />
   </SearchPaths>
   <Variables>
     <!-- a list of string variables to add to the scope -->
-    <StringVariable name="test" value="hello, world"/>
   </Variables>
   <Commands>
     <!-- a list of preconfigured commands -->
