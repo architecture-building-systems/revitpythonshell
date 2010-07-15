@@ -23,12 +23,11 @@ namespace RevitPythonShell
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
-            PushButtonData pb = new PushButtonData("RevitPythonShell", "Open Python Shell",
-                                      typeof(RevitPythonShellApplication).Assembly.Location,
-                                      "RevitPythonShell.StartShellCommand");
-            ribbonPanel.AddItem(pb);
+            ribbonPanel.AddStackedItems(
+                new PushButtonData("RevitPythonShell", "Open Python Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.StartShellCommand"),
+                new PushButtonData("Configure", "Configure...", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.ConfigureCommand"));
 
-            var dllfolder = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            var dllfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
             var dllname = "CommandLoaderAssembly.dll";
             var dllfullpath = Path.Combine(dllfolder, dllname);
 
@@ -70,6 +69,13 @@ namespace RevitPythonShell
                 ribbonPanel.AddStackedItems(
                     new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
                     new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index));
+            }
+            if (commands.Count == 1)
+            {
+                // only one command defined, show as a big button...
+                var command = commands[0];
+                ribbonPanel.AddItem(
+                    new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index));
             }
             CreateCommandLoaderAssembly(dllfolder, dllname);
             return Result.Succeeded;
@@ -135,8 +141,8 @@ namespace RevitPythonShell
 
         private static string GetSettingsFile()
         {
-            string assemblyFolder = new FileInfo(typeof(RevitPythonShellApplication).Assembly.Location ?? ".").DirectoryName ?? ".";            
-            return Path.Combine(assemblyFolder, "RevitPythonShell.xml");
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
+            return Path.Combine(folder, "RevitPythonShell.xml");
         }      
 
         /// <summary>
