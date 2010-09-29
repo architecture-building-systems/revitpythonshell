@@ -42,8 +42,7 @@ namespace RegisterRevit2011Addin
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Commit(IDictionary savedState)
         {
-            base.Commit(savedState);
-            System.Diagnostics.Process.Start("http://www.microsoft.com");
+            base.Commit(savedState);            
         }
 
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]

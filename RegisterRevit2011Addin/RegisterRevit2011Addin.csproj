@@ -61,6 +61,7 @@
     <Reference Include="System.Configuration.Install">
       <Private>False</Private>
     </Reference>
+    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RegisterRevit2011Addin.cs">
