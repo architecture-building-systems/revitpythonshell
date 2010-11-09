@@ -1,4 +1,5 @@
 #summary A sample script for how to read the boundaries of selected rooms
+#labels Featured
 
 {{{
 '''
