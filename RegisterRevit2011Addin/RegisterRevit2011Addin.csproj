@@ -52,8 +52,8 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RevitAddInUtility">
-      <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2011\Program\RevitAddInUtility.dll</HintPath>
+    <Reference Include="RevitAddInUtility, Version=2011.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\..\DPV\trunk\CODE\DesignPerformanceViewer\RevitAddInUtility.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <Private>False</Private>
