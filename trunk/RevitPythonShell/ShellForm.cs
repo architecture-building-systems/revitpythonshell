@@ -77,7 +77,7 @@ namespace RevitPythonShell
             _commandData = commandData;
 
             // provide a hook into Autodesk Revit
-            new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine, ironTextBoxControl.Scope);
+            new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine);
 
             ShowDialog();
 
