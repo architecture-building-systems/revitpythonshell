@@ -40,15 +40,14 @@ namespace RevitPythonShell
         {
             try
             {
-                var engine = IronPython.Hosting.Python.CreateEngine();
-                var scope = engine.CreateScope();
-                SetupEnvironment(engine, scope);
+                var engine = IronPython.Hosting.Python.CreateEngine();                
+                SetupEnvironment(engine);
 
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
                 var outputStream = new ScriptOutputStream(scriptOutput, engine);
 
-                // FIXME: do we really need this?
+                var scope = engine.CreateScope();
                 scope.SetVariable("__window__", scriptOutput);
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
@@ -86,9 +85,10 @@ namespace RevitPythonShell
         /// <summary>
         /// Set up an IronPython environment - for interactive shell or for canned scripts
         /// </summary>
-        public void SetupEnvironment(ScriptEngine engine, ScriptScope scope)
-        {
+        public void SetupEnvironment(ScriptEngine engine)
+        {                        
             // add variables from Revit
+            var scope = IronPython.Hosting.Python.GetBuiltinModule(engine);
             scope.SetVariable("__revit__", _commandData.Application);
             scope.SetVariable("__commandData__", _commandData);
             scope.SetVariable("__message__", _message);
