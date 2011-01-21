@@ -8,5 +8,17 @@
   </Variables>
   <Commands>
     <!-- a list of preconfigured commands -->
-  </Commands>  
+  </Commands>
+  <InitScript>
+    <![CDATA[    
+import clr
+clr.AddReference('RevitAPI')
+from Autodesk.Revit.DB import *
+from Autodesk.Revit.DB.Architecture import *
+
+uidoc = __revit__.ActiveUIDocument
+doc = __revit__.ActiveUIDocument.Document
+selection = list(__revit__.ActiveUIDocument.Selection.Elements)
+    ]]>
+  </InitScript>
 </RevitPythonShell>
