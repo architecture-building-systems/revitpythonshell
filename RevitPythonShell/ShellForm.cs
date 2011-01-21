@@ -69,6 +69,8 @@ namespace RevitPythonShell
         /// in RevitPythonShell so that it can be passed on.
         /// 
         /// For convenience and backwards compatibility, commandData.Application is mapped to the variable "__revit__"
+        /// 
+        /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
         /// </summary>
         public int ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
@@ -77,7 +79,14 @@ namespace RevitPythonShell
             _commandData = commandData;
 
             // provide a hook into Autodesk Revit
-            new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine);
+            new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine, ironTextBoxControl.Scope);
+
+            var initScript = RevitPythonShellApplication.GetInitScript();
+            if (initScript != null)
+            {
+                var scriptSource = ironTextBoxControl.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
+                scriptSource.Execute(ironTextBoxControl.Scope);
+            }
 
             ShowDialog();
 
