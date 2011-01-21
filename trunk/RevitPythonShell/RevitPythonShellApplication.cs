@@ -162,6 +162,22 @@ namespace RevitPythonShell
         }
 
         /// <summary>
+        /// Returns a string to be executed, whenever the interactive shell is started.
+        /// If this is not specified in the XML file (under /RevitPythonShell/InitScript),
+        /// then null is returned.
+        /// </summary>
+        public static string GetInitScript()
+        {
+            var initScriptTags = GetSettings().Root.Descendants("InitScript") ?? new List<XElement>();
+            if (initScriptTags.Count() == 0)
+            {
+                return null;
+            }
+            var firstScript = initScriptTags.First();
+            return firstScript.Value.Trim();
+        }
+
+        /// <summary>
         /// Saves a list of Command objects to the settings file, replacing the old commands.
         /// </summary>
         public static void SetCommands(
