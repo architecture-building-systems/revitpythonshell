@@ -58,10 +58,13 @@
             this.btnVariableAdd = new System.Windows.Forms.Button();
             this.btnVariableRemove = new System.Windows.Forms.Button();
             this.lstVariables = new System.Windows.Forms.ListBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.txtInitScript = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
@@ -89,6 +92,7 @@
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -362,6 +366,25 @@
             this.lstVariables.TabIndex = 29;
             this.lstVariables.SelectedIndexChanged += new System.EventHandler(this.lstVariables_SelectedIndexChanged);
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.txtInitScript);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(550, 191);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "InitScript";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // txtInitScript
+            // 
+            this.txtInitScript.Location = new System.Drawing.Point(3, 2);
+            this.txtInitScript.Multiline = true;
+            this.txtInitScript.Name = "txtInitScript";
+            this.txtInitScript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.txtInitScript.Size = new System.Drawing.Size(544, 188);
+            this.txtInitScript.TabIndex = 0;
+            // 
             // ConfigureCommandsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -381,6 +404,8 @@
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -416,5 +441,7 @@
         private System.Windows.Forms.ListBox lstVariables;
         private System.Windows.Forms.TextBox txtVariableValue;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TextBox txtInitScript;
     }
 }
