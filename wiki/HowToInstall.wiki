@@ -5,11 +5,12 @@
 
 = TLDR (Too Long Didn't Read) ==
 
-  # Use the [http://revitpythonshell.googlecode.com/files/Setup_RevitPythonShell_1.0.msi installer]
-    * *NOTE*: presently, the installer only works with the 32bit version of Autodesk Revit Architecture 2010
-  # Start Autodesk Revit Architecture 2010
+  # Use the installer from the downloads tab
+  # Start Autodesk Revit Architecture 2011
 
 = Introduction =
+
+*FIXME:* this stuff is really old. just use the installer.
 
 RevitPythonShell is still a work-in-progress. I have only a first rough cut at an installer, so you are going to get your hands slightly dirty here.
 
