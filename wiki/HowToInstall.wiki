@@ -10,8 +10,6 @@
 
 = Introduction =
 
-*FIXME:* this stuff is really old. just use the installer.
-
 RevitPythonShell is still a work-in-progress. I have only a first rough cut at an installer, so you are going to get your hands slightly dirty here.
 
 Oh, you will definitely want to install IronPython first. (NOTE: add instructions here)
@@ -68,21 +66,3 @@ I use the folder {{{C:\RevitPythonShell}}} for all my own scripts, as it is easy
 === Canned Commands ===
 
 The _name_ attribute will be displayed as a button text on top of the input window. Clicking on it will execute the command specified by the _src_ attribute.
-
-The shipped command {{{C:\RevitPythonShell\Commands\interactive.py}}} provides an interpreter loop (REPL - Read, Execute, Print, Loop) that has a variable {{{__revit__}}} that can be used to access the RevitAPI interface.
-
-The file should have following contents:
-
-{{{
-import code
-code.interact(None, None, 
-        {
-            '__name__': '__console__', 
-            '__doc__':None, 
-            '__revit__': __revit__
-        })
-}}}
-
-=== The Default Script ===
-
-The shipped default script loads a file called {{{current.py}}} in the search path (on my machine, it loads {{{C:\RevitPythonShell\current.py}}} and runs its main method. This is handy, as {{{current.py}}} can be edited in your favorite editor (as opposed to the crappy interface provided by RevitPythonShell). But you can set it to whatever you like.
