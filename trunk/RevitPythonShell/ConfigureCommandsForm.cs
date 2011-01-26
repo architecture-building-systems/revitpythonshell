@@ -44,6 +44,15 @@ namespace RevitPythonShell
             _variables = RevitPythonShellApplication.GetVariables().AsEnumerable().ToList();
             lstVariables.DataSource = _variables;
             lstVariables.DisplayMember = "Key";
+
+            string initScript = RevitPythonShellApplication.GetInitScript();
+            if (!initScript.Contains("\r\n"))
+            {
+                // quick hack to convert to DOS line endings. this could obviously be made less error prone ;)
+                initScript = initScript.Replace("\n", "\r\n");
+            }
+            txtInitScript.Text = initScript;
+
         }
 
         /// <summary>
@@ -201,7 +210,7 @@ namespace RevitPythonShell
         /// </summary>
         private void btnCommandSave_Click(object sender, EventArgs e)
         {
-            RevitPythonShellApplication.SetCommands(_commands, _searchPaths, _variables);
+            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text);
             Close();
         }
 

@@ -11,14 +11,23 @@
   </Commands>
   <InitScript>
     <![CDATA[    
+# these commands get executed in the current scope
+# of each new shell (but not for canned commands)
 import clr
 clr.AddReference('RevitAPI')
+clr.AddReference('RevitAPIUI')
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Architecture import *
+from Autodesk.Revit.DB.Analysis import *
 
 uidoc = __revit__.ActiveUIDocument
 doc = __revit__.ActiveUIDocument.Document
 selection = list(__revit__.ActiveUIDocument.Selection.Elements)
+
+from Autodesk.Revit.UI import TaskDialog
+from Autodesk.Revit.UI import UIApplication
+def alert(msg):
+   TaskDialog.Show('RevitPythonShell', msg)
     ]]>
   </InitScript>
 </RevitPythonShell>

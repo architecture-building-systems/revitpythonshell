@@ -178,10 +178,13 @@ namespace RevitPythonShell
         }
 
         /// <summary>
-        /// Saves a list of Command objects to the settings file, replacing the old commands.
+        /// Writes settings to the settings file, replacing the old commands.
         /// </summary>
-        public static void SetCommands(
-            IEnumerable<Command> commands, IEnumerable<string> searchPaths, IEnumerable<KeyValuePair<string, string>> variables)
+        public static void WriteSettings(
+            IEnumerable<Command> commands, 
+            IEnumerable<string> searchPaths, 
+            IEnumerable<KeyValuePair<string, string>> variables,
+            string initScript)
         {
             var doc = GetSettings();
 
@@ -197,6 +200,10 @@ namespace RevitPythonShell
             foreach (var xmlExistingVariables in doc.Root.Descendants("Variables").ToList())
             {
                 xmlExistingVariables.Remove();
+            }
+            foreach (var xmlExistingInitScript in doc.Root.Descendants("InitScript").ToList())
+            {
+                xmlExistingInitScript.Remove();
             }
 
             // add commnads
@@ -233,6 +240,11 @@ namespace RevitPythonShell
 
             }
             doc.Root.Add(xmlVariables);
+
+            // add init script
+            var xmlInitScript = new XElement("InitScript");
+            xmlInitScript.Add(new XCData(initScript));
+            doc.Root.Add(xmlInitScript);
 
             doc.Save(GetSettingsFile());
         }
