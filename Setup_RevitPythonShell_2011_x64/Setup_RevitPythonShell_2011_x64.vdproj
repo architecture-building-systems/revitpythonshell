@@ -232,12 +232,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_4672AE4C7ADDC43BC8F7872629948865"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -245,6 +239,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -914,7 +914,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RevitPythonShell"
         "ProductCode" = "8:{A9F487AE-B702-4682-AC8A-FD4CEFD43B3E}"
-        "PackageCode" = "8:{D3617CEA-7DE2-439E-B831-75D7A6FCF20C}"
+        "PackageCode" = "8:{946ABA04-61CD-44AB-8F56-97C45E93AE0A}"
         "UpgradeCode" = "8:{91D53F66-1E02-4000-84A0-F99945106149}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -929,7 +929,7 @@
         "Subject" = "8:"
         "ARPCONTACT" = "8:Daren Thomas"
         "Keywords" = "8:"
-        "ARPCOMMENTS" = "8:An IronPython Shell for Autodesk Revit  2011 64 bit"
+        "ARPCOMMENTS" = "8:An IronPython Shell for Autodesk Revit  2011"
         "ARPURLINFOABOUT" = "8:http://code.google.com/p/revitpythonshell/"
         "ARPPRODUCTICON" = "8:"
         "ARPIconIndex" = "3:0"
