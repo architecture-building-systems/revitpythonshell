@@ -88,6 +88,7 @@ namespace RevitPythonShell
                 scriptSource.Execute(ironTextBoxControl.Scope);
             }
 
+
             ShowDialog();
 
             message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
