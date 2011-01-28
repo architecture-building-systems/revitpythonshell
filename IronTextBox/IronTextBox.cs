@@ -93,6 +93,12 @@ namespace IronTextBox
         private readonly ToolTip intellisense = new ToolTip();
 
         /// <summary>
+        /// A callback function that returns a completed version of
+        /// the string passed into it.
+        /// </summary>
+        private readonly Func<string, string> _completionCallback;
+
+        /// <summary>
         /// True if currently processing raw_text()
         /// </summary>
         public static Boolean IsRawInput;
@@ -104,10 +110,12 @@ namespace IronTextBox
 
         #endregion IronTextBox members
 
-        internal IronTextBox()
+        internal IronTextBox(Func<string, string> completionCallback)
         {
             InitializeComponent();
-            PrintPrompt();
+
+            _completionCallback = completionCallback;
+            PrintPrompt();            
 
             // Set up the delays for the ToolTip.
             intellisense.AutoPopDelay = 1000;
@@ -428,7 +436,7 @@ namespace IronTextBox
             {
                 e.Handled = true;
                 return;
-            }
+            }            
 
             //If current key is enter
             if (IsTerminatorKey(e.KeyChar))
@@ -588,6 +596,11 @@ namespace IronTextBox
                 }
                 e.Handled = true;
             }
+            else if (e.KeyCode == Keys.Tab)
+            {
+                ReplaceTextAtPrompt(_completionCallback(GetTextAtPrompt()));
+                e.Handled = true;
+            }
             else if (e.KeyCode == Keys.Right)
             {
                 // Performs command completion
@@ -671,6 +684,11 @@ namespace IronTextBox
         /// The CommandEntered event
         /// </summary>
         public event EventCommandEntered CommandEntered;
+
+        /// <summary>
+        /// Raised when a completion is requested.
+        /// </summary>
+        public event EventHandler<CompletionRequestedEventArgs> CompletionRequested;
 
         /// <summary> 
         /// Required designer variable.
@@ -988,7 +1006,7 @@ namespace IronTextBox
         /// </summary>
         private void InitializeComponent()
         {
-            this.consoleTextBox = new IronTextBox();
+            this.consoleTextBox = new IronTextBox(CompletionCallback);
             this.SuspendLayout();
             // 
             // consoleTextBox
@@ -1055,6 +1073,30 @@ namespace IronTextBox
         {
             if (CommandEntered != null)
                 CommandEntered(command, new CommandEnteredEventArgs(command));
+        }
+
+        private string CompletionCallback(string uncompleted)
+        {
+            var args = new CompletionRequestedEventArgs(uncompleted);
+            OnCompletionRequested(args);
+
+            // FIXME: have to still find relevant portion for completion...
+            if (args.Completed != null)
+            {
+                return args.Completed;
+            }
+            else
+            {
+                return uncompleted;
+            }
+        }
+
+        protected virtual void OnCompletionRequested(CompletionRequestedEventArgs args)
+        {
+            if (CompletionRequested != null)
+            {
+                CompletionRequested(this, args);
+            }
         }
 
         /// <summary>
@@ -1630,6 +1672,29 @@ namespace IronTextBox
         public string Command
         {
             get { return command; }
+        }
+    }
+
+    public class CompletionRequestedEventArgs : EventArgs
+    {
+        private string _uncompleted;
+        private string _completed;
+
+        public CompletionRequestedEventArgs(string uncompleted)
+        {
+            _uncompleted = uncompleted;
+            _completed = null;
+        }
+
+        public string Uncompleted
+        {
+            get { return _uncompleted; }
+        }
+
+        public string Completed
+        {
+            get { return _completed;  }
+            set { _completed = value; }
         }
     }
 
