@@ -88,11 +88,18 @@ namespace RevitPythonShell
                 scriptSource.Execute(ironTextBoxControl.Scope);
             }
 
+            ironTextBoxControl.CompletionRequested += new EventHandler<IronTextBox.CompletionRequestedEventArgs>(ironTextBoxControl_CompletionRequested);
 
             ShowDialog();
 
             message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
             return (int)(ironTextBoxControl.Scope.GetVariable("__result__") ?? Result.Succeeded);
+        }
+
+        void ironTextBoxControl_CompletionRequested(object sender, IronTextBox.CompletionRequestedEventArgs e)
+        {
+            var tooltip = new CompletionToolTip();
+            tooltip.ShowTooltip(e.Uncompleted, new List<string>(){ "hello", "world" }, new System.Drawing.Point(0, 0));
         }
 
         /// <summary>

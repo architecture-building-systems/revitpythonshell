@@ -104,6 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLoaderBase.cs" />
+    <Compile Include="CompletionToolTip.cs" />
     <Compile Include="ConfigureCommand.cs" />
     <Compile Include="ConfigureCommandsForm.cs">
       <SubType>Form</SubType>
