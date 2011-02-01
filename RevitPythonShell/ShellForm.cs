@@ -11,6 +11,8 @@ using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace RevitPythonShell
 {
@@ -96,10 +98,85 @@ namespace RevitPythonShell
             return (int)(ironTextBoxControl.Scope.GetVariable("__result__") ?? Result.Succeeded);
         }
 
+        [DllImport("user32.dll")]
+        static extern bool GetCaretPos(out System.Drawing.Point lpPoint);
+        /// <summary>
+        /// Show a tooltip with the completions for the current text in the IronTextBoxControl.
+        /// </summary>        
         void ironTextBoxControl_CompletionRequested(object sender, IronTextBox.CompletionRequestedEventArgs e)
         {
+            string textAtPrompt = e.Uncompleted;
+            var completions = PerformCompletion(textAtPrompt);
+            if (completions == null)
+            {
+                return;
+            }
+
+            System.Drawing.Point location;
+            if (!GetCaretPos(out location))
+            {
+                location = new System.Drawing.Point(0, 0);
+            }
+            location = ironTextBoxControl.Parent.PointToScreen(location);
+            location.Offset(0, toolStrip.Height + ironTextBoxControl.FontHeight);
+
             var tooltip = new CompletionToolTip();
-            tooltip.ShowTooltip(e.Uncompleted, new List<string>(){ "hello", "world" }, new System.Drawing.Point(0, 0));
+            var completed = tooltip.ShowTooltip(e.Uncompleted, completions, location);
+            if (completed != null)
+            {
+                e.Completed = ReplaceUncompleted(textAtPrompt, GetUncompleted(textAtPrompt), completed);
+            }
+        }
+
+        /// <summary>
+        /// complete the current word, 
+        /// but only if a __completer__ function is defined in the InitScript
+        /// If no __completer__ function is defined, it return null.
+        /// </summary>
+        private List<string> PerformCompletion(string uncompleted)
+        {            
+            var engine = ironTextBoxControl.Engine;
+            var scope = ironTextBoxControl.Scope;
+            object completer;
+
+            if (!scope.TryGetVariable("__completer__", out completer))
+            {
+                return null;
+            }
+
+            var ops = engine.CreateOperations(scope);
+            if (!ops.IsCallable(completer))
+            {
+                return null;
+            }
+
+            var completion = (IList<object>)ops.Call(completer, uncompleted);
+            if (completion == null)
+            {
+                return null;
+            }
+            var result  = completion.Cast<string>().Distinct().ToList();
+            result.Sort();
+            return result;
+        }
+
+        /// <summary>
+        /// returns the uncompleted portion of the current text at the prompt.
+        /// </summary>
+        private string GetUncompleted(string textAtPrompt)
+        {            
+            var match = _regexLastWord.Match(textAtPrompt);
+            return match.Groups[1].Value;
+        }        
+        private static Regex _regexLastWord = new Regex(@"^.*?\b((\w|\.)*)$");
+
+        /// <summary>
+        /// Replaces the uncompleted portion of textAtPrompt with the completed version.
+        /// </summary>
+        private string ReplaceUncompleted(string textAtPrompt, string uncompleted, string completed)
+        {
+            var textBefore = textAtPrompt.Substring(0, textAtPrompt.LastIndexOf(uncompleted));
+            return textBefore + completed;
         }
 
         /// <summary>
