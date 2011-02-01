@@ -21,6 +21,7 @@ namespace RevitPythonShell
             public CompletionToolTipWindow(ListBox completions)
             {
                 FormBorderStyle = FormBorderStyle.None;
+                StartPosition = FormStartPosition.Manual;
                 TopMost = true;
                 ShowInTaskbar = false;
                 Opacity = 0.9;
@@ -41,14 +42,15 @@ namespace RevitPythonShell
         /// return the chosen completion. Or, when the user presses escape, then 
         /// close the window and return null.
         /// </summary>        
-        public string ShowTooltip(string uncompleted, IEnumerable<string> completions, Point position)
+        public string ShowTooltip(string uncompleted, IEnumerable<string> completions, Point location)
         {
             _lstCompletions = new ListBox();
+            _lstCompletions.ScrollAlwaysVisible = true;
             _lstCompletions.Items.AddRange(completions.ToArray());
 
             _dialog = new CompletionToolTipWindow(_lstCompletions);
             _dialog.KeyDown += new KeyEventHandler(dialog_KeyDown);
-            _dialog.Location = position;
+            _dialog.Location = location;
             _dialog.KeyPreview = true;
             _dialog.ShowDialog();
 

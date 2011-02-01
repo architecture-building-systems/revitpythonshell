@@ -36,6 +36,7 @@ using System.Windows.Forms;
 using IronPython.Runtime;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using System.Runtime.InteropServices;
 
 //ToolboxItem
     //ToolboxBitmap
@@ -50,7 +51,7 @@ namespace IronTextBox
     [Designer(typeof (IronTextBoxControl))]
     internal class IronTextBox : TextBox
     {
-        #region IronTextBox members
+        #region IronTextBox members        
 
         /// <summary>
         /// Default prompt text.
@@ -239,6 +240,15 @@ namespace IronTextBox
             }                
             var mystring = (string) Lines.GetValue(Lines.Length - 2);
             return mystring.Substring(prompt.Length);
+        }
+
+        /// <summary>
+        /// Replaces currentline's text string
+        /// </summary>
+        public void SetTextAtPrompt(string text)
+        {
+            var textWithPrompt = prompt + text;
+            Lines.SetValue(textWithPrompt, Lines.Length - 1);
         }
 
         /// <summary>
@@ -708,6 +718,8 @@ namespace IronTextBox
             }
         }
 
+        public new int FontHeight { get { return consoleTextBox.Font.Height; } }
+
         /// <summary>
         /// Returns the string array of the command history.
         /// </summary>
@@ -835,7 +847,6 @@ namespace IronTextBox
             //Begin IronTextBox evaluation if something there....
             if (command != "")
             {
-                int numberOfBlankLines = 0;
                 if (command == "cls")
                     Clear();
                 else if (command == "history")
@@ -1075,6 +1086,10 @@ namespace IronTextBox
                 CommandEntered(command, new CommandEnteredEventArgs(command));
         }
 
+        /// <summary>
+        /// The child control "ironTextBox" calls this, whenever a TAB key is pressed.
+        /// We just relay this information via the standard event mechanism to listeners.
+        /// </summary>
         private string CompletionCallback(string uncompleted)
         {
             var args = new CompletionRequestedEventArgs(uncompleted);
@@ -1099,6 +1114,7 @@ namespace IronTextBox
             }
         }
 
+       
         /// <summary>
         /// Clear the current text in the IronTextBox.
         /// </summary>
@@ -1114,6 +1130,19 @@ namespace IronTextBox
         public void WriteText(string text)
         {
             consoleTextBox.WriteText(text);
+        }
+
+        /// <summary>
+        /// Return the text at the prompt.
+        /// </summary>
+        public string GetTextAtPrompt()
+        {
+            return consoleTextBox.GetTextAtPrompt();
+        }
+
+        public void SetTextAtPrompt(string text)
+        {
+            consoleTextBox.SetTextAtPrompt(text);
         }
 
         /// <summary>

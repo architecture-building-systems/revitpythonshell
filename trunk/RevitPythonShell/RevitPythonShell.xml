@@ -28,6 +28,27 @@ from Autodesk.Revit.UI import TaskDialog
 from Autodesk.Revit.UI import UIApplication
 def alert(msg):
    TaskDialog.Show('RevitPythonShell', msg)
+   
+# hook for autocompletion functionality
+# HINT: modify only if you understand the autocompletion functionality inner workings...
+def __completer__(uncompleted):
+    from rlcompleter import Completer
+    from traceback import format_exc
+    import __builtin__
+    try:
+        __builtin__.__dict__.keys() # BUGFIX for rlcompleter.py, first invocation of global_matches() will otherwise fail in py2.5
+        completer = Completer()
+        i = 0
+        result = []
+        completion = completer.complete(uncompleted, i)
+        while completion:
+            result.append(completion)
+            i += 1
+            completion = completer.complete(uncompleted, i)
+        return result
+    except:
+        return [format_exc()]
+        
     ]]>
   </InitScript>
 </RevitPythonShell>
