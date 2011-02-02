@@ -155,8 +155,26 @@ namespace RevitPythonShell
             {
                 return null;
             }
+            
             var result  = completion.Cast<string>().Distinct().ToList();
-            result.Sort();
+
+            // sort the results, with those starting with underscores showing up last
+            result.Sort((x, y) =>
+            {
+                if (x.StartsWith("_") && !y.StartsWith("_"))
+                {
+                    return 1; // x is greater than y
+                }
+                else if (y.StartsWith("_") && !x.StartsWith("_"))
+                {
+                    return -1; // x is less than y
+                }
+                else
+                {
+                    return x.CompareTo(y); // sort them normally
+                }
+            });
+                        
             return result;
         }
 

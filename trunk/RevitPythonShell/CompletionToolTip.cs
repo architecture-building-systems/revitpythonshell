@@ -17,9 +17,13 @@ namespace RevitPythonShell
         private bool _cancel = false;
 
         private class CompletionToolTipWindow: Form
-        {            
+        {
+            private ListBox _completions;
+
             public CompletionToolTipWindow(ListBox completions)
             {
+                _completions = completions;
+
                 FormBorderStyle = FormBorderStyle.None;
                 StartPosition = FormStartPosition.Manual;
                 TopMost = true;
@@ -28,11 +32,19 @@ namespace RevitPythonShell
                 
                 Controls.Add(completions);
 
-                Width = completions.PreferredSize.Width;
-                Height = Math.Min(completions.PreferredHeight, 50);
+                Width = Math.Max(completions.PreferredSize.Width, 150);
+                Height = Math.Min(completions.PreferredHeight, 100);
+                completions.Height = Height;
+                completions.Width = Width;
                 
-                completions.Show();                               
-            }                                    
+                completions.Show();
+            }
+
+            protected override void OnShown(EventArgs e)
+            {
+                base.OnShown(e);
+                _completions.Focus();
+            }
         }
        
 
@@ -47,6 +59,7 @@ namespace RevitPythonShell
             _lstCompletions = new ListBox();
             _lstCompletions.ScrollAlwaysVisible = true;
             _lstCompletions.Items.AddRange(completions.ToArray());
+            _lstCompletions.SelectionMode = SelectionMode.One;
 
             _dialog = new CompletionToolTipWindow(_lstCompletions);
             _dialog.KeyDown += new KeyEventHandler(dialog_KeyDown);
