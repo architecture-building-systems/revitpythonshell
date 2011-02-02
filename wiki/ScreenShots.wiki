@@ -1,25 +1,35 @@
-﻿#summary A few screenshots of the plugin
+﻿#summary A few screenshots of the RevitPythonShell (RPS) plugin
 
-= The MainWindow (RevitPythonShell - Input) =
+= The RPS Add-Ins Ribbon =
 
-<img src="http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png" alt="Screenshot of the main window"/>
+The RPS Add-Ins Ribbon is added to the Add-Ins section of Revit when you install the plugin. It defaults to two commands:
 
-The main window is displayed when the plugin is started. This is a very rudimentary editor (a TextBox control) where you can type a python script.
+  * Open Python Shell
+  * Configure...
 
-  * the button _Execute_ starts the script in a fresh interpreter
-  * output of the script is shown in the OutputWindow (see below)
-  * a special variable {{{__revit__}}} can be used. It contains a reference to the {{{Autodesk.Revit.Application}}} object
+<img src="http://revitpythonshell.googlecode.com/svn/wiki/RPS_Ribbon.png" alt="Screenshot of the plugin ribbon" />
 
-== Canned commands ==
+The command "Open Python Shell" displays the RPS interactive shell. The command "Configure..." displays the ConfigurationDialog.
 
-In the top row of the MainWindow, you can see a button _Interactive_. This is just an example of a canned command - you can add as many as you like. Each such command starts in a now OutputWindow and runs a file as defined in the {{{RevitPythonShell.xml}}} configuration file.
+For each CannedCommand configured in the ConfigurationDialog, an additional command is displayed in the ribbon. In the example screen shot, I have four such commands defined: 
 
-The _Interactive_ command is rather usefull, as it enters a REPL (Read, Execute, Print, Loop) and allows interactive exploration of the RevitAPI.
+  * Save Snapshot
+  * WireFrameViewer
+  * SIA HTML Report 
+  * Animat Windows
 
-= The OutputWindow (RevitPythonShell - Output) =
+These are only examples and *not* shipped with the plugin. You can configure your own CannedScript to help you get your work done!
 
-<img src="http://revitpythonshell.googlecode.com/svn/wiki/OutputWindowScreenshot.png" alt="Screenshot of the output window"/>
+= The RPS interactive shell =
 
-This screenshot shows the output window where all python script output goes. It is currently running the _Interactive_ canned command that provides an interpreter loop. This is handy for exploration tasks.
+The RPS interactive shell is displayed when you click on "Open Python Shell" in the RevitPythonShell Add-Ins Ribbon:
 
-The [ModuleRevitutil revitutil module] adds some wrapper functionality for making it easier to work with the RevitAPI in python.
+<img src="http://revitpythonshell.googlecode.com/svn/wiki/MainWindowScreenshot.Png" alt="Screenshot of the interactive shell"/>
+
+It consists of a menu with a default item "Configure Commands" that brings up the ConfigurationDialog. Also, it contains an entry for each CannedCommand you have configured. In the example screen shot, you see four such items, as explained above.
+
+To get started with the interactive shell, you might want to look into the PredefinedVariables.
+
+== AutoCompletionFeature ==
+
+<img src="http://revitpythonshell.googlecode.com/svn/wiki/RPS_AutoCompletionFeature.png" alt="Screenshot of the AutoCompletionFeature"/>
