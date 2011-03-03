@@ -2,7 +2,7 @@
 
 = Introduction =
 
-This is a script Chen Kianwee kindly sent me:
+This is a script [http://chenkianwee.wordpress.com/ Chen Kianwee] kindly sent me:
 
  I did this very simple script using revit python shell, it was really  useful for exploring revit api as I can quickly see the results without  closing and opening revit. Attached is the .py file I wrote, hope its ok.
 
