@@ -11,3 +11,4 @@ This is a collection of sample RPS scripts as gathered over time.
   * FeaturedScriptRevitRoomBoundaries
   * FeaturedScriptLoadplugin
   * FeaturedScriptViewLocalMassing
+  * FeaturedScriptExportImage
