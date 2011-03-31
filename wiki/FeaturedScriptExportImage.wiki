@@ -1,4 +1,5 @@
 #summary exports a PNG of the current view
+#labels Featured
 
 = Introduction =
 
