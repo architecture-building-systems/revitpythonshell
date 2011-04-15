@@ -19,7 +19,7 @@ namespace IronPythonConsoleControl
         private TextWriter _stdout;
         private List<OutputLine> _logicalLines; // the actual output, before rendering
         private OutputLine _currentLine; // the line we are currently writing to (this is the last line in _lines)
-        private Font _font = new Font("Courrier New", 12);
+        private Font _font = new Font("Lucida Console", 12);
 
         public IronPythonConsoleControl(): base()
         {

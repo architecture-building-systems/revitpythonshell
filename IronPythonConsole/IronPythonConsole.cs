@@ -27,6 +27,7 @@ namespace IronPythonConsole
 
             // first step, just print some stuff
             console.WriteLine("Hello, world", Style.Out);
+            console.WriteLine("Here is another line of text", Style.Error);
         }
     }
 }
