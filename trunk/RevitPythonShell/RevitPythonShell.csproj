@@ -70,16 +70,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="IronPython">
-      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.1\IronPython.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.2\IronPython.dll</HintPath>
     </Reference>
     <Reference Include="IronPython.Modules">
-      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.1\IronPython.Modules.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.2\IronPython.Modules.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Scripting">
-      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.1\Microsoft.Scripting.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.2\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Scripting.Core">
-      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.1\Microsoft.Scripting.Core.dll</HintPath>
+      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.2\Microsoft.Scripting.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.ExtensionAttribute">
+      <HintPath>..\..\..\Program Files (x86)\IronPython 2.0.2\Microsoft.Scripting.ExtensionAttribute.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPI">
       <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2011\Program\RevitAPI.dll</HintPath>
