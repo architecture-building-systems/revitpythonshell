@@ -21,12 +21,20 @@ namespace IronPythonConsoleControl
         private OutputLine _currentLine; // the line we are currently writing to (this is the last line in _lines)
         private Font _font = new Font("Lucida Console", 12);
 
+        private Queue<string> _inputLines; // lists each line completed of input not yet read by ReadLine()
+        private StringBuilder _currentInputLine;
+
         public IronPythonConsoleControl(): base()
         {
             DoubleBuffered = true;
             _logicalLines = new List<OutputLine>();
             _currentLine = new OutputLine();
             _logicalLines.Add(_currentLine);
+
+            _inputLines = new Queue<string>();
+            _currentInputLine = new StringBuilder();
+
+            BackColor = Color.White;
         }                
 
         /// <summary>
@@ -46,16 +54,41 @@ namespace IronPythonConsoleControl
             }
         }
 
+        protected override void OnKeyPress(KeyPressEventArgs e)
+        {
+            base.OnKeyPress(e);
+
+            if (e.KeyChar == '\r')
+            {
+                // treat [ENTER] and [RETURN] specially
+                WriteLine();
+                _inputLines.Enqueue(_currentInputLine.ToString());
+                _currentInputLine = new StringBuilder();
+            }
+            else
+            {
+                // write character to output
+                Write(e.KeyChar.ToString(), Style.Out);
+
+                // store character as input
+                _currentInputLine.Append(e.KeyChar);
+            }            
+        }
+
 #region IConsole memebers
         public TextWriter ErrorOutput { get { return _stderr; } set { _stderr = value; } }
         public TextWriter Output { get { return _stdout; } set { _stdout = value; } }
 
         /// <summary>
         /// Blocks until the user has entered a line in the console.
+        /// Returns null when the user enters CTRL+Z.
         /// </summary>
         public string ReadLine(int autoIndentSize)
         {
-            throw new NotImplementedException();
+            while (_inputLines.Count < 1)
+            {
+                Application.DoEvents();
+            }
         }
 
         /// <summary>
