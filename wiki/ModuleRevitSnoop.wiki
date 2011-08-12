@@ -1,4 +1,5 @@
 #summary Launch a RevitLookup "Snoop Objects" dialog for elements from the RPS shell
+#labels Featured
 
 = Introduction =
 
@@ -8,9 +9,52 @@ I find that RevitLookup and RevitPythonShell complement each other rather well. 
 
 = Details =
 
-The module `revitsnoop` provides a mechanism to hook into the 
+The module `revitsnoop` provides a mechanism to hook into the RevitLookup plugin and start it with an object of your choice.
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Example:
+
+{{{
+>>>import revitsnoop
+
+>>>snooper = revitsnoop.RevitSnoop(__revit__)
+
+>>>snooper.snoop(doc.ProjectInformation)
+}}}
+
+This will pop up a dialog for snooping the documents project information. You can of course snoop any `Element` object.
+
+You can find the module in the downloads section, but just for kicks, here is the source:
+
+{{{
+'''
+revitsnoop.py
+
+a simple library to access the RevitLookup snoop functionality
+while inside the interactive shell...
+'''
+import clr
+from Autodesk.Revit.DB import ElementSet
+
+class RevitSnoop(object):
+    def __init__(self, uiApplication):
+        '''
+        for RevitSnoop to function properly, it needs to be instantiated
+        with a reverence to the Revit Application object.
+        '''
+        # find the RevitLookup plugin
+        rlapp = [app for app in uiApplication.LoadedApplications 
+                 if app.GetType().Namespace == 'RevitLookup' 
+                 and app.GetType().Name == 'App'][0]
+        # tell IronPython about the assembly of the RevitLookup plugin
+        clr.AddReference(rlapp.GetType().Assembly)
+        import RevitLookup
+        self.RevitLookup = RevitLookup
+        # See note in CelloctorExt.cs in the RevitLookup source:
+        self.RevitLookup.Snoop.CollectorExts.CollectorExt.m_app = uiApplication
+
+    def snoop(self, element):
+        elementSet = ElementSet()
+        elementSet.Insert(element)
+        form = self.RevitLookup.Snoop.Forms.Objects(elementSet)
+        form.ShowDialog()
+}}}
