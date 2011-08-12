@@ -1,11 +1,14 @@
-#summary One-sentence summary of this page.
+#summary Launch a RevitLookup "Snoop Objects" dialog for elements from the RPS shell
 
 = Introduction =
 
-Add your content here.
+You _do_ have `RevitLookup` installed, don't you? This is _the_ tool for introspecting model elements. You can find it in the Revit SDK folder, along with the source code. The plugin does many things, among which I most often use the "Snoop Current Selection..." feature. This pops up a nice dialog that lets you snoop around in the selected elements properties. See here for more: http://cadappdev.blogspot.com/2010/04/revit-2011-api-series-revitlookup-new.html
 
+I find that RevitLookup and RevitPythonShell complement each other rather well. Except, while inside the shell, you can't start any other plugins, so  you can't access the snoop functionality. Unless...
 
 = Details =
+
+The module `revitsnoop` provides a mechanism to hook into the 
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
