@@ -89,6 +89,7 @@ namespace IronPythonConsoleControl
             {
                 Application.DoEvents();
             }
+            return _inputLines.Dequeue();
         }
 
         /// <summary>
