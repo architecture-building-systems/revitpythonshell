@@ -82,6 +82,7 @@ namespace RevitPythonShell
 
             // provide a hook into Autodesk Revit
             new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine, ironTextBoxControl.Scope);
+            ironTextBoxControl.Scope.SetVariable("clear", (Action) ironTextBoxControl.Clear);
 
             var initScript = RevitPythonShellApplication.GetInitScript();
             if (initScript != null)
@@ -97,6 +98,7 @@ namespace RevitPythonShell
             message = (ironTextBoxControl.Scope.GetVariable("__message__") ?? "").ToString();
             return (int)(ironTextBoxControl.Scope.GetVariable("__result__") ?? Result.Succeeded);
         }
+        
 
         [DllImport("user32.dll")]
         static extern bool GetCaretPos(out System.Drawing.Point lpPoint);
