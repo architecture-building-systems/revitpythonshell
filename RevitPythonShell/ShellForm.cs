@@ -81,7 +81,7 @@ namespace RevitPythonShell
             _commandData = commandData;
 
             // provide a hook into Autodesk Revit
-            new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine, ironTextBoxControl.Scope);
+            ironTextBoxControl.Scope = new ScriptExecutor(_commandData, _message, _elements).SetupEnvironment(ironTextBoxControl.Engine);
             ironTextBoxControl.Scope.SetVariable("clear", (Action) ironTextBoxControl.Clear);
 
             var initScript = RevitPythonShellApplication.GetInitScript();
@@ -109,6 +109,7 @@ namespace RevitPythonShell
         {
             string textAtPrompt = e.Uncompleted;
             var completions = PerformCompletion(textAtPrompt);
+            var documentations = PerformDocumentation(completions);
             if (completions == null)
             {
                 return;
@@ -123,7 +124,7 @@ namespace RevitPythonShell
             location.Offset(0, toolStrip.Height + ironTextBoxControl.FontHeight);
 
             var tooltip = new CompletionToolTip();
-            var completed = tooltip.ShowTooltip(e.Uncompleted, completions, location);
+            var completed = tooltip.ShowTooltip(e.Uncompleted, completions, documentations,location);
             if (completed != null)
             {
                 e.Completed = ReplaceUncompleted(textAtPrompt, GetUncompleted(textAtPrompt), completed);
@@ -140,7 +141,6 @@ namespace RevitPythonShell
             var engine = ironTextBoxControl.Engine;
             var scope = ironTextBoxControl.Scope;
             object completer;
-
             if (!scope.TryGetVariable("__completer__", out completer))
             {
                 return null;
@@ -152,7 +152,7 @@ namespace RevitPythonShell
                 return null;
             }
 
-            var completion = (IList<object>)ops.Call(completer, uncompleted);
+            var completion = (IList<object>)ops.Invoke(completer, uncompleted);
             if (completion == null)
             {
                 return null;
@@ -178,6 +178,29 @@ namespace RevitPythonShell
             });
                         
             return result;
+        }
+        private List<string> PerformDocumentation(List<string> result)
+        {
+            var engine = ironTextBoxControl.Engine;
+            var scope = ironTextBoxControl.Scope;
+            object documenter;
+            if (!scope.TryGetVariable("__documenter__", out documenter))
+            {
+                return null;
+            }
+            var ops = engine.CreateOperations(scope);
+            if (!ops.IsCallable(documenter))
+            {
+                return null;
+            }
+
+            List<string> documentations = new List<string>();
+            foreach (string c in result)
+            {
+                var d = ops.Invoke(documenter, c).ToString();
+                documentations.Add(d);
+            }
+            return documentations;
         }
 
         /// <summary>
