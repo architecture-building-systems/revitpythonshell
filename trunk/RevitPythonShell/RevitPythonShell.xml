@@ -48,7 +48,12 @@ def __completer__(uncompleted):
         return result
     except:
         return [format_exc()]
-        
+def __documenter__(line):
+    try:
+        if line[-1]=='(':line=line[:-1]
+        return str(eval(line + ".__doc__"))
+    except:
+        return ''        
     ]]>
   </InitScript>
 </RevitPythonShell>
