@@ -87,14 +87,21 @@ namespace RevitPythonShell
         /// </summary>
         public ScriptScope SetupEnvironment(ScriptEngine engine)
         {
-            var scriptScope = IronPython.Hosting.Python.CreateModule(engine, "__main__");
+            var scope = IronPython.Hosting.Python.CreateModule(engine, "__main__");
 
+            SetupEnvironment(engine, scope);
+
+            return scope;
+        }
+
+        public void SetupEnvironment(ScriptEngine engine, ScriptScope scope)
+        {
             // these variables refer to the signature of the IExternalCommand.Execute method
-            scriptScope.SetVariable("__commandData__", _commandData);
-            scriptScope.SetVariable("__message__", _message);
-            scriptScope.SetVariable("__elements__", _elements);
-            scriptScope.SetVariable("__result__", (int)Result.Succeeded);            
-                        
+            scope.SetVariable("__commandData__", _commandData);
+            scope.SetVariable("__message__", _message);
+            scope.SetVariable("__elements__", _elements);
+            scope.SetVariable("__result__", (int)Result.Succeeded);
+
             // add two special variables: __revit__ and __vars__ to be globally visible everywhere:
             var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(engine);
             var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
@@ -103,8 +110,6 @@ namespace RevitPythonShell
 
             // add the search paths
             AddSearchPaths(engine);
-
-            return scriptScope;
         }
 
         /// <summary>
