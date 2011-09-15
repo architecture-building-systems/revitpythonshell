@@ -16,6 +16,9 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using System.IO;
 using System.Xml;
 using Microsoft.Win32;
+using Autodesk.Revit.UI;
+using Autodesk.Revit.DB;
+using Microsoft.Scripting;
 
 namespace RevitPythonShell
 {
@@ -24,9 +27,17 @@ namespace RevitPythonShell
     /// </summary>
     public partial class IronPythonConsole : Window
     {
-        ConsoleOptions consoleOptionsProvider;
+        private ConsoleOptions consoleOptionsProvider;
 
-        public IronPythonConsole()
+        // this is the name of the file currently being edited in the pad
+        private string currentFileName;
+
+        // hooks into the revit api
+        private ExternalCommandData _commandData;
+        private string _message;
+        private ElementSet _elements;
+
+        public IronPythonConsole(PythonConsoleControl.ConsoleCreatedEventHandler consoleCreated)
         {
             Initialized += new EventHandler(MainWindow_Initialized);
 
@@ -56,22 +67,16 @@ namespace RevitPythonShell
 
             expander.Expanded += new RoutedEventHandler(expander_Expanded);
 
-            console.Pad.Host.ConsoleCreated += new PythonConsoleControl.ConsoleCreatedEventHandler(Host_ConsoleCreated);
+            if (consoleCreated != null)
+            {
+                console.Pad.Host.ConsoleCreated += consoleCreated;
+            }            
         }
 
-        string currentFileName;
-
-        void Host_ConsoleCreated(object sender, EventArgs e)
+        public IronPythonConsole(): this(null)
         {
-            console.Pad.Console.ConsoleInitialized += new PythonConsoleControl.ConsoleInitializedEventHandler(Console_ConsoleInitialized);
-        }
-
-        void Console_ConsoleInitialized(object sender, EventArgs e)
-        {
-            //double[] test = new double[] { 1.2, 4.6 };
-            //console.Pad.Console.ScriptScope.SetVariable("test", test);
-        }
-
+        }                
+        
         void MainWindow_Initialized(object sender, EventArgs e)
         {
             //propertyGridComboBox.SelectedIndex = 1;
@@ -146,6 +151,37 @@ namespace RevitPythonShell
         void expander_Expanded(object sender, RoutedEventArgs e)
         {
             propertyGridComboBoxSelectionChanged(sender, e);
+        }
+
+        /// <summary>
+        /// Displays the shell form modally until the user closes it.
+        /// Provides the user with access to the parameters passed to the IExternalCommand implementation
+        /// in RevitPythonShell so that it can be passed on.
+        /// 
+        /// For convenience and backwards compatibility, commandData.Application is mapped to the variable "__revit__"
+        /// 
+        /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
+        /// </summary>
+        public int ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
+        {
+            _elements = elements;
+            _message = message;
+            _commandData = commandData;
+
+            try
+            {
+                ShowDialog();
+
+                // obey the external command interface
+                var scope = console.Pad.Host.Console.ScriptScope;
+                message = (scope.GetVariable("__message__") ?? "").ToString();
+                return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                return (int)Result.Failed;
+            }
         }
     }
 }
