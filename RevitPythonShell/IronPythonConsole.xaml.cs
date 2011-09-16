@@ -19,6 +19,7 @@ using Microsoft.Win32;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Microsoft.Scripting;
+using System.Threading;
 
 namespace RevitPythonShell
 {
@@ -36,6 +37,7 @@ namespace RevitPythonShell
         private ExternalCommandData _commandData;
         private string _message;
         private ElementSet _elements;
+        private Result _result;
 
         public IronPythonConsole(PythonConsoleControl.ConsoleCreatedEventHandler consoleCreated)
         {
@@ -162,26 +164,32 @@ namespace RevitPythonShell
         /// 
         /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
         /// </summary>
-        public int ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public void ShowShell(ExternalCommandData commandData, ElementSet elements, Action closingCallback)
         {
             _elements = elements;
-            _message = message;
+            _message = "";
+            _result = Result.Succeeded;
             _commandData = commandData;
 
             try
             {
-                ShowDialog();
-
-                // obey the external command interface
-                var scope = console.Pad.Host.Console.ScriptScope;
-                message = (scope.GetVariable("__message__") ?? "").ToString();
-                return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
+                this.Closing += (sender, args) =>
+                {
+                    // obey the external command interface
+                    var scope = console.Pad.Host.Console.ScriptScope;
+                    _message = (scope.GetVariable("__message__") ?? "").ToString();
+                    _result = (Result)(int)(scope.GetVariable("__result__") ?? Result.Succeeded);
+                    closingCallback();
+                };
+                Show();                
             }
             catch (Exception ex)
             {
-                message = ex.Message;
-                return (int)Result.Failed;
+                _message = ex.Message;                
             }
         }
+
+        public string Message { get { return _message;  } }
+        public Result ResultValue { get { return _result;  } }
     }
 }
