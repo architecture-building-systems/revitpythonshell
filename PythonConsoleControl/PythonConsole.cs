@@ -27,6 +27,17 @@ using Style = Microsoft.Scripting.Hosting.Shell.Style;
 
 namespace PythonConsoleControl
 {
+<<<<<<< .mine
+    public delegate void ConsoleInitializedEventHandler(object sender, EventArgs e);    
+    
+    /// <summary>
+    /// Custom IronPython console. The command dispacher runs on a separate UI thread from the REPL
+    /// and also from the WPF control.
+    /// </summary>
+    public class PythonConsole : IConsole, IDisposable
+    {
+        public static Queue<Action> ReplCommands = new Queue<Action>();
+=======
     public delegate void ConsoleInitializedEventHandler(object sender, EventArgs e);
     
     /// <summary>
@@ -54,20 +65,63 @@ namespace PythonConsoleControl
         bool consoleInitialized = false;
         string prompt;
         Window dispatcherWindow;
+>>>>>>> .r128
 
+<<<<<<< .mine
+        PythonTextEditor textEditor;
+        int lineReceivedEventIndex = 0; // The index into the waitHandles array where the lineReceivedEvent is stored.
+        ManualResetEvent lineReceivedEvent = new ManualResetEvent(false);
+        ManualResetEvent disposedEvent = new ManualResetEvent(false);
+        AutoResetEvent statementsExecutionRequestedEvent = new AutoResetEvent(false);
+        WaitHandle[] waitHandles;
+        int promptLength = 4;
+        List<string> previousLines = new List<string>();
+        CommandLine commandLine;
+        CommandLineHistory commandLineHistory = new CommandLineHistory();
+        Thread consoleThread;
+        Thread statementsExecutionThread;
+        volatile bool statementsExecuting = false;
+        string scriptText = "";
+        bool allowFullAutocompletion = false;
+        bool allowCtrlSpaceAutocompletion = true;
+        bool consoleInitialized = false;
+        string prompt;
+        Window dispatcherWindow;
+=======
         public event ConsoleInitializedEventHandler ConsoleInitialized;
+>>>>>>> .r128
 
+<<<<<<< .mine
+        public event ConsoleInitializedEventHandler ConsoleInitialized;
+=======
         public ScriptScope ScriptScope
         {
             get { return commandLine.ScriptScope; }
         }
+>>>>>>> .r128
 
+<<<<<<< .mine
+        public ScriptScope ScriptScope
+        {
+            get { return commandLine.ScriptScope; }
+        }
+=======
         public PythonConsole(PythonTextEditor textEditor, CommandLine commandLine)
         {   
             waitHandles = new WaitHandle[] { lineReceivedEvent, disposedEvent };
+>>>>>>> .r128
 
+<<<<<<< .mine
+        public PythonConsole(PythonTextEditor textEditor, CommandLine commandLine)
+        {   
+            waitHandles = new WaitHandle[] { lineReceivedEvent, disposedEvent };
+=======
             this.commandLine = commandLine;
+>>>>>>> .r128
 
+<<<<<<< .mine
+            this.commandLine = commandLine;
+=======
             this.textEditor = textEditor;
             textEditor.CompletionProvider = new PythonConsoleCompletionDataProvider(commandLine);
             textEditor.PreviewKeyDown += textEditor_PreviewKeyDown;
@@ -79,7 +133,21 @@ namespace PythonConsoleControl
             statementsExecutionThread.SetApartmentState(ApartmentState.STA);
             statementsExecutionThread.IsBackground = true;
             statementsExecutionThread.Start();
+>>>>>>> .r128
 
+<<<<<<< .mine
+            this.textEditor = textEditor;
+            textEditor.CompletionProvider = new PythonConsoleCompletionDataProvider(commandLine);
+            textEditor.PreviewKeyDown += textEditor_PreviewKeyDown;
+            textEditor.TextEntered += textEditor_TextEntered;
+            textEditor.TextEntering += textEditor_TextEntering;
+            consoleThread = Thread.CurrentThread;
+            
+            statementsExecutionThread = new Thread(new ThreadStart(DispatcherThreadStartingPoint));
+            statementsExecutionThread.SetApartmentState(ApartmentState.STA);
+            statementsExecutionThread.IsBackground = true;
+            statementsExecutionThread.Start();
+=======
             // These definition is only required when running outside REP loop.
             prompt = ">>> ";
             this.textEditor.textArea.Dispatcher.Invoke(new Action(delegate()
@@ -114,7 +182,44 @@ namespace PythonConsoleControl
             CodeContext codeContext = DefaultContext.Default;
             ClrModule.SetCommandDispatcher(codeContext, DispatchCommand);
         }
+>>>>>>> .r128
 
+<<<<<<< .mine
+            // These definition is only required when running outside REP loop.
+            prompt = ">>> ";
+            this.textEditor.textArea.Dispatcher.Invoke(new Action(delegate()
+            {
+                CommandBinding pasteBinding = null;
+                CommandBinding copyBinding = null;
+                CommandBinding cutBinding = null;
+                CommandBinding undoBinding = null;
+                CommandBinding deleteBinding = null;
+                foreach (CommandBinding commandBinding in (this.textEditor.textArea.CommandBindings))
+                {
+                    if (commandBinding.Command == ApplicationCommands.Paste) pasteBinding = commandBinding;
+                    if (commandBinding.Command == ApplicationCommands.Copy) copyBinding = commandBinding;
+                    if (commandBinding.Command == ApplicationCommands.Cut) cutBinding = commandBinding;
+                    if (commandBinding.Command == ApplicationCommands.Undo) undoBinding = commandBinding;
+                    if (commandBinding.Command == ApplicationCommands.Delete) deleteBinding = commandBinding;
+                }
+                // Remove current bindings completely from control. These are static so modifying them will cause other
+                // controls' behaviour to change too.
+                if (pasteBinding != null) this.textEditor.textArea.CommandBindings.Remove(pasteBinding);
+                if (copyBinding != null) this.textEditor.textArea.CommandBindings.Remove(copyBinding);
+                if (cutBinding != null) this.textEditor.textArea.CommandBindings.Remove(cutBinding);
+                if (undoBinding != null) this.textEditor.textArea.CommandBindings.Remove(undoBinding);
+                if (deleteBinding != null) this.textEditor.textArea.CommandBindings.Remove(deleteBinding);
+                this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, OnPaste, CanPaste));
+                this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Copy, OnCopy, PythonEditingCommandHandler.CanCutOrCopy));
+                this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, PythonEditingCommandHandler.OnCut, CanCut));
+                this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Undo, OnUndo, CanUndo));
+                this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, PythonEditingCommandHandler.OnDelete(ApplicationCommands.NotACommand), CanDeleteCommand));
+            
+            }));
+            CodeContext codeContext = DefaultContext.Default;
+            ClrModule.SetCommandDispatcher(codeContext, DispatchCommand);
+        }
+=======
         /// <summary>
         /// Set the command dispatcher to another dispatcher if necessary.
         /// </summary>        
@@ -123,7 +228,18 @@ namespace PythonConsoleControl
             CodeContext codeContext = DefaultContext.Default;
             ClrModule.SetCommandDispatcher(codeContext, dispatcher);
         }
+>>>>>>> .r128
 
+<<<<<<< .mine
+        protected void DispatchCommand(Delegate command)
+        {
+            if (command != null)
+            {
+                dispatcherWindow.Dispatcher.Invoke(DispatcherPriority.Normal, (Action) (delegate() { 
+                    ReplCommands.Enqueue((Action)command); }));
+            }
+        }
+=======
         protected void DispatchCommand(Delegate command)
         {
             if (command != null)
@@ -131,6 +247,7 @@ namespace PythonConsoleControl
                 dispatcherWindow.Dispatcher.Invoke(DispatcherPriority.Normal, command);
             }
         }
+>>>>>>> .r128
 
         public void Dispose()
         {

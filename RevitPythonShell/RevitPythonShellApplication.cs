@@ -25,7 +25,7 @@ namespace RevitPythonShell
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
             ribbonPanel.AddStackedItems(
                 new PushButtonData("RevitPythonShell", "Open Python Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.StartShellCommand"),
-                new PushButtonData("NewShell", "New Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.IronPythonConsoleCommand"),
+                //new PushButtonData("NewShell", "New Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.IronPythonConsoleCommand"),
                 new PushButtonData("Configure", "Configure...", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.ConfigureCommand"));
 
             var dllfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
