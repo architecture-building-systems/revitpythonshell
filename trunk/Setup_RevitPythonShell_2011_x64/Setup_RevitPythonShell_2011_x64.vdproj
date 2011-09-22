@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:Setup_RevitPythonShell_2011"
+"ProjectName" = "8:Setup_RevitPythonShell_2012"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -15,80 +15,92 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_0EF072FDBB30499F6FF9C9C0F6EAB158"
-        "OwnerKey" = "8:_B3664D580BA42BE56D425B2D4FF22FBC"
+        "MsmKey" = "8:_271ACEB73EF84DB484C39A4CD5C929BF"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0EF072FDBB30499F6FF9C9C0F6EAB158"
-        "OwnerKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
+        "OwnerKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_0EF072FDBB30499F6FF9C9C0F6EAB158"
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
+        "OwnerKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
+        "OwnerKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_519B00B1B70FDE9DDBE9181FDD4D5452"
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
+        "OwnerKey" = "8:_A51AFA67C35FFC51ECDCFC80A0669B5A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
+        "OwnerKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
+        "OwnerKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
+        "OwnerKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_519B00B1B70FDE9DDBE9181FDD4D5452"
-        "OwnerKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
+        "MsmKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
+        "OwnerKey" = "8:_A51AFA67C35FFC51ECDCFC80A0669B5A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_60DB21CA4CEFD977BEA8A9E7AA7A9A79"
-        "OwnerKey" = "8:_BDAC910E46D94C37B232581F30750B76"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6D2E1A15CB9CF73FFD265CAE12AAA534"
+        "MsmKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
-        "OwnerKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
+        "MsmKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+        "OwnerKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
-        "OwnerKey" = "8:_F8541C12C07F032ED6707837E4338AD9"
+        "MsmKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+        "OwnerKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
-        "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
-        "OwnerKey" = "8:_6D2E1A15CB9CF73FFD265CAE12AAA534"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
-        "OwnerKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-        "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
+        "MsmKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+        "OwnerKey" = "8:_A51AFA67C35FFC51ECDCFC80A0669B5A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -99,152 +111,80 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
+        "MsmKey" = "8:_A51AFA67C35FFC51ECDCFC80A0669B5A"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-        "OwnerKey" = "8:_F8541C12C07F032ED6707837E4338AD9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-        "OwnerKey" = "8:_6D2E1A15CB9CF73FFD265CAE12AAA534"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3664D580BA42BE56D425B2D4FF22FBC"
+        "MsmKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B3664D580BA42BE56D425B2D4FF22FBC"
-        "OwnerKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B3664D580BA42BE56D425B2D4FF22FBC"
-        "OwnerKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B5D870257EE2AC8074DEC6C5B793B705"
-        "OwnerKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B5D870257EE2AC8074DEC6C5B793B705"
+        "MsmKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BDAC910E46D94C37B232581F30750B76"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_C90C0EC73B8D855926203A2D371DACE9"
+        "OwnerKey" = "8:_271ACEB73EF84DB484C39A4CD5C929BF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C32F65DF3AEFD40D9C7E29DE0075F86A"
+        "MsmKey" = "8:_CB279FA3F9C3C9125DB95F43334AD699"
+        "OwnerKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_CB279FA3F9C3C9125DB95F43334AD699"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_C32F65DF3AEFD40D9C7E29DE0075F86A"
-        "OwnerKey" = "8:_EC221C1A7D66D8B58B3566E548365C1A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C32F65DF3AEFD40D9C7E29DE0075F86A"
-        "OwnerKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_C32F65DF3AEFD40D9C7E29DE0075F86A"
-        "OwnerKey" = "8:_519B00B1B70FDE9DDBE9181FDD4D5452"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
-        "OwnerKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
+        "MsmKey" = "8:_D5386A7CE38CE2CCD830A3EA421DB8B6"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EC221C1A7D66D8B58B3566E548365C1A"
-        "OwnerKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
+        "MsmKey" = "8:_D9001C652E984C58C409D844BFF29811"
+        "OwnerKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EC221C1A7D66D8B58B3566E548365C1A"
+        "MsmKey" = "8:_D9001C652E984C58C409D844BFF29811"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_EC221C1A7D66D8B58B3566E548365C1A"
-        "OwnerKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F8541C12C07F032ED6707837E4338AD9"
+        "MsmKey" = "8:_E592E4ED8EE78A5EDDF991419608CC02"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
-        "OwnerKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
+        "MsmKey" = "8:_E78FDD3C87738DCE01D3A1DDF0C1E1E1"
         "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
-        "OwnerKey" = "8:_6D2E1A15CB9CF73FFD265CAE12AAA534"
+        "MsmKey" = "8:_E78FDD3C87738DCE01D3A1DDF0C1E1E1"
+        "OwnerKey" = "8:_E592E4ED8EE78A5EDDF991419608CC02"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BDAC910E46D94C37B232581F30750B76"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F8541C12C07F032ED6707837E4338AD9"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_60DB21CA4CEFD977BEA8A9E7AA7A9A79"
+        "MsmKey" = "8:_F0B1FA5CF35F9E96F5DE8B11A89CE0EE"
+        "OwnerKey" = "8:_920B32E891754A0997674BF8A287628B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -256,73 +196,85 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
+        "OwnerKey" = "8:_271ACEB73EF84DB484C39A4CD5C929BF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E05F5BB92F910593261522947BA4FF4C"
+        "OwnerKey" = "8:_C90C0EC73B8D855926203A2D371DACE9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EC221C1A7D66D8B58B3566E548365C1A"
+        "OwnerKey" = "8:_F0B1FA5CF35F9E96F5DE8B11A89CE0EE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_519B00B1B70FDE9DDBE9181FDD4D5452"
+        "OwnerKey" = "8:_D5386A7CE38CE2CCD830A3EA421DB8B6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C32F65DF3AEFD40D9C7E29DE0075F86A"
+        "OwnerKey" = "8:_E592E4ED8EE78A5EDDF991419608CC02"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B3664D580BA42BE56D425B2D4FF22FBC"
+        "OwnerKey" = "8:_E78FDD3C87738DCE01D3A1DDF0C1E1E1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_0EF072FDBB30499F6FF9C9C0F6EAB158"
+        "OwnerKey" = "8:_B07D306C11CE54AEFBEB1A8641561FC8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6D2E1A15CB9CF73FFD265CAE12AAA534"
+        "OwnerKey" = "8:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
+        "OwnerKey" = "8:_D9001C652E984C58C409D844BFF29811"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F977039D7687056D0C6E434DCFEB3F42"
+        "OwnerKey" = "8:_A51AFA67C35FFC51ECDCFC80A0669B5A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B5D870257EE2AC8074DEC6C5B793B705"
+        "OwnerKey" = "8:_7AB83EEE79A3389C3D230ADED7CB5CF8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_78591594EC7709665C3DF4904DCF1B2B"
+        "OwnerKey" = "8:_52CA8F517B9893641CBD1248B80D76E5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_CB279FA3F9C3C9125DB95F43334AD699"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_528D09FC156DA8DE6C1A8553DA5E6780"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -333,7 +285,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\Setup_RevitPythonShell_2011.msi"
+        "OutputFilename" = "8:Debug\\Setup_RevitPythonShell_2012.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -407,17 +359,17 @@
     {
         "CustomAction"
         {
-            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_F5AF3FF33C424A89BFBECB7EBA34AC6B"
+            "{4AA51A2D-7D85-4A59-BA75-B0809FC8B380}:_D9E8E8726A914907B7AD9E61325D50E4"
             {
-            "Name" = "8:Primary output from RegisterRevit2011Addin (Active)"
+            "Name" = "8:Primary output from RegisterRevit2012Addin (Active)"
             "Condition" = "8:"
-            "Object" = "8:_BDAC910E46D94C37B232581F30750B76"
+            "Object" = "8:_271ACEB73EF84DB484C39A4CD5C929BF"
             "FileType" = "3:1"
             "InstallAction" = "3:1"
             "Arguments" = "8:"
             "EntryPoint" = "8:"
             "Sequence" = "3:1"
-            "Identifier" = "8:_CF5C4C49_CA47_47F8_8DCD_E092B7AAFD86"
+            "Identifier" = "8:_078A4B4A_1755_4D0C_B044_C45026E60A2A"
             "InstallerClass" = "11:TRUE"
             "CustomActionData" = "8:"
             }
@@ -436,7 +388,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                "FrameworkVersion" = "8:.NETFramework,Version=v4.0"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=131000"
                 }
@@ -444,138 +396,14 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0EF072FDBB30499F6FF9C9C0F6EAB158"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:ManagedMC3, Version=5.8.0.0, Culture=neutral, PublicKeyToken=99052d24520ebbb3, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_0EF072FDBB30499F6FF9C9C0F6EAB158"
-                    {
-                    "Name" = "8:ManagedMC3.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:ManagedMC3.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_519B00B1B70FDE9DDBE9181FDD4D5452"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RevitAPI, Version=2012.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_519B00B1B70FDE9DDBE9181FDD4D5452"
-                    {
-                    "Name" = "8:RevitAPI.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:RevitAPI.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_60DB21CA4CEFD977BEA8A9E7AA7A9A79"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RevitAddInUtility, Version=2011.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_60DB21CA4CEFD977BEA8A9E7AA7A9A79"
-                    {
-                    "Name" = "8:RevitAddInUtility.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:RevitAddInUtility.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6D2E1A15CB9CF73FFD265CAE12AAA534"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6D2E1A15CB9CF73FFD265CAE12AAA534"
-                    {
-                    "Name" = "8:IronPython.Modules.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:IronPython.Modules.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_78591594EC7709665C3DF4904DCF1B2B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_528D09FC156DA8DE6C1A8553DA5E6780"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_78591594EC7709665C3DF4904DCF1B2B"
+                    "_528D09FC156DA8DE6C1A8553DA5E6780"
                     {
                     "Name" = "8:Microsoft.Scripting.dll"
                     "Attributes" = "3:512"
@@ -599,262 +427,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:RevitAPIUI, Version=2012.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_8FD6E1B98CD59DA5CF67EC5EDFDEC6F8"
-                    {
-                    "Name" = "8:RevitAPIUI.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:RevitAPIUI.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_9BF5668ACB108BDC0EC7C10AA8F25F2D"
-                    {
-                    "Name" = "8:IronPython.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:IronPython.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B3664D580BA42BE56D425B2D4FF22FBC"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AdWindows, Version=3.2.26.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_B3664D580BA42BE56D425B2D4FF22FBC"
-                    {
-                    "Name" = "8:AdWindows.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:AdWindows.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B5D870257EE2AC8074DEC6C5B793B705"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B5D870257EE2AC8074DEC6C5B793B705"
-                    {
-                    "Name" = "8:Microsoft.Scripting.Metadata.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.Scripting.Metadata.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C32F65DF3AEFD40D9C7E29DE0075F86A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DBManagedServices, Version=2012.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_C32F65DF3AEFD40D9C7E29DE0075F86A"
-                    {
-                    "Name" = "8:DBManagedServices.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:DBManagedServices.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E05F5BB92F910593261522947BA4FF4C"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UIFramework, Version=2012.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_E05F5BB92F910593261522947BA4FF4C"
-                    {
-                    "Name" = "8:UIFramework.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:UIFramework.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_EC221C1A7D66D8B58B3566E548365C1A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:UIFrameworkServices, Version=0.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_EC221C1A7D66D8B58B3566E548365C1A"
-                    {
-                    "Name" = "8:UIFrameworkServices.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:UIFrameworkServices.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F8541C12C07F032ED6707837E4338AD9"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:IronTextBox, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_F8541C12C07F032ED6707837E4338AD9"
-                    {
-                    "Name" = "8:IronTextBox.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:IronTextBox.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F977039D7687056D0C6E434DCFEB3F42"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_52CA8F517B9893641CBD1248B80D76E5"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_F977039D7687056D0C6E434DCFEB3F42"
+                    "_52CA8F517B9893641CBD1248B80D76E5"
                     {
                     "Name" = "8:Microsoft.Dynamic.dll"
                     "Attributes" = "3:512"
@@ -878,6 +458,347 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7AB83EEE79A3389C3D230ADED7CB5CF8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7AB83EEE79A3389C3D230ADED7CB5CF8"
+                    {
+                    "Name" = "8:IronPython.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:IronPython.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A51AFA67C35FFC51ECDCFC80A0669B5A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A51AFA67C35FFC51ECDCFC80A0669B5A"
+                    {
+                    "Name" = "8:IronPython.Modules.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:IronPython.Modules.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B07D306C11CE54AEFBEB1A8641561FC8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:IronTextBox, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_B07D306C11CE54AEFBEB1A8641561FC8"
+                    {
+                    "Name" = "8:IronTextBox.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:IronTextBox.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B70DD0484CE5C9F7E71B4EBABECBAEB9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:PythonConsoleControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_B70DD0484CE5C9F7E71B4EBABECBAEB9"
+                    {
+                    "Name" = "8:PythonConsoleControl.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:PythonConsoleControl.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C90C0EC73B8D855926203A2D371DACE9"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RevitAddInUtility, Version=2012.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C90C0EC73B8D855926203A2D371DACE9"
+                    {
+                    "Name" = "8:RevitAddInUtility.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:RevitAddInUtility.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CB279FA3F9C3C9125DB95F43334AD699"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_CB279FA3F9C3C9125DB95F43334AD699"
+                    {
+                    "Name" = "8:Microsoft.Scripting.Metadata.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.Scripting.Metadata.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D5386A7CE38CE2CCD830A3EA421DB8B6"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:System.Windows.Controls.WpfPropertyGrid, Version=2010.11.10.0, Culture=neutral, PublicKeyToken=be4b71144cd8a3e5, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D5386A7CE38CE2CCD830A3EA421DB8B6"
+                    {
+                    "Name" = "8:System.Windows.Controls.WpfPropertyGrid.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:System.Windows.Controls.WpfPropertyGrid.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D9001C652E984C58C409D844BFF29811"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:ICSharpCode.AvalonEdit, Version=4.0.0.5949, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D9001C652E984C58C409D844BFF29811"
+                    {
+                    "Name" = "8:ICSharpCode.AvalonEdit.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:ICSharpCode.AvalonEdit.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E592E4ED8EE78A5EDDF991419608CC02"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RevitAPIUI, Version=2011.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_E592E4ED8EE78A5EDDF991419608CC02"
+                    {
+                    "Name" = "8:RevitAPIUI.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:RevitAPIUI.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E78FDD3C87738DCE01D3A1DDF0C1E1E1"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:RevitAPI, Version=2011.0.0.0, Culture=neutral, processorArchitecture=AMD64"
+                "ScatterAssemblies"
+                {
+                    "_E78FDD3C87738DCE01D3A1DDF0C1E1E1"
+                    {
+                    "Name" = "8:RevitAPI.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:RevitAPI.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F0B1FA5CF35F9E96F5DE8B11A89CE0EE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WPG, Version=2.0.3997.38860, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F0B1FA5CF35F9E96F5DE8B11A89CE0EE"
+                    {
+                    "Name" = "8:WPG.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WPG.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -897,7 +818,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_A8D02098510B4426877E196A26D981AF"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFilesFolder]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -955,9 +876,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:RevitPythonShell"
+        "ProductName" = "8:RevitPythonShell2012"
         "ProductCode" = "8:{A9F487AE-B702-4682-AC8A-FD4CEFD43B3E}"
-        "PackageCode" = "8:{5C124459-80CD-456A-9B21-121D9C20C46E}"
+        "PackageCode" = "8:{9AE9AFCA-0488-4FC2-B75C-42598997E437}"
         "UpgradeCode" = "8:{91D53F66-1E02-4000-84A0-F99945106149}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -968,7 +889,7 @@
         "Manufacturer" = "8:Daren Thomas"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
-        "Title" = "8:Setup_RevitPythonShell_2011"
+        "Title" = "8:Setup RevitPythonShell 2012"
         "Subject" = "8:"
         "ARPCONTACT" = "8:Daren Thomas"
         "Keywords" = "8:"
@@ -1476,9 +1397,37 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_271ACEB73EF84DB484C39A4CD5C929BF"
+            {
+            "SourcePath" = "8:..\\RegisterRevit2012Addin\\obj\\Debug\\RegisterRevit2012Addin.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:Built"
+            "OutputProjectGuid" = "8:{07988933-CD81-4B15-BEB4-9555FC492AAD}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_920B32E891754A0997674BF8A287628B"
             {
-            "SourcePath" = "8:..\\RevitPythonShell\\obj\\Release\\RevitPythonShell.dll"
+            "SourcePath" = "8:..\\RevitPythonShell\\obj\\Debug\\RevitPythonShell.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
@@ -1499,34 +1448,6 @@
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
             "OutputProjectGuid" = "8:{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BDAC910E46D94C37B232581F30750B76"
-            {
-            "SourcePath" = "8:..\\RegisterRevit2011Addin\\obj\\Release\\RegisterRevit2011Addin.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_A8D02098510B4426877E196A26D981AF"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
                 {

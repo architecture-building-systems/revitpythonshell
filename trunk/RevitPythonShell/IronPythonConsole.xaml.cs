@@ -164,7 +164,11 @@ namespace RevitPythonShell
         /// 
         /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
         /// </summary>
+<<<<<<< .mine
+        public void ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
+=======
         public void ShowShell(ExternalCommandData commandData, ElementSet elements, Action closingCallback)
+>>>>>>> .r128
         {
             _elements = elements;
             _message = "";
@@ -173,6 +177,14 @@ namespace RevitPythonShell
 
             try
             {
+<<<<<<< .mine
+                Show();
+
+                // obey the external command interface
+                //var scope = console.Pad.Host.Console.ScriptScope;
+                //message = (scope.GetVariable("__message__") ?? "").ToString();
+                //return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
+=======
                 this.Closing += (sender, args) =>
                 {
                     // obey the external command interface
@@ -182,10 +194,15 @@ namespace RevitPythonShell
                     closingCallback();
                 };
                 Show();                
+>>>>>>> .r128
             }
             catch (Exception ex)
             {
+<<<<<<< .mine
+                message = ex.Message;                
+=======
                 _message = ex.Message;                
+>>>>>>> .r128
             }
         }
 

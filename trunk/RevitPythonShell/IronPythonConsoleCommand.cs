@@ -7,8 +7,12 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Diagnostics;
 using Microsoft.Scripting;
+<<<<<<< .mine
+using System.Threading;
+=======
 using System.Threading;
 using System.Windows.Threading;
+>>>>>>> .r128
 
 namespace RevitPythonShell
 {
@@ -53,6 +57,33 @@ namespace RevitPythonShell
                         }
                     };
                 });
+<<<<<<< .mine
+
+            gui.ShowShell(commandData, ref message, elements);
+
+            while (true)
+            {
+                if (PythonConsoleControl.PythonConsole.ReplCommands.Any())
+                {
+                    var command = PythonConsoleControl.PythonConsole.ReplCommands.Dequeue();
+                    if (command != null)
+                    {
+                        command();
+                    }
+                    else
+                    {
+                        break;
+                    }                    
+                }
+                else
+                {
+                    System.Windows.Forms.Application.DoEvents();
+                    Thread.Sleep(100);
+                    Thread.Yield();
+                }
+            }
+            return Result.Succeeded;
+=======
             
             gui.ShowShell(commandData, elements, () => replCommands.Enqueue(null));
             while (true)
@@ -77,6 +108,7 @@ namespace RevitPythonShell
             }
             message = gui.Message;
             return gui.ResultValue;
+>>>>>>> .r128
         }
 
         void Console_ConsoleInitialized(object sender, EventArgs e)
