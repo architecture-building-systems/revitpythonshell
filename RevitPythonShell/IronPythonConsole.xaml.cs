@@ -28,6 +28,8 @@ namespace RevitPythonShell
     /// </summary>
     public partial class IronPythonConsole : Window
     {
+        public static IronPythonConsole LastInstance;
+
         private ConsoleOptions consoleOptionsProvider;
 
         // this is the name of the file currently being edited in the pad
@@ -72,7 +74,10 @@ namespace RevitPythonShell
             if (consoleCreated != null)
             {
                 console.Pad.Host.ConsoleCreated += consoleCreated;
-            }            
+            }
+
+            // ugly hack so we can talk about the last instance while the control is still being created...
+            LastInstance = this;
         }
 
         public IronPythonConsole(): this(null)
@@ -164,11 +169,7 @@ namespace RevitPythonShell
         /// 
         /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
         /// </summary>
-<<<<<<< .mine
-        public void ShowShell(ExternalCommandData commandData, ref string message, ElementSet elements)
-=======
-        public void ShowShell(ExternalCommandData commandData, ElementSet elements, Action closingCallback)
->>>>>>> .r128
+        public void ShowShell(ExternalCommandData commandData, ElementSet elements)
         {
             _elements = elements;
             _message = "";
@@ -177,33 +178,22 @@ namespace RevitPythonShell
 
             try
             {
-<<<<<<< .mine
-                Show();
-
-                // obey the external command interface
-                //var scope = console.Pad.Host.Console.ScriptScope;
-                //message = (scope.GetVariable("__message__") ?? "").ToString();
-                //return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
-=======
-                this.Closing += (sender, args) =>
-                {
-                    // obey the external command interface
-                    var scope = console.Pad.Host.Console.ScriptScope;
-                    _message = (scope.GetVariable("__message__") ?? "").ToString();
-                    _result = (Result)(int)(scope.GetVariable("__result__") ?? Result.Succeeded);
-                    closingCallback();
-                };
-                Show();                
->>>>>>> .r128
+                this.Loaded += new RoutedEventHandler(IronPythonConsole_Loaded);
+                ShowDialog();                
             }
             catch (Exception ex)
             {
-<<<<<<< .mine
-                message = ex.Message;                
-=======
                 _message = ex.Message;                
->>>>>>> .r128
             }
+        }
+
+        void IronPythonConsole_Loaded(object sender, RoutedEventArgs e)
+        {
+            var doc = _commandData.Application.ActiveUIDocument.Document;
+            var t = new Transaction(doc, "test");
+            t.Start();
+            t.Commit();
+            MessageBox.Show("done!");
         }
 
         public string Message { get { return _message;  } }
