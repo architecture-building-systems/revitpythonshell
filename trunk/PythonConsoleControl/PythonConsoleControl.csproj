@@ -49,21 +49,14 @@
     <Reference Include="ICSharpCode.AvalonEdit">
       <HintPath>RequiredLibraries\AvalonEdit\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython">
-      <HintPath>RequiredLibraries\IronPython\IronPython.dll</HintPath>
-    </Reference>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
     <Reference Include="IronPython.Modules">
       <HintPath>RequiredLibraries\IronPython\IronPython.Modules.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>RequiredLibraries\IronPython\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting">
-      <HintPath>RequiredLibraries\IronPython\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Debugging">
-      <HintPath>RequiredLibraries\IronPython\Microsoft.Scripting.Debugging.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
