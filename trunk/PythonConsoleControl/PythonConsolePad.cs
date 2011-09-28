@@ -23,7 +23,6 @@ namespace PythonConsoleControl
             host.Run();
             textEditor.FontFamily = new FontFamily("Consolas");
             textEditor.FontSize = 12;
-
         }
 
         public TextEditor Control

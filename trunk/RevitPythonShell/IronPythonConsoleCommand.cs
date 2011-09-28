@@ -28,32 +28,24 @@ namespace RevitPythonShell
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {            
             var messageCopy = message;
-            var gui = new IronPythonConsole(
-                (sender, e) => {
-                    var host = (PythonConsoleControl.PythonConsoleHost)sender;
-                    host.Console.ConsoleInitialized += (sender2, e2) => {                        
-                        
-                        // now that the console is created and initialized, the script scope should
-                        // be accessible...
-                        new ScriptExecutor(commandData, messageCopy, elements).SetupEnvironment(host.Engine, host.Console.ScriptScope);
+            var gui = new IronPythonConsole();
+            gui.consoleControl.WithConsoleHost((host) =>
+            {
+                // now that the console is created and initialized, the script scope should
+                // be accessible...
+                new ScriptExecutor(commandData, messageCopy, elements).SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
-                        // run the initscript
-                        var initScript = RevitPythonShellApplication.GetInitScript();
-                        if (initScript != null)
-                        {
-                            var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
-                            scriptSource.Execute(host.Console.ScriptScope);
-                        }
-
-                        // set the dispatcher thread to the right thread, because, baby, we don't want to crash Revit ever again!!!
-                        var pythonConsole = (PythonConsoleControl.PythonConsole)sender2;
-                        pythonConsole.SetDispatcherWindow(IronPythonConsole.LastInstance);
-                    };
-                });
-
-            gui.ShowShell(commandData, elements);
-            message = gui.Message;
-            return gui.ResultValue;
+                // run the initscript
+                var initScript = RevitPythonShellApplication.GetInitScript();
+                if (initScript != null)
+                {
+                    var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
+                    scriptSource.Execute(host.Console.ScriptScope);
+                }                
+            });
+            gui.consoleControl.SetDispatcherWindow(gui);
+            gui.ShowDialog();
+            return Result.Succeeded;
         }
 
         void Console_ConsoleInitialized(object sender, EventArgs e)
