@@ -20,7 +20,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Row="0" Grid.Column="0">
-            <console:IronPythonConsoleControl Name="console"></console:IronPythonConsoleControl>
+            <console:IronPythonConsoleControl Name="consoleControl"></console:IronPythonConsoleControl>
         </Grid>
         <GridSplitter Grid.Row="1" Height="10" VerticalAlignment="Center" HorizontalAlignment="Stretch"></GridSplitter>
         <DockPanel Grid.Row="2" Grid.Column="0">

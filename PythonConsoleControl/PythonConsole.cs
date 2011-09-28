@@ -112,8 +112,22 @@ namespace PythonConsoleControl
             
             }));
 
-            CodeContext codeContext = DefaultContext.Default;
-            ClrModule.SetCommandDispatcher(codeContext, DispatchCommand);
+            SetDispatcherWindow(dispatcherWindow);
+        }
+
+        /// <summary>
+        /// Perform action only after the console was initialized.
+        /// </summary>
+        public void WhenConsoleInitialized(Action action)
+        {
+            if (consoleInitialized)
+            {
+                action();
+            }
+            else
+            {
+                ConsoleInitialized += (sender, args) => action();
+            }
         }
         
         /// <summary>
@@ -121,17 +135,23 @@ namespace PythonConsoleControl
         /// </summary>
         public void SetDispatcherWindow(Window window)
         {
+            if (commandLine.ScriptScope == null)
+            {
+                return;
+            }
+
             dispatcherWindow = window;
+            var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(commandLine.ScriptScope.Engine);
+            var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
+            var dispatcher = pythonContext.GetSetCommandDispatcher((command) =>
+            {
+                if (command != null)
+                {
+                    dispatcherWindow.Dispatcher.Invoke(DispatcherPriority.Normal, command);
+                }
+            });            
         }
         
-
-        protected void DispatchCommand(Delegate command)
-        {
-            if (command != null)
-            {
-                dispatcherWindow.Dispatcher.Invoke(DispatcherPriority.Normal, command);
-            }
-        }
 
         public void Dispose()
         {

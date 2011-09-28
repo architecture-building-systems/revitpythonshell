@@ -30,6 +30,19 @@ namespace PythonConsoleControl
     {
         PythonConsolePad pad;
         
+        public void SetDispatcherWindow(Window window)
+        {
+            WithConsoleHost((host) => host.Console.SetDispatcherWindow(window));
+        }
+
+        /// <summary>
+        /// Perform the action on an already instantiated PythonConsoleHost.
+        /// </summary>
+        public void WithConsoleHost(Action<PythonConsoleHost> action)
+        {
+            pad.Host.WhenConsoleCreated(action);
+        }
+
         public IronPythonConsoleControl()
         {
             InitializeComponent();

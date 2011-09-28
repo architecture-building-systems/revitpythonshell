@@ -15,6 +15,7 @@ using Microsoft.Scripting.Hosting.Shell;
 namespace PythonConsoleControl
 {
     public delegate void ConsoleCreatedEventHandler(object sender, EventArgs e);
+    
 
     /// <summary>
     /// Hosts the python console.
@@ -23,7 +24,7 @@ namespace PythonConsoleControl
     {
         Thread thread;
         PythonTextEditor textEditor;
-        PythonConsole pythonConsole;
+        PythonConsole pythonConsole;       
 
         public event ConsoleCreatedEventHandler ConsoleCreated;
 
@@ -87,6 +88,18 @@ namespace PythonConsoleControl
             pythonConsole = new PythonConsole(textEditor, commandLine);
             if (ConsoleCreated != null) ConsoleCreated(this, EventArgs.Empty);
             return pythonConsole;
+        }
+
+        public void WhenConsoleCreated(Action<PythonConsoleHost> action)
+        {            
+            if (pythonConsole != null)
+            {
+                pythonConsole.WhenConsoleInitialized(() => action(this));
+            }
+            else
+            {
+                ConsoleCreated += (sender, args) => WhenConsoleCreated(action);
+            }
         }
 
         protected virtual void SetOutput(PythonOutputStream stream)

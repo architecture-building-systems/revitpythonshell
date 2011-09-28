@@ -28,20 +28,12 @@ namespace RevitPythonShell
     /// </summary>
     public partial class IronPythonConsole : Window
     {
-        public static IronPythonConsole LastInstance;
-
         private ConsoleOptions consoleOptionsProvider;
 
         // this is the name of the file currently being edited in the pad
         private string currentFileName;
 
-        // hooks into the revit api
-        private ExternalCommandData _commandData;
-        private string _message;
-        private ElementSet _elements;
-        private Result _result;
-
-        public IronPythonConsole(PythonConsoleControl.ConsoleCreatedEventHandler consoleCreated)
+        public IronPythonConsole()
         {
             Initialized += new EventHandler(MainWindow_Initialized);
 
@@ -65,24 +57,12 @@ namespace RevitPythonShell
 
             textEditor.PreviewKeyDown += new KeyEventHandler(textEditor_PreviewKeyDown);
 
-            consoleOptionsProvider = new ConsoleOptions(console.Pad);
+            consoleOptionsProvider = new ConsoleOptions(consoleControl.Pad);
 
             propertyGridComboBox.SelectedIndex = 0;
 
-            expander.Expanded += new RoutedEventHandler(expander_Expanded);
-
-            if (consoleCreated != null)
-            {
-                console.Pad.Host.ConsoleCreated += consoleCreated;
-            }
-
-            // ugly hack so we can talk about the last instance while the control is still being created...
-            LastInstance = this;
+            expander.Expanded += new RoutedEventHandler(expander_Expanded);            
         }
-
-        public IronPythonConsole(): this(null)
-        {
-        }                
         
         void MainWindow_Initialized(object sender, EventArgs e)
         {
@@ -136,7 +116,7 @@ namespace RevitPythonShell
                 statementsToRun = textEditor.TextArea.Selection.GetText(textEditor.TextArea.Document);
             else
                 statementsToRun = textEditor.TextArea.Document.Text;
-            console.Pad.Console.RunStatements(statementsToRun);
+            consoleControl.Pad.Console.RunStatements(statementsToRun);
         }
 
         void propertyGridComboBoxSelectionChanged(object sender, RoutedEventArgs e)
@@ -158,45 +138,6 @@ namespace RevitPythonShell
         void expander_Expanded(object sender, RoutedEventArgs e)
         {
             propertyGridComboBoxSelectionChanged(sender, e);
-        }
-
-        /// <summary>
-        /// Displays the shell form modally until the user closes it.
-        /// Provides the user with access to the parameters passed to the IExternalCommand implementation
-        /// in RevitPythonShell so that it can be passed on.
-        /// 
-        /// For convenience and backwards compatibility, commandData.Application is mapped to the variable "__revit__"
-        /// 
-        /// If an InitScript is defined in RevitPythonShell.xml, then it will be run first.
-        /// </summary>
-        public void ShowShell(ExternalCommandData commandData, ElementSet elements)
-        {
-            _elements = elements;
-            _message = "";
-            _result = Result.Succeeded;
-            _commandData = commandData;
-
-            try
-            {
-                this.Loaded += new RoutedEventHandler(IronPythonConsole_Loaded);
-                ShowDialog();                
-            }
-            catch (Exception ex)
-            {
-                _message = ex.Message;                
-            }
-        }
-
-        void IronPythonConsole_Loaded(object sender, RoutedEventArgs e)
-        {
-            var doc = _commandData.Application.ActiveUIDocument.Document;
-            var t = new Transaction(doc, "test");
-            t.Start();
-            t.Commit();
-            MessageBox.Show("done!");
-        }
-
-        public string Message { get { return _message;  } }
-        public Result ResultValue { get { return _result;  } }
+        }      
     }
 }
