@@ -64,8 +64,8 @@ namespace RevitPythonShell
             splitButton.AddPushButton(pbdConfigure);
 
             var commands = GetCommands().ToList();
-            AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => c.Group != null).GroupBy(c => c.Group));
-            AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => c.Group == null).ToList());
+            AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));
+            AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => string.IsNullOrEmpty(c.Group)).ToList());
         }
 
         private static ImageSource GetEmbeddedBmp(System.Reflection.Assembly app, string imageName)
@@ -255,7 +255,7 @@ namespace RevitPythonShell
             {
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
-                var group = commandNode.Attribute("group") == null ? null : commandNode.Attribute("group").Value;
+                var group = commandNode.Attribute("group") == null ? "" : commandNode.Attribute("group").Value;
                 yield return new Command { Name = commandName, Source = commandSrc, Group = group, Index = i++ };                
             }
         }
