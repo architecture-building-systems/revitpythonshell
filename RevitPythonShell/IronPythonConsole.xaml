@@ -84,20 +84,6 @@
                 </avalonEdit:TextEditor>
             </Grid>
         </DockPanel>
-        <Expander Name="expander" Grid.Column="1" Grid.RowSpan="3" Margin="0 0 0 0" HorizontalAlignment="Right" ExpandDirection="Left" MaxWidth="300">
-            <!--<DockPanel Grid.Column="1" Grid.RowSpan="2" Margin="4 0 0 0">-->
-            <DockPanel>
-                <ComboBox Name="propertyGridComboBox" DockPanel.Dock="Top"
-				        SelectedIndex="0" SelectionChanged="propertyGridComboBoxSelectionChanged">
-                    <ComboBoxItem>Console</ComboBoxItem>
-                    <ComboBoxItem>Pad</ComboBoxItem>
-                </ComboBox>
-                <pg:PropertyGrid Name="propertyGrid">
-                </pg:PropertyGrid>
-                <!--
-                <wpg:PropertyGrid x:Name="propertyGrid" /> 
-                -->
-            </DockPanel>
-        </Expander>
+        
     </Grid>
 </Window>

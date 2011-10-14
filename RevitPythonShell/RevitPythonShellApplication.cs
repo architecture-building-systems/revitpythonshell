@@ -10,6 +10,8 @@ using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RevitPythonShell
 {
@@ -22,18 +24,81 @@ namespace RevitPythonShell
         /// </summary>
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
-            ribbonPanel.AddStackedItems(
-                new PushButtonData("RevitPythonShell", "Open Python Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.StartShellCommand"),
-                new PushButtonData("NewShell", "New Shell", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.IronPythonConsoleCommand"),
-                new PushButtonData("Configure", "Configure...", typeof(RevitPythonShellApplication).Assembly.Location, "RevitPythonShell.ConfigureCommand"));
 
             var dllfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
             var dllname = "CommandLoaderAssembly.dll";
             var dllfullpath = Path.Combine(dllfolder, dllname);
 
-            // add canned commands as stacked pushbuttons (try to pack 3 commands per pushbutton, then 2)
+            BuildRibbonPanel(application, dllfullpath);
+            CreateCommandLoaderAssembly(dllfolder, dllname);
+            return Result.Succeeded;
+        }
+
+        private static void BuildRibbonPanel(UIControlledApplication application, string dllfullpath)
+        {
+            var assembly = typeof(RevitPythonShellApplication).Assembly;
+            //var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
+            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole36x36.png");
+            var smallImage = GetEmbeddedBmp(assembly, "RevitPythonShell.Resources.PythonConsole16x16.bmp");
+
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
+            var splitButton = ribbonPanel.AddItem(new SplitButtonData("splitButtonRevitPythonShell", "RevitPythonShell")) as SplitButton;
+
+            PushButtonData pbdOpenPythonShell = new PushButtonData(
+                            "RevitPythonShell", 
+                            "Interactive Python Shell", 
+                            assembly.Location, 
+                            "RevitPythonShell.IronPythonConsoleCommand");
+            pbdOpenPythonShell.Image = smallImage;
+            pbdOpenPythonShell.LargeImage = largeImage;
+            splitButton.AddPushButton(pbdOpenPythonShell);
+
+
+            PushButtonData pbdConfigure = new PushButtonData(
+                            "Configure", 
+                            "Configure...", 
+                            assembly.Location, 
+                            "RevitPythonShell.ConfigureCommand");
+            pbdConfigure.Image = smallImage;
+            pbdConfigure.LargeImage = largeImage;
+            splitButton.AddPushButton(pbdConfigure);
+
             var commands = GetCommands().ToList();
+            AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => c.Group != null).GroupBy(c => c.Group));
+            AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => c.Group == null).ToList());
+        }
+
+        private static ImageSource GetEmbeddedBmp(System.Reflection.Assembly app, string imageName)
+        {
+            var file = app.GetManifestResourceStream(imageName);
+            var source = BmpBitmapDecoder.Create(file, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            return source.Frames[0];
+        }
+
+        private static ImageSource GetEmbeddedPng(System.Reflection.Assembly app, string imageName)
+        {
+            var file = app.GetManifestResourceStream(imageName);
+            var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+            return source.Frames[0];
+        }
+
+        private static void AddGroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, IEnumerable<IGrouping<string, Command>> groupedCommands)
+        {
+            foreach (var group in groupedCommands)
+            {
+                SplitButtonData splitButtonData = new SplitButtonData(group.Key, group.Key);
+                var splitButton = ribbonPanel.AddItem(splitButtonData) as SplitButton;
+                foreach (var command in group)
+                {
+                    splitButton.AddPushButton(new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index));
+                }
+            }
+        }
+
+
+        private static void AddUngroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, List<Command> commands)
+        {
+            // add canned commands as stacked pushbuttons (try to pack 3 commands per pushbutton, then 2)            
             while (commands.Count > 4 || commands.Count == 3)
             {
                 // remove first three commands from the list
@@ -78,8 +143,6 @@ namespace RevitPythonShell
                 ribbonPanel.AddItem(
                     new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index));
             }
-            CreateCommandLoaderAssembly(dllfolder, dllname);
-            return Result.Succeeded;
         }
 
         /// <summary>
@@ -144,7 +207,7 @@ namespace RevitPythonShell
         {
             string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
             return Path.Combine(folder, "RevitPythonShell.xml");
-        }      
+        }
 
         /// <summary>
         /// Returns a list of commands as defined in the settings file.
@@ -157,8 +220,8 @@ namespace RevitPythonShell
             {
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
-
-                yield return new Command { Name = commandName, Source = commandSrc, Index = i++ };                
+                var group = commandNode.Attribute("group") == null ? null : commandNode.Attribute("group").Value;
+                yield return new Command { Name = commandName, Source = commandSrc, Group = group, Index = i++ };                
             }
         }
 
@@ -278,8 +341,9 @@ namespace RevitPythonShell
     internal class Command
     {
         public string Name;
+        public string Group;
         public string Source;
-        public int Index;
+        public int Index;        
 
         public override string ToString()
         {

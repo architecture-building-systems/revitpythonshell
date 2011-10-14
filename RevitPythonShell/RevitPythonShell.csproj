@@ -166,7 +166,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="ipy.ico" />
+    <None Include="Resources\ipy.ico" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Cut.png" />
     <Resource Include="Images\Delete.png" />
@@ -177,6 +177,13 @@
     <Resource Include="Images\Save.png" />
     <Resource Include="Images\Undo.png" />
     <Resource Include="Images\WordWrap.png" />
+    <EmbeddedResource Include="Resources\CreateWall.png" />
+    <Content Include="Resources\py.ico" />
+    <Content Include="Resources\pycon.ico" />
+    <EmbeddedResource Include="Resources\PythonConsole16x16.bmp" />
+    <EmbeddedResource Include="Resources\PythonConsole32x32.bmp" />
+    <EmbeddedResource Include="Resources\PythonConsole32x32.png" />
+    <EmbeddedResource Include="Resources\PythonConsole36x36.png" />
     <Content Include="RevitPythonShell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
