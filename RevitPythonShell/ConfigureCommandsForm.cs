@@ -63,6 +63,7 @@ namespace RevitPythonShell
             var command = (Command)lstCommands.SelectedItem;
             txtCommandName.Text = command.Name;
             txtCommandPath.Text = command.Source;
+            txtCommandGroup.Text = command.Group;
         }
 
         /// <summary>
@@ -72,6 +73,14 @@ namespace RevitPythonShell
         {
             var command = (Command)lstCommands.SelectedItem;
             command.Name = txtCommandName.Text;
+
+            RefreshBindingContext(lstCommands, _commands);
+        }
+
+        private void txtCommandGroup_TextChanged(object sender, EventArgs e)
+        {
+            var command = (Command)lstCommands.SelectedItem;
+            command.Group = txtCommandGroup.Text;
 
             RefreshBindingContext(lstCommands, _commands);
         }
@@ -123,6 +132,7 @@ namespace RevitPythonShell
             {
                 var command = new Command();
                 command.Name = "";
+                command.Group = "";
                 command.Source = dialog.FileName;
 
                 _commands.Add(command);
@@ -336,5 +346,7 @@ namespace RevitPythonShell
             _variables.RemoveAt(lstVariables.SelectedIndex);
             RefreshBindingContext(lstVariables, _variables);
         }
+
+        
     }
 }

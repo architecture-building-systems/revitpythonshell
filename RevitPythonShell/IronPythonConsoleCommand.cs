@@ -47,10 +47,5 @@ namespace RevitPythonShell
             gui.ShowDialog();
             return Result.Succeeded;
         }
-
-        void Console_ConsoleInitialized(object sender, EventArgs e)
-        {
-            
-        }
     }    
 }
