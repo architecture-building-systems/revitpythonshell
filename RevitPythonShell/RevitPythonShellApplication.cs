@@ -38,8 +38,8 @@ namespace RevitPythonShell
         {
             var assembly = typeof(RevitPythonShellApplication).Assembly;
             //var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
-            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole36x36.png");
-            var smallImage = GetEmbeddedBmp(assembly, "RevitPythonShell.Resources.PythonConsole16x16.bmp");
+            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
+            var smallImage = GetEmbeddedBmp(assembly, "RevitPythonShell.Resources.PythonConsole16x16.png");
 
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
             var splitButton = ribbonPanel.AddItem(new SplitButtonData("splitButtonRevitPythonShell", "RevitPythonShell")) as SplitButton;
@@ -79,18 +79,26 @@ namespace RevitPythonShell
         {
             var file = app.GetManifestResourceStream(imageName);
             var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+            Debug.WriteLine(source.Frames[0].DpiX);
+            Debug.WriteLine(source.Frames[0].DpiY);
             return source.Frames[0];
         }
 
         private static void AddGroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, IEnumerable<IGrouping<string, Command>> groupedCommands)
         {
+            var largeImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript32x32.png");
+            var smallImage = GetEmbeddedBmp(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript16x16.png");
+
             foreach (var group in groupedCommands)
             {
                 SplitButtonData splitButtonData = new SplitButtonData(group.Key, group.Key);
                 var splitButton = ribbonPanel.AddItem(splitButtonData) as SplitButton;
                 foreach (var command in group)
                 {
-                    splitButton.AddPushButton(new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index));
+                    var pbd = new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index);
+                    pbd.Image = smallImage;
+                    pbd.LargeImage = largeImage;
+                    splitButton.AddPushButton(pbd);
                 }
             }
         }
@@ -98,6 +106,9 @@ namespace RevitPythonShell
 
         private static void AddUngroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, List<Command> commands)
         {
+            var largeImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript32x32.png");
+            var smallImage = GetEmbeddedBmp(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript16x16.png");
+
             // add canned commands as stacked pushbuttons (try to pack 3 commands per pushbutton, then 2)            
             while (commands.Count > 4 || commands.Count == 3)
             {
@@ -109,10 +120,19 @@ namespace RevitPythonShell
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
 
-                ribbonPanel.AddStackedItems(
-                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index),
-                    new PushButtonData(command2.Name, command2.Name, dllfullpath, "Command" + command2.Index));
+                PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
+                pbdA.Image = smallImage;
+                pbdA.Image = largeImage;
+
+                PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
+                pbdB.Image = smallImage;
+                pbdB.Image = largeImage;
+
+                PushButtonData pbdC = new PushButtonData(command2.Name, command2.Name, dllfullpath, "Command" + command2.Index);
+                pbdC.Image = smallImage;
+                pbdC.Image = largeImage;
+
+                ribbonPanel.AddStackedItems(pbdA, pbdB, pbdC);
             }
             if (commands.Count == 4)
             {
@@ -121,9 +141,16 @@ namespace RevitPythonShell
                 var command1 = commands[1];
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
-                ribbonPanel.AddStackedItems(
-                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index));
+
+                PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
+                pbdA.Image = smallImage;
+                pbdA.Image = largeImage;
+
+                PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
+                pbdB.Image = smallImage;
+                pbdB.Image = largeImage;
+
+                ribbonPanel.AddStackedItems(pbdA, pbdB);
             }
             if (commands.Count == 2)
             {
@@ -132,16 +159,24 @@ namespace RevitPythonShell
                 var command1 = commands[1];
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
-                ribbonPanel.AddStackedItems(
-                    new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index),
-                    new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index));
+                PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
+                pbdA.Image = smallImage;
+                pbdA.Image = largeImage;
+
+                PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
+                pbdB.Image = smallImage;
+                pbdB.Image = largeImage;
+
+                ribbonPanel.AddStackedItems(pbdA, pbdB);
             }
             if (commands.Count == 1)
             {
                 // only one command defined, show as a big button...
                 var command = commands[0];
-                ribbonPanel.AddItem(
-                    new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index));
+                PushButtonData pbd = new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index);
+                pbd.Image = smallImage;
+                pbd.Image = largeImage;
+                ribbonPanel.AddItem(pbd);
             }
         }
 
