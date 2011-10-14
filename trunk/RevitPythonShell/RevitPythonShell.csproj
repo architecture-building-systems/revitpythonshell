@@ -180,10 +180,10 @@
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Resources\py.ico" />
     <Content Include="Resources\pycon.ico" />
-    <EmbeddedResource Include="Resources\PythonConsole16x16.bmp" />
-    <EmbeddedResource Include="Resources\PythonConsole32x32.bmp" />
     <EmbeddedResource Include="Resources\PythonConsole32x32.png" />
-    <EmbeddedResource Include="Resources\PythonConsole36x36.png" />
+    <EmbeddedResource Include="Resources\PythonConsole16x16.png" />
+    <EmbeddedResource Include="Resources\PythonScript16x16.png" />
+    <EmbeddedResource Include="Resources\PythonScript32x32.png" />
     <Content Include="RevitPythonShell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
