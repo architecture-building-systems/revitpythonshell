@@ -54,14 +54,8 @@ namespace RevitPythonShell
             InitializeComponent();
 
             textEditor.SyntaxHighlighting = pythonHighlighting;
-
             textEditor.PreviewKeyDown += new KeyEventHandler(textEditor_PreviewKeyDown);
-
             consoleOptionsProvider = new ConsoleOptions(consoleControl.Pad);
-
-            propertyGridComboBox.SelectedIndex = 0;
-
-            expander.Expanded += new RoutedEventHandler(expander_Expanded);            
         }
         
         void MainWindow_Initialized(object sender, EventArgs e)
@@ -117,27 +111,6 @@ namespace RevitPythonShell
             else
                 statementsToRun = textEditor.TextArea.Document.Text;
             consoleControl.Pad.Console.RunStatements(statementsToRun);
-        }
-
-        void propertyGridComboBoxSelectionChanged(object sender, RoutedEventArgs e)
-        {
-            if (propertyGrid == null)
-                return;
-            switch (propertyGridComboBox.SelectedIndex)
-            {
-                case 0:
-                    propertyGrid.SelectedObject = consoleOptionsProvider; // not .Instance
-                    break;
-                case 1:
-                    //propertyGrid.SelectedObject = textEditor.Options; (for WPF native control)
-                    propertyGrid.SelectedObject = textEditor.Options;
-                    break;
-            }
-        }
-
-        void expander_Expanded(object sender, RoutedEventArgs e)
-        {
-            propertyGridComboBoxSelectionChanged(sender, e);
-        }      
+        }         
     }
 }
