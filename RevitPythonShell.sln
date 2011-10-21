@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonConsoleControl", "Pyt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterRevit2012Addin", "RegisterRevit2012Addin\RegisterRevit2012Addin.csproj", "{07988933-CD81-4B15-BEB4-9555FC492AAD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84677A26-E049-48B3-AFB0-3B3F99955849}"
+	ProjectSection(SolutionItems) = preProject
+		Setup_RevitPythonShell_Vasari_TP2.1.iss = Setup_RevitPythonShell_Vasari_TP2.1.iss
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True

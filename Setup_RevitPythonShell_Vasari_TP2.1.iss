@@ -2,7 +2,6 @@
 Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\ICSharpCode.AvalonEdit.dll; DestDir: {app};
 Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\IronPython.dll; DestDir: {app};
 Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\IronPython.Modules.dll; DestDir: {app};
-Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\IronTextBox.dll; DestDir: {app};
 Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\PythonConsoleControl.dll; DestDir: {app};
 Source: C:\projects\revitpythonshell\RevitPythonShell\bin\Debug\RevitPythonShell.dll; DestDir: {app};
 Source: "C:\Program Files (x86)\IronPython 2.7\Microsoft.Scripting.Metadata.dll"; DestDir: {app};
