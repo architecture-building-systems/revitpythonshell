@@ -79,12 +79,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IronPythonConsoleControl\IronPythonConsoleControl.csproj">
-      <Project>{D4FCAF4D-C580-41A0-9CCC-684839C1CECC}</Project>
-      <Name>IronPythonConsoleControl</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
