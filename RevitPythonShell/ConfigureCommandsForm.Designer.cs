@@ -62,11 +62,21 @@
             this.lstVariables = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.txtInitScript = new System.Windows.Forms.TextBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.lstRepositories = new System.Windows.Forms.ListBox();
+            this.btnRepositoryRemove = new System.Windows.Forms.Button();
+            this.btnRepositoryMoveUp = new System.Windows.Forms.Button();
+            this.btnRepositoryMoveDown = new System.Windows.Forms.Button();
+            this.txtRepositoryPath = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnRepositoryBrowse = new System.Windows.Forms.Button();
+            this.btnRepositoryAdd = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnSave
@@ -92,6 +102,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
@@ -406,6 +417,97 @@
             this.txtInitScript.Size = new System.Drawing.Size(544, 188);
             this.txtInitScript.TabIndex = 0;
             // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.btnRepositoryAdd);
+            this.tabPage5.Controls.Add(this.btnRepositoryBrowse);
+            this.tabPage5.Controls.Add(this.label7);
+            this.tabPage5.Controls.Add(this.txtRepositoryPath);
+            this.tabPage5.Controls.Add(this.btnRepositoryMoveDown);
+            this.tabPage5.Controls.Add(this.btnRepositoryMoveUp);
+            this.tabPage5.Controls.Add(this.btnRepositoryRemove);
+            this.tabPage5.Controls.Add(this.lstRepositories);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(550, 211);
+            this.tabPage5.TabIndex = 4;
+            this.tabPage5.Text = "Repositories";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // lstRepositories
+            // 
+            this.lstRepositories.FormattingEnabled = true;
+            this.lstRepositories.Location = new System.Drawing.Point(0, 6);
+            this.lstRepositories.Name = "lstRepositories";
+            this.lstRepositories.Size = new System.Drawing.Size(400, 147);
+            this.lstRepositories.TabIndex = 0;
+            // 
+            // btnRepositoryRemove
+            // 
+            this.btnRepositoryRemove.Location = new System.Drawing.Point(436, 6);
+            this.btnRepositoryRemove.Name = "btnRepositoryRemove";
+            this.btnRepositoryRemove.Size = new System.Drawing.Size(99, 24);
+            this.btnRepositoryRemove.TabIndex = 1;
+            this.btnRepositoryRemove.Text = "Remove";
+            this.btnRepositoryRemove.UseVisualStyleBackColor = true;
+            this.btnRepositoryRemove.Click += new System.EventHandler(this.btnRepositoryRemove_Click);
+            // 
+            // btnRepositoryMoveUp
+            // 
+            this.btnRepositoryMoveUp.Location = new System.Drawing.Point(436, 99);
+            this.btnRepositoryMoveUp.Name = "btnRepositoryMoveUp";
+            this.btnRepositoryMoveUp.Size = new System.Drawing.Size(99, 24);
+            this.btnRepositoryMoveUp.TabIndex = 2;
+            this.btnRepositoryMoveUp.Text = "Move up";
+            this.btnRepositoryMoveUp.UseVisualStyleBackColor = true;
+            this.btnRepositoryMoveUp.Click += new System.EventHandler(this.btnRepositoryMoveUp_Click);
+            // 
+            // btnRepositoryMoveDown
+            // 
+            this.btnRepositoryMoveDown.Location = new System.Drawing.Point(436, 129);
+            this.btnRepositoryMoveDown.Name = "btnRepositoryMoveDown";
+            this.btnRepositoryMoveDown.Size = new System.Drawing.Size(99, 24);
+            this.btnRepositoryMoveDown.TabIndex = 3;
+            this.btnRepositoryMoveDown.Text = "Move down";
+            this.btnRepositoryMoveDown.UseVisualStyleBackColor = true;
+            this.btnRepositoryMoveDown.Click += new System.EventHandler(this.btnRepositoryMoveDown_Click);
+            // 
+            // txtRepositoryPath
+            // 
+            this.txtRepositoryPath.Location = new System.Drawing.Point(32, 174);
+            this.txtRepositoryPath.Name = "txtRepositoryPath";
+            this.txtRepositoryPath.Size = new System.Drawing.Size(367, 20);
+            this.txtRepositoryPath.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(-3, 177);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(29, 13);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "URL";
+            // 
+            // btnRepositoryBrowse
+            // 
+            this.btnRepositoryBrowse.Location = new System.Drawing.Point(403, 171);
+            this.btnRepositoryBrowse.Name = "btnRepositoryBrowse";
+            this.btnRepositoryBrowse.Size = new System.Drawing.Size(27, 24);
+            this.btnRepositoryBrowse.TabIndex = 6;
+            this.btnRepositoryBrowse.Text = "...";
+            this.btnRepositoryBrowse.UseVisualStyleBackColor = true;
+            this.btnRepositoryBrowse.Click += new System.EventHandler(this.btnRepositoryBrowse_Click);
+            // 
+            // btnRepositoryAdd
+            // 
+            this.btnRepositoryAdd.Location = new System.Drawing.Point(436, 171);
+            this.btnRepositoryAdd.Name = "btnRepositoryAdd";
+            this.btnRepositoryAdd.Size = new System.Drawing.Size(99, 24);
+            this.btnRepositoryAdd.TabIndex = 7;
+            this.btnRepositoryAdd.Text = "Add";
+            this.btnRepositoryAdd.UseVisualStyleBackColor = true;
+            this.btnRepositoryAdd.Click += new System.EventHandler(this.btnRepositoryAdd_Click);
+            // 
             // ConfigureCommandsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -427,6 +529,8 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
+            this.tabPage5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -466,5 +570,14 @@
         private System.Windows.Forms.TextBox txtInitScript;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtCommandGroup;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Button btnRepositoryAdd;
+        private System.Windows.Forms.Button btnRepositoryBrowse;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox txtRepositoryPath;
+        private System.Windows.Forms.Button btnRepositoryMoveDown;
+        private System.Windows.Forms.Button btnRepositoryMoveUp;
+        private System.Windows.Forms.Button btnRepositoryRemove;
+        private System.Windows.Forms.ListBox lstRepositories;
     }
 }
