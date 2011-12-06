@@ -25,13 +25,36 @@ namespace RevitPythonShell
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
 
-            var dllfolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
-            var dllname = "CommandLoaderAssembly.dll";
-            var dllfullpath = Path.Combine(dllfolder, dllname);
+            var dllfolder = Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                "RevitPythonShell2012");
+            var assemblyName = "CommandLoaderAssembly";
+            var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
+            var settings = GetSettings();
+
+            CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
             BuildRibbonPanel(application, dllfullpath);
-            CreateCommandLoaderAssembly(dllfolder, dllname);
+
+            foreach (var repository in GetRepositories())
+            {
+                CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
+                BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
+            }
             return Result.Succeeded;
+        }
+
+        private static void BuildRepositoryPanel(UIControlledApplication application, Repository repository, string dllfullpath)
+        {
+            var assembly = typeof(RevitPythonShellApplication).Assembly;
+            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
+            var smallImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole16x16.png");
+
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel(repository.Name);
+
+            var commands = GetCommands(XDocument.Load(repository.Url)).ToList();
+            AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));
+            AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => string.IsNullOrEmpty(c.Group)).ToList());
         }
 
         private static void BuildRibbonPanel(UIControlledApplication application, string dllfullpath)
@@ -63,10 +86,12 @@ namespace RevitPythonShell
             pbdConfigure.LargeImage = largeImage;
             splitButton.AddPushButton(pbdConfigure);
 
-            var commands = GetCommands().ToList();
+            var commands = GetCommands(GetSettings()).ToList();
             AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));
             AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => string.IsNullOrEmpty(c.Group)).ToList());
         }
+
+
 
         private static ImageSource GetEmbeddedBmp(System.Reflection.Assembly app, string imageName)
         {
@@ -183,13 +208,13 @@ namespace RevitPythonShell
         /// <summary>
         /// Creates a dynamic assembly that contains types for starting the canned commands.
         /// </summary>
-        private static void CreateCommandLoaderAssembly(string dllfolder, string dllname)
+        private static void CreateCommandLoaderAssembly(XDocument repository, string dllfolder, string dllname)
         {
-            var assemblyName = new AssemblyName { Name = "CommandLoaderAssembly", Version = new Version(1, 0, 0, 0) };
+            var assemblyName = new AssemblyName { Name = dllname + ".dll", Version = new Version(1, 0, 0, 0) };
             var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllfolder);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", dllname);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", dllname + ".dll");
 
-            foreach (var command in GetCommands())
+            foreach (var command in GetCommands(repository))
             {
                 var typebuilder = moduleBuilder.DefineType("Command" + command.Index,
                                                         TypeAttributes.Class | TypeAttributes.Public,
@@ -219,7 +244,7 @@ namespace RevitPythonShell
                 gen.Emit(OpCodes.Ret);                    // return from constructor
                 typebuilder.CreateType();
             }
-            assemblyBuilder.Save(dllname);
+            assemblyBuilder.Save(dllname + ".dll");
         }
 
         Result IExternalApplication.OnShutdown(UIControlledApplication application)
@@ -240,23 +265,23 @@ namespace RevitPythonShell
 
         private static string GetSettingsFile()
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell");
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell2012");
             return Path.Combine(folder, "RevitPythonShell.xml");
         }
 
         /// <summary>
-        /// Returns a list of commands as defined in the settings file.
+        /// Returns a list of commands as defined in the repository file.
         /// </summary>
         /// <returns></returns>
-        public static IEnumerable<Command> GetCommands()
+        public static IEnumerable<Command> GetCommands(XDocument repository)
         {
             int i = 0;
-            foreach (var commandNode in GetSettings().Root.Descendants("Command") ?? new List<XElement>())
+            foreach (var commandNode in repository.Root.Descendants("Command") ?? new List<XElement>())
             {
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
                 var group = commandNode.Attribute("group") == null ? "" : commandNode.Attribute("group").Value;
-                yield return new Command { Name = commandName, Source = commandSrc, Group = group, Index = i++ };                
+                yield return new Command { Name = commandName, Source = commandSrc, Group = group, Index = i++ };
             }
         }
 
@@ -281,6 +306,7 @@ namespace RevitPythonShell
         /// </summary>
         public static void WriteSettings(
             IEnumerable<Command> commands, 
+            IEnumerable<Repository> repositories,
             IEnumerable<string> searchPaths, 
             IEnumerable<KeyValuePair<string, string>> variables,
             string initScript)
@@ -317,6 +343,17 @@ namespace RevitPythonShell
 
             }
             doc.Root.Add(xmlCommands);
+
+            // add repositories
+            var xmlRepositories = new XElement("Repositories");
+            foreach (var repository in repositories)
+            {
+                xmlRepositories.Add(new XElement(
+                    "Repository",
+                        new XAttribute("name", repository.Name),
+                        new XAttribute("url", repository.Url)));
+            }
+            doc.Root.Add(xmlRepositories);
 
             // add search paths
             var xmlSearchPaths = new XElement("SearchPaths");
@@ -369,6 +406,16 @@ namespace RevitPythonShell
                 yield return searchPathNode.Attribute("name").Value;
             }
         }
+
+        public static IEnumerable<Repository> GetRepositories()
+        {
+            foreach (var repositoryNode in GetSettings().Root.Descendants("Repository"))
+            {
+                var name = repositoryNode.Attribute("name").Value;
+                var url = repositoryNode.Attribute("url").Value;
+                yield return new Repository() { Name = name, Url = url };
+            }
+        }
     }
 
     /// <summary>
@@ -384,6 +431,67 @@ namespace RevitPythonShell
         public override string ToString()
         {
             return Name;
+        }
+    }
+
+    /// <summary>
+    /// A simple structure to hold information about repositories.
+    /// </summary>
+    internal class Repository
+    {
+        public string Name;
+        public string Url;
+
+        public override string ToString()
+        {
+            return Name;    
+        }
+
+        /// <summary>
+        /// Tries to load a repository from a specified path
+        /// (see documentation for XmlReader.Create(string))
+        /// </summary>
+        public static Repository FromPath(string path)
+        {
+            XDocument repositoryXml;
+            try
+            {
+                repositoryXml = XDocument.Load(path);
+            }
+            catch
+            {
+                return null;
+            }
+            var repositoryNode = repositoryXml.Root.Descendants("Repository").FirstOrDefault();
+            if (repositoryNode == null)
+            {
+                return null;
+            }
+            var nameAttribute = repositoryNode.Attribute("name");
+            if (nameAttribute == null)
+            {
+                return null;
+            }
+            var name = nameAttribute.Value;
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+            return new Repository() { Name = name, Url = path };
+        }
+
+        /// <summary>
+        /// Return a version of the repositories name that can be used as
+        /// a filename.
+        /// </summary>
+        public string SafeName()
+        {
+            var invalidChars = new HashSet<char>(
+                System.IO.Path.GetInvalidFileNameChars())
+                .Union(System.IO.Path.GetInvalidPathChars());
+            var safeName = new string(
+                Name.Select(c => invalidChars.Contains(c) ? '_' : c).ToArray());
+            return safeName;
         }
     }
 }

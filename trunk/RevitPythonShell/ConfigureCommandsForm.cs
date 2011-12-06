@@ -13,6 +13,7 @@ namespace RevitPythonShell
     public partial class ConfigureCommandsForm : Form
     {
         private List<Command> _commands;
+        private List<Repository> _repositories;
         private List<string> _searchPaths;
         private List<KeyValuePair<string, string>> _variables;
 
@@ -35,8 +36,12 @@ namespace RevitPythonShell
         /// </summary>
         private void ConfigureCommandsForm_Load(object sender, EventArgs e)
         {
-            _commands = RevitPythonShellApplication.GetCommands().ToList();
+            _commands = RevitPythonShellApplication.GetCommands(
+                RevitPythonShellApplication.GetSettings()).ToList();
             lstCommands.DataSource = _commands;
+
+            _repositories = RevitPythonShellApplication.GetRepositories().ToList();
+            lstRepositories.DataSource = _repositories;
 
             _searchPaths = RevitPythonShellApplication.GetSearchPaths().ToList();
             lstSearchPaths.DataSource = _searchPaths;
@@ -189,18 +194,28 @@ namespace RevitPythonShell
             int oldPosition = lstCommands.SelectedIndex;
             int newPosition = Math.Max(0, oldPosition - 1);
 
-            SwapCommandPositions(oldPosition, newPosition);
+            SwapPositions(_commands, oldPosition, newPosition);
             
             RefreshBindingContext(lstCommands, _commands);
 
             lstCommands.SelectedIndex = newPosition;
         }
 
-        private void SwapCommandPositions(int oldPosition, int newPosition)
+        private void btnRepositoryMoveUp_Click(object sender, EventArgs e)
         {
-            var temp = _commands[newPosition];
-            _commands[newPosition] = _commands[oldPosition];
-            _commands[oldPosition] = temp;
+            int oldPosition = lstCommands.SelectedIndex;
+            int newPosition = Math.Max(0, oldPosition - 1);
+
+            SwapPositions(_repositories, oldPosition, newPosition);
+            RefreshBindingContext(lstRepositories, _repositories);
+            lstRepositories.SelectedIndex = newPosition;
+        }
+
+        private void SwapPositions<T>(List<T> container, int oldPosition, int newPosition)
+        {
+            var temp = container[newPosition];
+            container[newPosition] = container[oldPosition];
+            container[oldPosition] = temp;
         }
 
         private void btnCommandMoveDown_Click(object sender, EventArgs e)
@@ -208,11 +223,20 @@ namespace RevitPythonShell
             int oldPosition = lstCommands.SelectedIndex;
             int newPosition = Math.Min(_commands.Count - 1, oldPosition + 1);
 
-            SwapCommandPositions(oldPosition, newPosition);
+            SwapPositions(_commands, oldPosition, newPosition);
 
             RefreshBindingContext(lstCommands, _commands);
 
             lstCommands.SelectedIndex = newPosition;
+        }
+
+        private void btnRepositoryMoveDown_Click(object sender, EventArgs e)
+        {
+            int oldPosition = lstRepositories.SelectedIndex;
+            int newPosition = Math.Min(_repositories.Count - 1, oldPosition + 1);
+            SwapPositions(_repositories, oldPosition, newPosition);
+            RefreshBindingContext(lstRepositories, _repositories);
+            lstRepositories.SelectedIndex = newPosition;
         }
 
         /// <summary>
@@ -220,7 +244,7 @@ namespace RevitPythonShell
         /// </summary>
         private void btnCommandSave_Click(object sender, EventArgs e)
         {
-            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text);
+            RevitPythonShellApplication.WriteSettings(_commands, _repositories, _searchPaths, _variables, txtInitScript.Text);
             Close();
         }
 
@@ -347,6 +371,41 @@ namespace RevitPythonShell
             RefreshBindingContext(lstVariables, _variables);
         }
 
-        
+        private void btnRepositoryRemove_Click(object sender, EventArgs e)
+        {
+            if (lstRepositories.SelectedIndex < 0)
+            {
+                return;
+            }
+
+            _repositories.RemoveAt(lstRepositories.SelectedIndex);
+            RefreshBindingContext(lstRepositories, _repositories);
+        }
+
+        private void btnRepositoryBrowse_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = true;
+            dialog.CheckPathExists = true;
+            dialog.Multiselect = false;
+
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                txtRepositoryPath.Text = dialog.FileName;
+            }
+        }
+
+        private void btnRepositoryAdd_Click(object sender, EventArgs e)
+        {
+            var repository = Repository.FromPath(txtRepositoryPath.Text);
+            if (repository != null)
+            {
+                _repositories.Add(repository);
+                RefreshBindingContext(lstRepositories, _repositories);
+                lstRepositories.SelectedIndex = _repositories.Count - 1;
+
+                txtRepositoryPath.Text = "";
+            }
+        }        
     }
 }
