@@ -64,7 +64,7 @@ namespace RegisterRevit2011Addin
             var revitProducts = RevitProductUtility.GetAllInstalledRevitProducts();
             if (revitProducts.Count > 0)
             {
-                File.Delete(Path.Combine(revitProducts[0].CurrentUserAddInFolder, "RevitPythonShell.addin"));
+                File.Delete(Path.Combine(revitProducts[0].CurrentUserAddInFolder, "RevitPythonShell2012.addin"));
             }
             base.Uninstall(savedState);
         }
