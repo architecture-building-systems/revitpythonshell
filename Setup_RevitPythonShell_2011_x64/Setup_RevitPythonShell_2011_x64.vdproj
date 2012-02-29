@@ -280,10 +280,10 @@
             "ComponentsUrl" = "8:"
                 "Items"
                 {
-                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0,Profile=Client"
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.0"
                     {
-                    "Name" = "8:Microsoft .NET Framework 4 Client Profile (x86 and x64)"
-                    "ProductCode" = "8:.NETFramework,Version=v4.0,Profile=Client"
+                    "Name" = "8:Microsoft .NET Framework 4 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.0"
                     }
                     "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
                     {
@@ -796,7 +796,7 @@
                     "{9EF0B969-E518-4E46-987F-47570745A589}:_EE2EC4635492412393568753A457684E"
                     {
                     "Name" = "8:RevitPythonShell2012"
-                    "AlwaysCreate" = "11:FALSE"
+                    "AlwaysCreate" = "11:TRUE"
                     "Condition" = "8:"
                     "Transitive" = "11:FALSE"
                     "Property" = "8:_A1C2D72C6720465FB350EF6521C46CC7"
@@ -815,7 +815,7 @@
             "{39E1837C-0DB9-45A2-89C8-438377A77565}:_63A979B66269414EBE6605658D050256"
             {
             "Name" = "8:Search for existing RevitPythonShell.xml"
-            "Folder" = "8:[AppDataFolder]\\RevitPythonShell\\"
+            "Folder" = "8:[AppDataFolder]\\RevitPythonShell2012\\"
             "Depth" = "2:0"
             "FileName" = "8:RevitPythonShell.xml"
             "MinVesion" = "8:"
@@ -838,7 +838,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:RevitPythonShell2012"
         "ProductCode" = "8:{42573206-4333-4779-9E0D-F71827F5695B}"
-        "PackageCode" = "8:{473F9D66-E252-411E-8EA9-22EFAE688E78}"
+        "PackageCode" = "8:{70DB25B8-82F0-4E50-9DED-C810361B5635}"
         "UpgradeCode" = "8:{4A16F318-A80F-4858-BABC-09059E9A0857}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
