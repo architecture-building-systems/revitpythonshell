@@ -14,6 +14,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84677A26-E049-48B3-AFB0-3B3F99955849}"
 	ProjectSection(SolutionItems) = preProject
 		Setup_RevitPythonShell_Vasari_TP2.1.iss = Setup_RevitPythonShell_Vasari_TP2.1.iss
+		Setup_RevitPythonShell_Vasari_TP2.5.iss = Setup_RevitPythonShell_Vasari_TP2.5.iss
 	EndProjectSection
 EndProject
 Global
