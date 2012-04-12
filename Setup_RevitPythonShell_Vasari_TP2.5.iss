@@ -7,7 +7,7 @@ Source: bin\IronPython.Modules.dll; DestDir: {app};
 Source: bin\Microsoft.Scripting.Metadata.dll; DestDir: {app};
 Source: bin\Microsoft.Dynamic.dll; DestDir: {app};
 Source: bin\Microsoft.Scripting.dll; DestDir: {app};
-Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell; Flags: onlyifdoesntexist;
+Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell2012; Flags: onlyifdoesntexist; 
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
@@ -31,7 +31,7 @@ begin
 	AddInFileContents := AddInFileContents + '    <Assembly>'  + ExpandConstant('{app}') + '\RevitPythonShell.dll</Assembly>' + #13#10;
 	AddInFileContents := AddInFileContents + '    <AddInId>3a7a1d24-51ed-462b-949f-1ddcca12008d</AddInId>' + #13#10;
 	AddInFileContents := AddInFileContents + '    <FullClassName>RevitPythonShell.RevitPythonShellApplication</FullClassName>' + #13#10;
-	AddInFileContents := AddInFileContents + '  <VendorId>RIPS</VendorId>' + #13#10;
+	AddInFileContents := AddInFileContents + '  <VendorId>ADSK</VendorId>' + #13#10;
 	AddInFileContents := AddInFileContents + '  </AddIn>' + #13#10;
 	AddInFileContents := AddInFileContents + '</RevitAddIns>' + #13#10;
 	SaveStringToFile(AddInFilePath, AddInFileContents, False);
