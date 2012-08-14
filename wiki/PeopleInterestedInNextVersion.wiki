@@ -1,0 +1,11 @@
+#summary A list of people to inform about the next (beta) version
+
+= Port to Revit 2013 (beta) =
+
+These people have contacted me for a peek at the beta version of the 2013 Port:
+
+  * Tyler Selby
+  * Iffat Mai
+  * Sean Dodsworth
+
+(I'm just keeping this list so I don't forget to contact you when I'm done...)
