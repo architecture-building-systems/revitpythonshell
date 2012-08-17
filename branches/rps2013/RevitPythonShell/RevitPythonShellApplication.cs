@@ -27,7 +27,7 @@ namespace RevitPythonShell
 
             var dllfolder = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-                "RevitPythonShell2012");
+                "RevitPythonShell2013");
             var assemblyName = "CommandLoaderAssembly";
             var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
@@ -265,7 +265,7 @@ namespace RevitPythonShell
 
         private static string GetSettingsFile()
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell2012");
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell2013");
             return Path.Combine(folder, "RevitPythonShell.xml");
         }
 
