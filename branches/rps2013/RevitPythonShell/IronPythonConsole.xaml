@@ -1,0 +1,89 @@
+﻿<Window x:Class="RevitPythonShell.IronPythonConsole"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:console="clr-namespace:PythonConsoleControl;assembly=PythonConsoleControl"
+        xmlns:wpg="clr-namespace:WPG;assembly=WPG"
+        xmlns:pg="http://schemas.denisvuyka.wordpress.com/wpfpropertygrid"
+        Title="IronPython Console" Height="500" Width="700">
+    <!-- 
+	Copyright (c) 2010 Joe Moorhouse
+    -->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0">
+            <console:IronPythonConsoleControl Name="consoleControl"></console:IronPythonConsoleControl>
+        </Grid>
+        <GridSplitter Grid.Row="1" Height="10" VerticalAlignment="Center" HorizontalAlignment="Stretch"></GridSplitter>
+        <DockPanel Grid.Row="2" Grid.Column="0">
+            <ToolBar DockPanel.Dock="Top">
+                <ToolBar.Resources>
+                    <Style TargetType="{x:Type Image}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                                <Setter Property="Opacity" Value="0.30" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToolBar.Resources>
+                <Button Click="openFileClick">
+                    <Image Source="Images/Open.png" Height="16"/>
+                </Button>
+                <Button Click="saveFileClick">
+                    <Image Source="Images/Save.png" Height="16"/>
+                </Button>
+                <Separator/>
+                <Button Command="Cut">
+                    <Image Source="Images/Cut.png" Height="16"/>
+                </Button>
+                <Button Command="Copy">
+                    <Image Source="Images/Copy.png" Height="16"/>
+                </Button>
+                <Button Command="Paste">
+                    <Image Source="Images/Paste.png" Height="16"/>
+                </Button>
+                <Button Command="Delete">
+                    <Image Source="Images/Delete.png" Height="16"/>
+                </Button>
+                <Separator/>
+                <Button Command="Undo">
+                    <Image Source="Images/Undo.png" Height="16"/>
+                </Button>
+                <Button Command="Redo">
+                    <Image Source="Images/Redo.png" Height="16"/>
+                </Button>
+                <Separator/>
+                <CheckBox IsChecked="{Binding ElementName=textEditor,Path=WordWrap}">
+                    <Image Source="Images/WordWrap.png" Height="16"/>
+                </CheckBox>
+                <CheckBox IsChecked="{Binding ElementName=textEditor,Path=ShowLineNumbers}">
+                    <TextBlock Width="16" TextAlignment="Center">#</TextBlock>
+                </CheckBox>
+                <CheckBox IsChecked="{Binding ElementName=textEditor,Path=Options.ShowEndOfLine}">
+                    <TextBlock Width="16" TextAlignment="Center">¶</TextBlock>
+                </CheckBox>
+                <Separator/>
+                <Button Click="runClick">
+                    <Image Source="Images/Run.png" Height="16"/>
+                </Button>
+            </ToolBar>
+            <Grid DockPanel.Dock="Bottom">
+                <avalonEdit:TextEditor
+			    Name="textEditor"
+			    FontFamily="Consolas"
+			    FontSize="10pt"
+                    ># IronPython Pad. Write code snippets here and F5 to run.
+                </avalonEdit:TextEditor>
+            </Grid>
+        </DockPanel>
+        
+    </Grid>
+</Window>
