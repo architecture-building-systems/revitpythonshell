@@ -82,12 +82,10 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\Revit\Vasari2\ReleaseWin32\RevitAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2013\Program\RevitAPI.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\Revit\Vasari2\ReleaseWin32\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2013\Program\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -175,8 +173,8 @@
     <EmbeddedResource Include="Resources\PythonScript16x16.png" />
     <EmbeddedResource Include="Resources\PythonScript32x32.png" />
     <Content Include="RevitPythonShell.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\Python.xshd" />
   </ItemGroup>
