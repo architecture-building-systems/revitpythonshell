@@ -18,9 +18,19 @@ namespace RevitPythonShell
         private readonly ExternalCommandData _commandData;
         private string _message;
         private readonly ElementSet _elements;
+        private readonly UIApplication _revit;
+
+        public ScriptExecutor(UIApplication uiApplication)
+        {
+            _revit = uiApplication;
+            _commandData = null;
+            _elements = null;
+            _message = null;
+        }
 
         public ScriptExecutor(ExternalCommandData commandData, string message, ElementSet elements)
         {
+            _revit = commandData.Application;
             _commandData = commandData;
             _elements = elements;
             _message = message;
@@ -105,8 +115,9 @@ namespace RevitPythonShell
             // add two special variables: __revit__ and __vars__ to be globally visible everywhere:
             var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(engine);
             var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
-            pythonContext.BuiltinModuleDict.Add("__revit__", _commandData.Application);
+            pythonContext.BuiltinModuleDict.Add("__revit__", _revit);
             pythonContext.BuiltinModuleDict.Add("__vars__", RevitPythonShellApplication.GetVariables());
+            pythonContext.BuiltinModuleDict.Add("__set__", new Action<string, object>(RevitPythonShellApplication.SetVariable));
 
             // add the search paths
             AddSearchPaths(engine);

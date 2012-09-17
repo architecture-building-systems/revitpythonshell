@@ -41,7 +41,28 @@ namespace RevitPythonShell
                 CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
                 BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
             }
+            
+            ExecuteStartupScript(application);
+
             return Result.Succeeded;
+        }
+
+        private static void ExecuteStartupScript(UIControlledApplication application)
+        {
+            // we need a UIApplication object to assign as `__revit__` in python...
+            var fi = application.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
+            var uiApplication = (UIApplication)fi.GetValue(application);            
+            // execute StartupScript
+            var startupScript = GetStartupScript();
+            if (startupScript != null)
+            {
+                var executor = new ScriptExecutor(uiApplication);
+                var result = executor.ExecuteScript(startupScript);
+                if (result == (int)Result.Failed)
+                {
+                    TaskDialog.Show("RevitPythonShell - StartupScript", executor.Message);
+                }
+            }
         }
 
         private static void BuildRepositoryPanel(UIControlledApplication application, Repository repository, string dllfullpath)
@@ -302,6 +323,22 @@ namespace RevitPythonShell
         }
 
         /// <summary>
+        /// Returns a string to be executed, whenever the revit is started.
+        /// If this is not specified in the XML file (under /RevitPythonShell/StartupScript),
+        /// then null is returned.
+        /// </summary>
+        public static string GetStartupScript()
+        {
+            var startupScriptTags = GetSettings().Root.Descendants("StartupScript") ?? new List<XElement>();
+            if (startupScriptTags.Count() == 0)
+            {
+                return null;
+            }
+            var firstScript = startupScriptTags.First();
+            return firstScript.Value.Trim();
+        }
+
+        /// <summary>
         /// Writes settings to the settings file, replacing the old commands.
         /// </summary>
         public static void WriteSettings(
@@ -394,6 +431,22 @@ namespace RevitPythonShell
         {
             return GetSettings().Root.Descendants("StringVariable").ToDictionary(v => v.Attribute("name").Value,
                                                                                   v => v.Attribute("value").Value);
+        }
+
+        public static void SetVariable(string name, object value)
+        {
+            var doc = GetSettings();
+            var variable = doc.Root.Descendants("StringVariable").Where(x => x.Attribute("name").Value == name).FirstOrDefault();
+            if (variable != null)
+            {
+                variable.Attribute("value").Value = value.ToString();
+            }
+            else
+            {
+                doc.Root.Descendants("Variables").First().Add(
+                    new XElement("StringVariable", new XAttribute("name", name), new XAttribute("value", value.ToString())));
+            }
+            doc.Save(GetSettingsFile());
         }
 
         /// <summary>
