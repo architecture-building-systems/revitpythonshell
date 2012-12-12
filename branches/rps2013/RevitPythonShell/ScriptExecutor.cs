@@ -23,6 +23,10 @@ namespace RevitPythonShell
         public ScriptExecutor(UIApplication uiApplication)
         {
             _revit = uiApplication;
+
+            // note, if this constructor is used, then this stuff is all null
+            // (I'm just setting it here to be explete - this constructor is
+            // only used for the startupscript)
             _commandData = null;
             _elements = null;
             _message = null;
@@ -30,7 +34,6 @@ namespace RevitPythonShell
 
         public ScriptExecutor(ExternalCommandData commandData, string message, ElementSet elements)
         {
-            _revit = commandData.Application;
             _commandData = commandData;
             _elements = elements;
             _message = message;
@@ -117,7 +120,6 @@ namespace RevitPythonShell
             var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
             pythonContext.BuiltinModuleDict.Add("__revit__", _revit);
             pythonContext.BuiltinModuleDict.Add("__vars__", RevitPythonShellApplication.GetVariables());
-            pythonContext.BuiltinModuleDict.Add("__set__", new Action<string, object>(RevitPythonShellApplication.SetVariable));
 
             // add the search paths
             AddSearchPaths(engine);

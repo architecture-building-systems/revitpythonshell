@@ -25,26 +25,34 @@ namespace RevitPythonShell
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
 
-            var dllfolder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-                "RevitPythonShell2013");
-            var assemblyName = "CommandLoaderAssembly";
-            var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
-
-            var settings = GetSettings();
-
-            CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
-            BuildRibbonPanel(application, dllfullpath);
-
-            foreach (var repository in GetRepositories())
+            try
             {
-                CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
-                BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
-            }
-            
-            ExecuteStartupScript(application);
+                var dllfolder = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "RevitPythonShell2013");
+                var assemblyName = "CommandLoaderAssembly";
+                var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
-            return Result.Succeeded;
+                var settings = GetSettings();
+
+                CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
+                BuildRibbonPanel(application, dllfullpath);
+
+                foreach (var repository in GetRepositories())
+                {
+                    CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
+                    BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
+                }
+
+                ExecuteStartupScript(application);
+
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error setting up RevitPythonShell", ex.ToString());
+                return Result.Failed;
+            }
         }
 
         private static void ExecuteStartupScript(UIControlledApplication application)
