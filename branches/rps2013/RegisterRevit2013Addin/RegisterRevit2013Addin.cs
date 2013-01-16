@@ -7,7 +7,7 @@ using System.Collections;
 using System.Diagnostics;
 using System.Linq;
 
-namespace RegisterRevit2011Addin
+namespace RegisterRevit2013Addin
 {
     [RunInstaller(true)]
     public partial class RegisterAddinCustomAction : System.Configuration.Install.Installer
@@ -19,10 +19,10 @@ namespace RegisterRevit2011Addin
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Install(IDictionary stateSaver)
         {
-            //Debugger.Launch();
+            // Debugger.Launch();
             // make sure addin manifest is written
             var assemblyFolder = Path.GetDirectoryName(Context.Parameters["assemblypath"]);
-            var assemblyPath = Path.Combine(assemblyFolder, "RevitPythonShell.dll");
+            var assemblyPath = Path.Combine(assemblyFolder, "RevitPythonShell.dll");            
 
             var manifest = new RevitAddInManifest();
             var application = new RevitAddInApplication("RevitPythonShell", assemblyPath, Guid.Parse("3a7a1d24-51ed-462b-949f-1ddcca12008d"),
@@ -37,7 +37,13 @@ namespace RegisterRevit2011Addin
 
             foreach (var product in revitProducts.Where(p => p.Version == RevitVersion.Revit2013))
             {
-                manifest.SaveAs(Path.Combine(product.CurrentUserAddInFolder, "RevitPythonShell2013.addin"));
+                var manifestFolder = Context.Parameters["allusers"] == "1"
+                    ? product.AllUsersAddInFolder
+                    : product.CurrentUserAddInFolder;
+                var manifestPath = Path.Combine(manifestFolder, "RevitPythonShell2013.addin");
+
+
+                manifest.SaveAs(manifestPath);
             }
 
             base.Install(stateSaver);
@@ -58,14 +64,21 @@ namespace RegisterRevit2011Addin
         [System.Security.Permissions.SecurityPermission(System.Security.Permissions.SecurityAction.Demand)]
         public override void Uninstall(IDictionary savedState)
         {
-            Debugger.Break();
-
+            // Debugger.Launch();
             // remove addin manifest
-            var revitProducts = RevitProductUtility.GetAllInstalledRevitProducts();
-            if (revitProducts.Count > 0)
+            foreach (var product in RevitProductUtility.GetAllInstalledRevitProducts().Where(p => p.Version == RevitVersion.Revit2013))
             {
-                File.Delete(Path.Combine(revitProducts[0].CurrentUserAddInFolder, "RevitPythonShell2013.addin"));
+                var manifestFolder = Context.Parameters["allusers"] == "1"
+                    ? product.AllUsersAddInFolder
+                    : product.CurrentUserAddInFolder;
+                var manifestPath = Path.Combine(manifestFolder, "RevitPythonShell2013.addin");
+
+                if (File.Exists(manifestPath))
+                {
+                    File.Delete(manifestPath);
+                }
             }
+
             base.Uninstall(savedState);
         }
     }
