@@ -34,6 +34,7 @@ namespace RevitPythonShell
 
         public ScriptExecutor(ExternalCommandData commandData, string message, ElementSet elements)
         {
+            _revit = commandData.Application;
             _commandData = commandData;
             _elements = elements;
             _message = message;
@@ -120,6 +121,7 @@ namespace RevitPythonShell
             var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
             pythonContext.BuiltinModuleDict.Add("__revit__", _revit);
             pythonContext.BuiltinModuleDict.Add("__vars__", RevitPythonShellApplication.GetVariables());
+            pythonContext.BuiltinModuleDict.Add("__set__", new Action<string, object>(RevitPythonShellApplication.SetVariable));
 
             // add the search paths
             AddSearchPaths(engine);
