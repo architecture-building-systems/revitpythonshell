@@ -8,7 +8,7 @@ using System.Windows.Forms;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RpsRuntime
 {
     /// <summary>
     /// A stream to write output to...
