@@ -43,10 +43,10 @@ namespace RevitPythonShell
             _repositories = RevitPythonShellApplication.GetRepositories().ToList();
             lstRepositories.DataSource = _repositories;
 
-            _searchPaths = RevitPythonShellApplication.GetSearchPaths().ToList();
+            _searchPaths = RevitPythonShellApplication.GetConfig().GetSearchPaths().ToList();
             lstSearchPaths.DataSource = _searchPaths;
 
-            _variables = RevitPythonShellApplication.GetVariables().AsEnumerable().ToList();
+            _variables = RevitPythonShellApplication.GetConfig().GetVariables().AsEnumerable().ToList();
             lstVariables.DataSource = _variables;
             lstVariables.DisplayMember = "Key";
 

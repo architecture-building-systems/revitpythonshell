@@ -12,6 +12,8 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using RpsRuntime;
+using RevitPythonShell.RpsRuntime;
 
 namespace RevitPythonShell
 {
@@ -64,7 +66,7 @@ namespace RevitPythonShell
             var startupScript = GetStartupScript();
             if (startupScript != null)
             {
-                var executor = new ScriptExecutor(uiApplication);
+                var executor = new ScriptExecutor(GetConfig(), uiApplication);
                 var result = executor.ExecuteScript(startupScript);
                 if (result == (int)Result.Failed)
                 {
@@ -282,6 +284,16 @@ namespace RevitPythonShell
             return Result.Succeeded;
         }
 
+        private static IRpsConfig _config = null;
+        public static IRpsConfig GetConfig()
+        {
+            if (_config == null)
+            {
+                _config = new RpsConfig(GetSettingsFile());
+            }
+            return _config;
+        }
+
         /// <summary>
         /// Returns a handle to the settings file.
         /// </summary>
@@ -430,44 +442,7 @@ namespace RevitPythonShell
 
             doc.Save(GetSettingsFile());
         }
-
-        /// <summary>
-        /// Returns the list of variables to be included with the scope in RevitPythonShell scripts.
-        /// </summary>
-        /// <returns></returns>
-        public static IDictionary<string, string> GetVariables()
-        {
-            return GetSettings().Root.Descendants("StringVariable").ToDictionary(v => v.Attribute("name").Value,
-                                                                                  v => v.Attribute("value").Value);
-        }
-
-        public static void SetVariable(string name, object value)
-        {
-            var doc = GetSettings();
-            var variable = doc.Root.Descendants("StringVariable").Where(x => x.Attribute("name").Value == name).FirstOrDefault();
-            if (variable != null)
-            {
-                variable.Attribute("value").Value = value.ToString();
-            }
-            else
-            {
-                doc.Root.Descendants("Variables").First().Add(
-                    new XElement("StringVariable", new XAttribute("name", name), new XAttribute("value", value.ToString())));
-            }
-            doc.Save(GetSettingsFile());
-        }
-
-        /// <summary>
-        /// Returns a list of search paths to be added to python interpreter engines.
-        /// </summary>
-        public static IEnumerable<string> GetSearchPaths()
-        {
-            foreach (var searchPathNode in GetSettings().Root.Descendants("SearchPath"))
-            {
-                yield return searchPathNode.Attribute("name").Value;
-            }
-        }
-
+                        
         public static IEnumerable<Repository> GetRepositories()
         {
             foreach (var repositoryNode in GetSettings().Root.Descendants("Repository"))

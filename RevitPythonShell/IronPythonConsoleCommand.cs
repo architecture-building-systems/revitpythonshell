@@ -9,6 +9,7 @@ using System.Diagnostics;
 using Microsoft.Scripting;
 using System.Threading;
 using System.Windows.Threading;
+using RevitPythonShell.RpsRuntime;
 
 namespace RevitPythonShell
 {
@@ -33,7 +34,8 @@ namespace RevitPythonShell
             {
                 // now that the console is created and initialized, the script scope should
                 // be accessible...
-                new ScriptExecutor(commandData, messageCopy, elements).SetupEnvironment(host.Engine, host.Console.ScriptScope);
+                new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
+                    .SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
                 // run the initscript
                 var initScript = RevitPythonShellApplication.GetInitScript();

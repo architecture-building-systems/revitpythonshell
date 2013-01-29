@@ -7,8 +7,9 @@ using Microsoft.Scripting.Hosting;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
+using RpsRuntime;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RpsRuntime
 {
     /// <summary>
     /// Executes a script scripts
@@ -19,9 +20,12 @@ namespace RevitPythonShell
         private string _message;
         private readonly ElementSet _elements;
         private readonly UIApplication _revit;
+        private readonly IRpsConfig _config;
 
-        public ScriptExecutor(UIApplication uiApplication)
+        public ScriptExecutor(IRpsConfig config, UIApplication uiApplication)
         {
+            _config = config;
+
             _revit = uiApplication;
 
             // note, if this constructor is used, then this stuff is all null
@@ -32,8 +36,10 @@ namespace RevitPythonShell
             _message = null;
         }
 
-        public ScriptExecutor(ExternalCommandData commandData, string message, ElementSet elements)
+        public ScriptExecutor(IRpsConfig config, ExternalCommandData commandData, string message, ElementSet elements)
         {
+            _config = config;
+
             _revit = commandData.Application;
             _commandData = commandData;
             _elements = elements;
@@ -55,13 +61,13 @@ namespace RevitPythonShell
         {
             try
             {
-                var engine = IronPython.Hosting.Python.CreateEngine(new Dictionary<string, object>() { {"Frames", true}, {"FullFrames", true}});
+                var engine = IronPython.Hosting.Python.CreateEngine(new Dictionary<string, object>() { { "Frames", true }, { "FullFrames", true } });
                 var scope = SetupEnvironment(engine);
 
                 var scriptOutput = new ScriptOutput();
                 scriptOutput.Show();
                 var outputStream = new ScriptOutputStream(scriptOutput, engine);
-                
+
                 scope.SetVariable("__window__", scriptOutput);
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
@@ -75,7 +81,7 @@ namespace RevitPythonShell
 
                     _message = (scope.GetVariable("__message__") ?? "").ToString();
                     return (int)(scope.GetVariable("__result__") ?? Result.Succeeded);
-               }
+                }
                 catch (SystemExitException)
                 {
                     // ok, so the system exited. That was bound to happen...
@@ -120,8 +126,7 @@ namespace RevitPythonShell
             var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(engine);
             var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
             pythonContext.BuiltinModuleDict.Add("__revit__", _revit);
-            pythonContext.BuiltinModuleDict.Add("__vars__", RevitPythonShellApplication.GetVariables());
-            pythonContext.BuiltinModuleDict.Add("__set__", new Action<string, object>(RevitPythonShellApplication.SetVariable));
+            pythonContext.BuiltinModuleDict.Add("__vars__", _config.GetVariables());
 
             // add the search paths
             AddSearchPaths(engine);
@@ -134,18 +139,18 @@ namespace RevitPythonShell
         private Microsoft.Scripting.Runtime.Scope GetScope(ScriptScope scriptScope)
         {
             var field = scriptScope.GetType().GetField(
-                "_scope", 
+                "_scope",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            return (Microsoft.Scripting.Runtime.Scope) field.GetValue(scriptScope);
+            return (Microsoft.Scripting.Runtime.Scope)field.GetValue(scriptScope);
         }
 
         /// <summary>
         /// Add the search paths defined in the ini file to the engine.
         /// </summary>
-        private static void AddSearchPaths(ScriptEngine engine)
+        private void AddSearchPaths(ScriptEngine engine)
         {
             var searchPaths = engine.GetSearchPaths();
-            foreach (var path in RevitPythonShellApplication.GetSearchPaths())
+            foreach (var path in _config.GetSearchPaths())
             {
                 searchPaths.Add(path);
             }
