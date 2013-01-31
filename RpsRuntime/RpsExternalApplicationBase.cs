@@ -6,6 +6,8 @@ using Autodesk.Revit.UI;
 using System.Reflection;
 using System.IO;
 using System.Xml.Linq;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace RevitPythonShell.RpsRuntime
 {
@@ -81,9 +83,42 @@ namespace RevitPythonShell.RpsRuntime
 
             var result = new PushButtonData(pbName, text, addinAssembly.Location, className);
 
-            // FIXME: add icons here!
+            if (xmlPushButton.Attribute("largeImage") != null && !string.IsNullOrEmpty(xmlPushButton.Attribute("largeImage").Value))
+            {
+                var largeImagePath = Path.Combine(addinAssembly.Location, xmlPushButton.Attribute("largeImage").Value);
+                result.LargeImage = BitmapDecoder.Create(File.OpenRead(largeImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
+            }
+            else
+            {
+                result.LargeImage = GetEmbeddedPng("RevitPythonShell.RpsRuntime.Resources.PythonScript32x32.png");
+            }
+
+            if (xmlPushButton.Attribute("smallImage") != null && !string.IsNullOrEmpty(xmlPushButton.Attribute("smallImage").Value))
+            {
+                var largeImagePath = Path.Combine(addinAssembly.Location, xmlPushButton.Attribute("smallImage").Value);
+                result.LargeImage = BitmapDecoder.Create(File.OpenRead(largeImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
+            }
+            else
+            {
+                result.Image = GetEmbeddedPng("RevitPythonShell.RpsRuntime.Resources.PythonScript16x16.png");
+            }
 
             return result;
+        }
+
+        /// <summary>
+        /// Given a string representing an embedded png image, return it
+        /// as an ImageSource, which can be used for PushButtons etc.
+        /// 
+        /// NOTE: any embedded resource in the "Resources" folder has the name
+        /// "RpsRuntime.Resources.BASENAME.EXT"
+        /// </summary>
+        private ImageSource GetEmbeddedPng(string imageName)
+        {
+            var assembly = typeof(RpsExternalApplicationBase).Assembly;
+            var file = assembly.GetManifestResourceStream(imageName);
+            var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
+            return source.Frames[0];
         }
     }
 }
