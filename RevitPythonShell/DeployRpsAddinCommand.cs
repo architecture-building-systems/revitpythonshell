@@ -43,7 +43,14 @@ namespace RevitPythonShell
             _outputFolder = CreateOutputFolder();
 
             // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
-            CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location); // RpsAddin.dll
+            CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location);          // RpsAddin.dll
+
+            var ironPythonPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
+            CopyFile(Path.Combine(ironPythonPath, "IronPython.dll"));                    // IronPython.dll
+            CopyFile(Path.Combine(ironPythonPath, "IronPython.Modules.dll"));            // IronPython.Modules.dll            
+            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.dll"));           // Microsoft.Scripting.dll
+            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.Metadata.dll"));  // Microsoft.Scripting.Metadata.dll
+            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Dynamic.dll"));             // Microsoft.Dynamic.dll
 
             // copy files mentioned (they must all be unique)
             CopyIcons();
