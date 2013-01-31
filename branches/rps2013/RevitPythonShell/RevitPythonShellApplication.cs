@@ -143,8 +143,6 @@ namespace RevitPythonShell
         {
             var file = app.GetManifestResourceStream(imageName);
             var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-            Debug.WriteLine(source.Frames[0].DpiX);
-            Debug.WriteLine(source.Frames[0].DpiY);
             return source.Frames[0];
         }
 

@@ -24,29 +24,86 @@ namespace RevitPythonShell
     [Regeneration(RegenerationOption.Manual)]
     public class DeployRpsAddinCommand: IExternalCommand
     {
+        private string _outputFolder;
+        private string _rootFolder;
+        private string _addinName;
+        private XDocument _doc;
+
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             // read in rpsaddin.xml
             var rpsAddinXmlPath = GetAddinXmlPath(); // FIXME: do some argument checking here            
 
-            var addinName = Path.GetFileNameWithoutExtension(rpsAddinXmlPath);
-            var rootFolder = Path.GetDirectoryName(rpsAddinXmlPath);
+            _addinName = Path.GetFileNameWithoutExtension(rpsAddinXmlPath);
+            _rootFolder = Path.GetDirectoryName(rpsAddinXmlPath);
 
-            var doc = XDocument.Load(rpsAddinXmlPath);
+            _doc = XDocument.Load(rpsAddinXmlPath);
 
             // create subfolder
-            var outputFolder = CreateOutputFolder(rootFolder, addinName);
+            _outputFolder = CreateOutputFolder();
 
             // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
 
             // copy files mentioned (they must all be unique)
+            CopyIcons();
 
             // create addin assembly
-            CreateAssembly(outputFolder, addinName, doc, rootFolder);
+            CreateAssembly();
 
             // create innosetup script
 
+            TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
+
             return Result.Succeeded;
+        }
+
+        /// <summary>
+        /// Copy any icon files mentioned in PushButton tags. 
+        /// 
+        /// The PythonScript16x16.png and PythonScript32x32.png icons will be used as default,
+        /// if no icons are found (they are embedded in the RpsRuntime.dll)
+        /// 
+        /// as always, relative paths are assumed to be relative to rootFolder, that
+        /// is the folder that the RpsAddin xml file came from.
+        /// </summary>
+        private void CopyIcons()
+        {
+            HashSet<string> copiedIcons = new HashSet<string>();
+
+            foreach (var pb in _doc.Descendants("PushButton"))
+            {
+                CopyReferencedFileToOutputFolder(pb.Attribute("largeImage"));
+                CopyReferencedFileToOutputFolder(pb.Attribute("smallImage"));
+            }
+        }
+
+        /// <summary>
+        /// Copies a referenced file to the output folder, unless it could not find that
+        /// file.
+        /// </summary>
+        private void CopyReferencedFileToOutputFolder(XAttribute attr)
+        {
+            if (attr == null)
+            {
+                return;
+            }
+
+            var path = GetRootedPath(_rootFolder, attr.Value);
+            if (path != null)
+            {
+                if (!File.Exists(path))
+                {
+                    throw new FileNotFoundException(
+                        "Could not find the file referenced by attribute " + attr.Name,
+                        attr.Value);
+                }
+
+                var fileName = Path.GetFileName(path);
+                File.Copy(path, Path.Combine(_outputFolder, fileName));
+                
+                // make the new value relative, for the embedded RpsAddin xml
+                attr.Value = fileName;
+            }                           
         }
 
         /// <summary>
@@ -71,19 +128,16 @@ namespace RevitPythonShell
         /// as embedded resources, plus, for each such script, add a subclass of
         /// RpsExternalCommand to load the script from.    
         /// </summary>
-        private void CreateAssembly(string outputFolder, string addinName, XDocument doc, string sourceFolder)
+        private void CreateAssembly()
         {
-            var assemblyName = new AssemblyName { Name = addinName + ".dll", Version = new Version(1, 0, 0, 0) }; // FIXME: read version from doc
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, outputFolder);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule("RpsAddinModule", addinName + ".dll");
+            var assemblyName = new AssemblyName { Name = _addinName + ".dll", Version = new Version(1, 0, 0, 0) }; // FIXME: read version from doc
+            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, _outputFolder);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("RpsAddinModule", _addinName + ".dll");
 
-            foreach (var xmlPushButton in doc.Descendants("PushButton"))
+            foreach (var xmlPushButton in _doc.Descendants("PushButton"))
             {
-                var scriptFile = xmlPushButton.Attribute("script").Value;                // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
-                if (!Path.IsPathRooted(scriptFile))
-                {
-                    scriptFile = Path.Combine(sourceFolder, scriptFile);
-                }
+                var scriptFile = GetRootedPath(
+                    _rootFolder, xmlPushButton.Attribute("script").Value);              // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
                 var newScriptFile = Path.GetFileName(scriptFile);                        // e.g. "helloworld.py" - strip path for embedded resource
                 var className = "ec_" + Path.GetFileNameWithoutExtension(newScriptFile); // e.g. "ec_helloworld", "ec" stands for ExternalCommand
 
@@ -104,9 +158,28 @@ namespace RevitPythonShell
                 typeBuilder.CreateType();            
             }
 
-            AddRpsAddinXmlToAssembly(addinName, doc, moduleBuilder);
-            AddExternalApplicationToAssembly(addinName, moduleBuilder);
-            assemblyBuilder.Save(addinName + ".dll");
+            AddRpsAddinXmlToAssembly(_addinName, _doc, moduleBuilder);
+            AddExternalApplicationToAssembly(_addinName, moduleBuilder);
+            assemblyBuilder.Save(_addinName + ".dll");
+        }
+
+        /// <summary>
+        /// Returns the possiblyRelativePath rooted in sourceFolder,
+        /// if it is relative or unchanged if it is absolute already.
+        /// if the input is null or an empty string, returns null.
+        /// </summary>
+        private static string GetRootedPath(string sourceFolder, string possiblyRelativePath)
+        {
+            if (string.IsNullOrEmpty(possiblyRelativePath))
+            {
+                return null;
+            }
+
+            if (!Path.IsPathRooted(possiblyRelativePath))
+            {
+                return Path.Combine(sourceFolder, possiblyRelativePath);
+            }
+            return possiblyRelativePath;
         }
 
         /// <summary>
@@ -161,10 +234,10 @@ namespace RevitPythonShell
         /// 
         /// Example result: "2013.01.28.16.40.06_HelloWorld"
         /// </summary>
-        private string CreateOutputFolder(string rootFolder, string basename)
+        private string CreateOutputFolder()
         {
-            var folderName = string.Format("{0}_{1}", DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss"), basename);
-            var folderPath = Path.Combine(rootFolder, folderName);
+            var folderName = string.Format("{0}_{1}", DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss"), _addinName);
+            var folderPath = Path.Combine(_rootFolder, folderName);
             Directory.CreateDirectory(folderPath);
             return folderPath;
         }
