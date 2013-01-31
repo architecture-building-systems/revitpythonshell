@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitPythonShell", "RevitPythonShell\RevitPythonShell.csproj", "{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_RevitPythonShell_2013", "Setup_RevitPythonShell_2011_x64\Setup_RevitPythonShell_2011_x64.vdproj", "{B8A79BD7-683C-4742-97F3-23442C184C2B}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup_RevitPythonShell.vdproj", "{B8A79BD7-683C-4742-97F3-23442C184C2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterRevit2011Addin", "RegisterRevit2011Addin\RegisterRevit2011Addin.csproj", "{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}"
 EndProject
