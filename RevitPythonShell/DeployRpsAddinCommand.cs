@@ -43,6 +43,7 @@ namespace RevitPythonShell
             _outputFolder = CreateOutputFolder();
 
             // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
+            CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location); // RpsAddin.dll
 
             // copy files mentioned (they must all be unique)
             CopyIcons();
@@ -75,6 +76,14 @@ namespace RevitPythonShell
                 CopyReferencedFileToOutputFolder(pb.Attribute("largeImage"));
                 CopyReferencedFileToOutputFolder(pb.Attribute("smallImage"));
             }
+        }        
+
+        /// <summary>
+        /// Copy a file to the output folder ("flat" folder structure!)
+        /// </summary>
+        private void CopyFile(string path)
+        {
+            File.Copy(path, Path.Combine(_outputFolder, Path.GetFileName(path)));
         }
 
         /// <summary>
