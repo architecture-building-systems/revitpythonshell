@@ -12,7 +12,6 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using RpsRuntime;
 using RevitPythonShell.RpsRuntime;
 
 namespace RevitPythonShell
@@ -116,6 +115,15 @@ namespace RevitPythonShell
             pbdConfigure.Image = smallImage;
             pbdConfigure.LargeImage = largeImage;
             splitButton.AddPushButton(pbdConfigure);
+
+            PushButtonData pbdDeployRpsAddin = new PushButtonData(
+                "DeployRpsAddin",
+                "Deploy RpsAddin",
+                assembly.Location,
+                "RevitPythonShell.DeployRpsAddinCommand");
+            pbdDeployRpsAddin.Image = smallImage;
+            pbdDeployRpsAddin.LargeImage = largeImage;
+            splitButton.AddPushButton(pbdDeployRpsAddin);
 
             var commands = GetCommands(GetSettings()).ToList();
             AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));

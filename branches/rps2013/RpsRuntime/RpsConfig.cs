@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace RpsRuntime
+namespace RevitPythonShell.RpsRuntime
 {
     /// <summary>
     /// Provides access functions to those parts of the RevitPythonShell.xml file

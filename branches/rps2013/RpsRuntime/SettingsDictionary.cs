@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace RpsRuntime
+namespace RevitPythonShell.RpsRuntime
 {
     /// <summary>
     /// A subclass of Dictionary<string, string>, that writes changes back to a settings xml file.
