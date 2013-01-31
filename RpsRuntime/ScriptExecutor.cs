@@ -7,7 +7,6 @@ using Microsoft.Scripting.Hosting;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
-using RpsRuntime;
 
 namespace RevitPythonShell.RpsRuntime
 {

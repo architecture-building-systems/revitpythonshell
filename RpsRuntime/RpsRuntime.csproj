@@ -8,7 +8,7 @@
     <ProjectGuid>{C8446636-C663-409F-82D0-72C0D55BBA1C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RpsRuntime</RootNamespace>
+    <RootNamespace>RevitPythonShell.RpsRuntime</RootNamespace>
     <AssemblyName>RpsRuntime</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -63,6 +63,8 @@
     <Compile Include="IRpsConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RpsConfig.cs" />
+    <Compile Include="RpsExternalApplicationBase.cs" />
+    <Compile Include="RpsExternalCommandBase.cs" />
     <Compile Include="ScriptExecutor.cs" />
     <Compile Include="ScriptOutput.cs">
       <SubType>Form</SubType>
