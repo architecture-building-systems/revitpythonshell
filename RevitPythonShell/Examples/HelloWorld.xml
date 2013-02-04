@@ -1,5 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<RpsAddin>  
+<RpsAddin>
+  <Files>
+    <File source="HelloWorld.iss"/>
+  </Files>
   <RibbonPanel text="Hello World">
     <!-- the script is always searched relative to the location of the RpsAddin xml file -->
     <PushButton text="Hello World!" script="helloworld.py"/>

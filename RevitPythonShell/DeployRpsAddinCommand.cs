@@ -55,10 +55,10 @@ namespace RevitPythonShell
             // copy files mentioned (they must all be unique)
             CopyIcons();
 
+            CopyExplicitFiles();
+
             // create addin assembly
             CreateAssembly();
-
-            // create innosetup script
 
             TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
 
@@ -92,6 +92,32 @@ namespace RevitPythonShell
         {
             File.Copy(path, Path.Combine(_outputFolder, Path.GetFileName(path)));
         }
+
+        /// <summary>
+        /// Copy all files mentioned in /Files/File tags.
+        /// </summary>
+        private void CopyExplicitFiles()
+        {
+            foreach (var xmlFile in _doc.Descendants("Files").SelectMany(f => f.Descendants("File")))
+            {
+                var source = xmlFile.Attribute("source").Value;
+                var sourcePath = GetRootedPath(_rootFolder, source);
+
+                if (!File.Exists(sourcePath))
+                {
+                    throw new FileNotFoundException(
+                        "Could not find the explicitly referenced file",
+                        source);
+                }
+
+                var fileName = Path.GetFileName(sourcePath);
+                File.Copy(sourcePath, Path.Combine(_outputFolder, fileName));
+
+                // remove path information for deployment
+                xmlFile.Attribute("source").Value = fileName;
+            }
+        }
+
 
         /// <summary>
         /// Copies a referenced file to the output folder, unless it could not find that
