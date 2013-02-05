@@ -289,15 +289,10 @@ namespace RevitPythonShell
             // FIXME: deallocate the python shell...
             return Result.Succeeded;
         }
-
-        private static IRpsConfig _config = null;
+        
         public static IRpsConfig GetConfig()
-        {
-            if (_config == null)
-            {
-                _config = new RpsConfig(GetSettingsFile());
-            }
-            return _config;
+        {           
+            return new RpsConfig(GetSettingsFile());
         }
 
         /// <summary>
