@@ -13,7 +13,7 @@ Source: HelloWorld.dll; DestDir: {app};
 ;Source: HelloWorld.xml; DestDir: {userappdata}\HelloWorld; Flags: onlyifdoesntexist; 
 
 [code]
-{ HANDLE INSTALL PROCESS STEPS }
+{ install revit manifest file }
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   AddInFilePath: String;
@@ -46,6 +46,23 @@ begin
 
   end;
 end;
+
+{ uninstall revit addin manifest }
+procedure CurUninstallStepChanged(CurUninstallStep: TUninstallStep);
+var
+  AddInFilePath: String;
+begin
+  if CurUninstallStep = usPostUninstall then
+  begin
+    AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2013\HelloWorld.addin');
+    
+    if FileExists(AddInFilePath) then
+    begin
+      DeleteFile(AddInFilePath);
+    end;
+  end;
+end;
+
 
 [Setup]
 AppName=HelloWorld
