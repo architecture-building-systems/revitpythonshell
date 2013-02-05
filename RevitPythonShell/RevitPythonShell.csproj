@@ -150,7 +150,9 @@
     <Resource Include="Images\WordWrap.png" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
-    <Content Include="Examples\HelloWorld.xml" />
+    <Content Include="Examples\HelloWorld.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\py.ico" />
     <Content Include="Resources\pycon.ico" />
     <EmbeddedResource Include="Resources\PythonConsole32x32.png" />

@@ -48,17 +48,17 @@ begin
 end;
 
 [Setup]
-AppName=RevitPythonShell for Vasari TP2.5
-AppVerName=RevitPythonShell for Vasari TP2.5
+AppName=HelloWorld
+AppVerName=HelloWorld
 RestartIfNeededByRun=false
-DefaultDirName={pf32}\RevitPythonShell_for_Vasari_TP2.5
-OutputBaseFilename=Setup_RevitPythonShell_Vasari_TP2.5
+DefaultDirName={pf32}\HelloWorld
+OutputBaseFilename=Setup_HelloWorld
 ShowLanguageDialog=auto
 FlatComponentsList=false
 UninstallFilesDir={app}\Uninstall
-UninstallDisplayName=RevitPythonShell for Vasari TP2.5
+UninstallDisplayName=HelloWorld
 AppVersion=2012.0
 VersionInfoVersion=2012.0
-VersionInfoDescription=RevitPythonShell for Vasari TP2.5
-VersionInfoTextVersion=RevitPythonShell for Vasari TP2.5
+VersionInfoDescription=HelloWorld
+VersionInfoTextVersion=HelloWorld
 

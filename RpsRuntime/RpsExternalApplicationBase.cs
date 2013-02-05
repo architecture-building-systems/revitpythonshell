@@ -65,6 +65,18 @@ namespace RevitPythonShell.RpsRuntime
                         var pushButtonData = BuildPushButtonData(addinAssembly, element);
                         ribbonPanel.AddItem(pushButtonData);
                     }
+                    else if (element.Name == "SplitButton")
+                    {
+                        var splitButton = ribbonPanel.AddItem(
+                            new SplitButtonData(
+                                element.Attribute("text").Value, 
+                                element.Attribute("text").Value)) as SplitButton;
+                        foreach (var xmlPushButton in element.Descendants("PushButton"))
+                        {
+                            var pushButtonData = BuildPushButtonData(addinAssembly, xmlPushButton);
+                            splitButton.AddPushButton(pushButtonData);
+                        }
+                    }
                 }                
             }                        
         }
