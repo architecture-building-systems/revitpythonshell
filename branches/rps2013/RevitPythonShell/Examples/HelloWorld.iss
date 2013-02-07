@@ -1,13 +1,13 @@
 [Files]
-Source: RpsRuntime.dll; DestDir: {app};
-Source: IronPython.dll; DestDir: {app};
-Source: IronPython.Modules.dll; DestDir: {app};
-Source: Microsoft.Scripting.Metadata.dll; DestDir: {app};
-Source: Microsoft.Dynamic.dll; DestDir: {app};
-Source: Microsoft.Scripting.dll; DestDir: {app};
+Source: Output_HelloWorld\RpsRuntime.dll; DestDir: {app};
+Source: Output_HelloWorld\IronPython.dll; DestDir: {app};
+Source: Output_HelloWorld\IronPython.Modules.dll; DestDir: {app};
+Source: Output_HelloWorld\Microsoft.Scripting.Metadata.dll; DestDir: {app};
+Source: Output_HelloWorld\Microsoft.Dynamic.dll; DestDir: {app};
+Source: Output_HelloWorld\Microsoft.Scripting.dll; DestDir: {app};
 
 ; this is the main dll with the script embedded
-Source: HelloWorld.dll; DestDir: {app};
+Source: Output_HelloWorld\HelloWorld.dll; DestDir: {app};
 
 ; add a similar line, if your addin requires a configuration file (search paths or predefined variables)
 ;Source: HelloWorld.xml; DestDir: {userappdata}\HelloWorld; Flags: onlyifdoesntexist; 

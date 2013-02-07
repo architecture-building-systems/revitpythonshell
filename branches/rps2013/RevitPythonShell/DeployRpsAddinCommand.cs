@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using Autodesk.Revit.Attributes;
 using System.Windows.Forms;
 using RevitPythonShell.RpsRuntime;
+using System.Security.AccessControl;
 
 namespace RevitPythonShell
 {
@@ -271,16 +272,25 @@ namespace RevitPythonShell
         }
 
         /// <summary>
-        /// Creates a subfolder in rootFolder with a timestamp and the basename of the
+        /// Creates a subfolder in rootFolder with the basename of the
         /// RpsAddin xml file and returns the name of that folder.
         /// 
-        /// Example result: "2013.01.28.16.40.06_HelloWorld"
+        /// deletes previous folders.
+        /// 
+        /// result: "Output_HelloWorld"
         /// </summary>
         private string CreateOutputFolder()
         {
-            var folderName = string.Format("{0}_{1}", DateTime.Now.ToString("yyyy.MM.dd.HH.mm.ss"), _addinName);
+            var folderName = string.Format("{0}_{1}", "Output", _addinName);
             var folderPath = Path.Combine(_rootFolder, folderName);
-            Directory.CreateDirectory(folderPath);
+
+            if (Directory.Exists(folderPath))
+            {
+                // delete existing folder
+                Directory.Delete(folderPath, true);
+            }
+
+            Directory.CreateDirectory(folderPath, Directory.GetAccessControl(_rootFolder));
             return folderPath;
         }
     }
