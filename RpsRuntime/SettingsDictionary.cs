@@ -60,39 +60,39 @@ namespace RevitPythonShell.RpsRuntime
             _settings.Save(_settingsPath);
         }
 
-        void IDictionary<string, string>.Add(string key, string value)
+        public void Add(string key, string value)
         {
             _dict.Add(key, value);
             SetVariable(key, value);
         }
 
-        bool IDictionary<string, string>.ContainsKey(string key)
+        public bool ContainsKey(string key)
         {
             return _dict.ContainsKey(key);
         }
 
-        ICollection<string> IDictionary<string, string>.Keys
+        public ICollection<string> Keys
         {
             get { return _dict.Keys; }
         }
 
-        bool IDictionary<string, string>.Remove(string key)
+        public bool Remove(string key)
         {
             RemoveVariable(key);
             return _dict.Remove(key);            
         }
 
-        bool IDictionary<string, string>.TryGetValue(string key, out string value)
+        public bool TryGetValue(string key, out string value)
         {
             return _dict.TryGetValue(key, out value);
         }
 
-        ICollection<string> IDictionary<string, string>.Values
+        public ICollection<string> Values
         {
             get { return _dict.Values; }
         }
 
-        string IDictionary<string, string>.this[string key]
+        public string this[string key]
         {
             get
             {
@@ -105,45 +105,45 @@ namespace RevitPythonShell.RpsRuntime
             }
         }
 
-        void ICollection<KeyValuePair<string, string>>.Add(KeyValuePair<string, string> item)
+        public void Add(KeyValuePair<string, string> item)
         {
             _dict.Add(item);
             SetVariable(item.Key, item.Value);
         }
 
-        void ICollection<KeyValuePair<string, string>>.Clear()
+        public void Clear()
         {
             ClearVariables();
             _dict.Clear();            
         }
 
-        bool ICollection<KeyValuePair<string, string>>.Contains(KeyValuePair<string, string> item)
+        public bool Contains(KeyValuePair<string, string> item)
         {
             return _dict.Contains(item);
         }
 
-        void ICollection<KeyValuePair<string, string>>.CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
         {
             _dict.CopyTo(array, arrayIndex);
         }
 
-        int ICollection<KeyValuePair<string, string>>.Count
+        public int Count
         {
             get { return _dict.Count; }
         }
 
-        bool ICollection<KeyValuePair<string, string>>.IsReadOnly
+        public bool IsReadOnly
         {
             get { return false; }
         }
 
-        bool ICollection<KeyValuePair<string, string>>.Remove(KeyValuePair<string, string> item)
+        public bool Remove(KeyValuePair<string, string> item)
         {
             RemoveVariable(item.Key);
             return _dict.Remove(item);
         }
 
-        IEnumerator<KeyValuePair<string, string>> IEnumerable<KeyValuePair<string, string>>.GetEnumerator()
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
         {
             return _dict.GetEnumerator();
         }
