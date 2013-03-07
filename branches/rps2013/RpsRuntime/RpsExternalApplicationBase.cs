@@ -44,6 +44,7 @@ namespace RevitPythonShell.RpsRuntime
             var addinXml = XDocument.Load(addinAssembly.GetManifestResourceStream(addinName + ".xml"));
 
             BuildRibbonPanels(application, addinXml, addinAssembly);
+            ExecuteStartupScript(application, addinXml, addinAssembly);
 
             return Result.Succeeded;
         }
@@ -131,6 +132,90 @@ namespace RevitPythonShell.RpsRuntime
             var file = assembly.GetManifestResourceStream(imageName);
             var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
             return source.Frames[0];
+        }
+
+        /// <summary>
+        /// Execute the startup script (specified under /RpsAddin/StartupScript/@src)
+        /// </summary>
+        /// <param name="application"></param>
+        private void ExecuteStartupScript(UIControlledApplication application, XDocument addinXml, Assembly addinAssembly)
+        {
+            // we need a UIApplication object to assign as `__revit__` in python...
+            var fi = application.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
+            var uiApplication = (UIApplication)fi.GetValue(application);
+            // execute StartupScript
+            var startupScript = GetStartupScript(addinXml, addinAssembly);
+            if (startupScript != null)
+            {
+                var executor = new ScriptExecutor(GetConfig(), uiApplication);
+                var result = executor.ExecuteScript(startupScript);
+                if (result == (int)Result.Failed)
+                {
+                    // FIXME: make the TaskDialog show the addins name.
+                    TaskDialog.Show("RevitPythonShell - StartupScript", executor.Message);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns a string to be executed, whenever the revit is started.
+        /// If this is not specified as a path to an existing file in the XML file (under /RpsAddin/StartupScript/@src),
+        /// then null is returned.
+        /// </summary>
+        private string GetStartupScript(XDocument addinXml, Assembly addinAssembly)
+        {
+            var startupScriptTags = addinXml.Root.Descendants("StartupScript") ?? new List<XElement>();
+            if (startupScriptTags.Count() == 0)
+            {
+                return null;
+            }
+            var tag = startupScriptTags.First();
+            var scriptName = tag.Attribute("script").Value;
+            var source = new StreamReader(addinAssembly.GetManifestResourceStream(scriptName)).ReadToEnd();
+            return source;
+        }
+
+        /// <summary>
+        /// Search for the config file first in the user preferences,
+        /// then in the all users preferences.
+        /// If not found, a new (empty) config file is created in the user preferences.
+        /// 
+        /// FIXME: for now, this is a copy of the RpsExternalCommandBase.GetConfig() method. I am
+        /// duplicating this code, because I need "this" to reference a subclass in the RpsAddin assembly
+        /// and don't know how to fix that right now...
+        /// </summary>
+        private RpsConfig GetConfig()
+        {
+            var addinName = Path.GetFileNameWithoutExtension(this.GetType().Assembly.Location);
+            var fileName = addinName + ".xml";
+            var userFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), addinName);
+
+            var userFolderFile = Path.Combine(userFolder, fileName);
+            if (File.Exists(userFolderFile))
+            {
+                return new RpsConfig(userFolderFile);
+            }
+
+            var allUserFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), addinName);
+            var allUserFolderFile = Path.Combine(allUserFolder, addinName);
+            if (File.Exists(allUserFolderFile))
+            {
+                return new RpsConfig(allUserFolderFile);
+            }
+
+            // create a new file in users appdata and return that
+            var doc = new XDocument(
+                new XElement("RevitPythonShell",
+                    new XElement("SearchPaths"),
+                    new XElement("Variables")));
+
+            if (!Directory.Exists(userFolder))
+            {
+                Directory.CreateDirectory(userFolder);
+            }
+
+            doc.Save(userFolderFile);
+            return new RpsConfig(userFolderFile);
         }
     }
 }

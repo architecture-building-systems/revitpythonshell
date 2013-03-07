@@ -345,7 +345,7 @@ namespace RevitPythonShell
 
         /// <summary>
         /// Returns a string to be executed, whenever the revit is started.
-        /// If this is not specified in the XML file (under /RevitPythonShell/StartupScript),
+        /// If this is not specified as a path to an existing file in the XML file (under /RevitPythonShell/StartupScript/@src),
         /// then null is returned.
         /// </summary>
         public static string GetStartupScript()
@@ -355,8 +355,19 @@ namespace RevitPythonShell
             {
                 return null;
             }
-            var firstScript = startupScriptTags.First();
-            return firstScript.Value.Trim();
+            var tag = startupScriptTags.First();
+            var path = tag.Attribute("script").Value;
+            if (File.Exists(path))
+            {
+                using (var reader = File.OpenText(path))
+                {
+                    var source = reader.ReadToEnd();
+                    return source;
+                }
+
+            }
+            // no startup script found
+            return null;
         }
 
         /// <summary>
