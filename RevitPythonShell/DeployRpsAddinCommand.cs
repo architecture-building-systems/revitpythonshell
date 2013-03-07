@@ -201,6 +201,19 @@ namespace RevitPythonShell
                 typeBuilder.CreateType();            
             }
 
+            // add StartupScript to addin assembly
+            if (_doc.Descendants("StartupScript").Count() > 0)
+            {
+                var tag = _doc.Descendants("StartupScript").First();
+                var scriptFile = GetRootedPath(_rootFolder, tag.Attribute("script").Value);
+                var newScriptFile = Path.GetFileName(scriptFile);
+                var scriptStream = File.OpenRead(scriptFile);
+                moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
+
+                // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
+                tag.Attribute("script").Value = newScriptFile;
+            }
+
             AddRpsAddinXmlToAssembly(_addinName, _doc, moduleBuilder);
             AddExternalApplicationToAssembly(_addinName, moduleBuilder);
             assemblyBuilder.Save(_addinName + ".dll");
