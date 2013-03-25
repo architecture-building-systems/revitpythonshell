@@ -37,6 +37,8 @@ namespace RevitPythonShell
                 new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
                     .SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
+                host.Console.ScriptScope.SetVariable("__window__", gui);
+
                 // run the initscript
                 var initScript = RevitPythonShellApplication.GetInitScript();
                 if (initScript != null)
