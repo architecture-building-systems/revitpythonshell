@@ -356,7 +356,7 @@ namespace RevitPythonShell
                 return null;
             }
             var tag = startupScriptTags.First();
-            var path = tag.Attribute("script").Value;
+            var path = tag.Attribute("src").Value;
             if (File.Exists(path))
             {
                 using (var reader = File.OpenText(path))
