@@ -1,4 +1,4 @@
-﻿namespace RevitPythonShell
+﻿namespace RevitPythonShell.RpsRuntime
 {
     partial class ScriptOutput
     {

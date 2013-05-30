@@ -51,43 +51,33 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
-    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=4.0.0.5949, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\PythonConsoleControl\RequiredLibraries\AvalonEdit\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
-    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
-    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\Revit\Vasari2\ReleaseWin32\RevitAPI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2013\Program\RevitAPI.dll</HintPath>
     </Reference>
     <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\Revit\Vasari2\ReleaseWin32\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\..\Program Files\Autodesk\Revit Architecture 2013\Program\RevitAPIUI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -123,6 +113,7 @@
       <DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ConsoleOptions.cs" />
+    <Compile Include="DeployRpsAddinCommand.cs" />
     <Compile Include="IronPythonConsole.xaml.cs">
       <DependentUpon>IronPythonConsole.xaml</DependentUpon>
     </Compile>
@@ -134,14 +125,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="RevitPythonShellApplication.cs" />
-    <Compile Include="ScriptExecutor.cs" />
-    <Compile Include="ScriptOutput.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ScriptOutput.Designer.cs">
-      <DependentUpon>ScriptOutput.cs</DependentUpon>
-    </Compile>
-    <Compile Include="ScriptOutputStream.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ConfigureCommandsForm.resx">
@@ -151,11 +134,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="ScriptOutput.resx">
-      <DependentUpon>ScriptOutput.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Examples\HelloWorld.iss" />
     <None Include="Resources\ipy.ico" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Cut.png" />
@@ -168,6 +149,10 @@
     <Resource Include="Images\Undo.png" />
     <Resource Include="Images\WordWrap.png" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
+    <Content Include="Examples\helloworld.py" />
+    <Content Include="Examples\HelloWorld.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Resources\py.ico" />
     <Content Include="Resources\pycon.ico" />
     <EmbeddedResource Include="Resources\PythonConsole32x32.png" />
@@ -175,8 +160,8 @@
     <EmbeddedResource Include="Resources\PythonScript16x16.png" />
     <EmbeddedResource Include="Resources\PythonScript32x32.png" />
     <Content Include="RevitPythonShell.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\Python.xshd" />
   </ItemGroup>
@@ -184,6 +169,10 @@
     <ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
       <Project>{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}</Project>
       <Name>PythonConsoleControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
+      <Project>{C8446636-C663-409F-82D0-72C0D55BBA1C}</Project>
+      <Name>RpsRuntime</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
