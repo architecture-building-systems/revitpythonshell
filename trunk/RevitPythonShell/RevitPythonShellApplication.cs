@@ -12,6 +12,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using RevitPythonShell.RpsRuntime;
 
 namespace RevitPythonShell
 {
@@ -25,23 +26,52 @@ namespace RevitPythonShell
         Result IExternalApplication.OnStartup(UIControlledApplication application)
         {
 
-            var dllfolder = Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
-                "RevitPythonShell2012");
-            var assemblyName = "CommandLoaderAssembly";
-            var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
-
-            var settings = GetSettings();
-
-            CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
-            BuildRibbonPanel(application, dllfullpath);
-
-            foreach (var repository in GetRepositories())
+            try
             {
-                CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
-                BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
+                var dllfolder = Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                        "RevitPythonShell2013");
+                var assemblyName = "CommandLoaderAssembly";
+                var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
+
+                var settings = GetSettings();
+
+                CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
+                BuildRibbonPanel(application, dllfullpath);
+
+                foreach (var repository in GetRepositories())
+                {
+                    CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
+                    BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
+                }
+
+                ExecuteStartupScript(application);
+
+                return Result.Succeeded;
             }
-            return Result.Succeeded;
+            catch (Exception ex)
+            {
+                TaskDialog.Show("Error setting up RevitPythonShell", ex.ToString());
+                return Result.Failed;
+            }
+        }
+
+        private static void ExecuteStartupScript(UIControlledApplication application)
+        {
+            // we need a UIApplication object to assign as `__revit__` in python...
+            var fi = application.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
+            var uiApplication = (UIApplication)fi.GetValue(application);            
+            // execute StartupScript
+            var startupScript = GetStartupScript();
+            if (startupScript != null)
+            {
+                var executor = new ScriptExecutor(GetConfig(), uiApplication);
+                var result = executor.ExecuteScript(startupScript);
+                if (result == (int)Result.Failed)
+                {
+                    TaskDialog.Show("RevitPythonShell - StartupScript", executor.Message);
+                }
+            }
         }
 
         private static void BuildRepositoryPanel(UIControlledApplication application, Repository repository, string dllfullpath)
@@ -86,6 +116,15 @@ namespace RevitPythonShell
             pbdConfigure.LargeImage = largeImage;
             splitButton.AddPushButton(pbdConfigure);
 
+            PushButtonData pbdDeployRpsAddin = new PushButtonData(
+                "DeployRpsAddin",
+                "Deploy RpsAddin",
+                assembly.Location,
+                "RevitPythonShell.DeployRpsAddinCommand");
+            pbdDeployRpsAddin.Image = smallImage;
+            pbdDeployRpsAddin.LargeImage = largeImage;
+            splitButton.AddPushButton(pbdDeployRpsAddin);
+
             var commands = GetCommands(GetSettings()).ToList();
             AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));
             AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => string.IsNullOrEmpty(c.Group)).ToList());
@@ -104,8 +143,6 @@ namespace RevitPythonShell
         {
             var file = app.GetManifestResourceStream(imageName);
             var source = PngBitmapDecoder.Create(file, BitmapCreateOptions.None, BitmapCacheOption.None);
-            Debug.WriteLine(source.Frames[0].DpiX);
-            Debug.WriteLine(source.Frames[0].DpiY);
             return source.Frames[0];
         }
 
@@ -252,6 +289,11 @@ namespace RevitPythonShell
             // FIXME: deallocate the python shell...
             return Result.Succeeded;
         }
+        
+        public static IRpsConfig GetConfig()
+        {           
+            return new RpsConfig(GetSettingsFile());
+        }
 
         /// <summary>
         /// Returns a handle to the settings file.
@@ -265,7 +307,7 @@ namespace RevitPythonShell
 
         private static string GetSettingsFile()
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell2012");
+            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell2013");
             return Path.Combine(folder, "RevitPythonShell.xml");
         }
 
@@ -299,6 +341,33 @@ namespace RevitPythonShell
             }
             var firstScript = initScriptTags.First();
             return firstScript.Value.Trim();
+        }
+
+        /// <summary>
+        /// Returns a string to be executed, whenever the revit is started.
+        /// If this is not specified as a path to an existing file in the XML file (under /RevitPythonShell/StartupScript/@src),
+        /// then null is returned.
+        /// </summary>
+        public static string GetStartupScript()
+        {
+            var startupScriptTags = GetSettings().Root.Descendants("StartupScript") ?? new List<XElement>();
+            if (startupScriptTags.Count() == 0)
+            {
+                return null;
+            }
+            var tag = startupScriptTags.First();
+            var path = tag.Attribute("src").Value;
+            if (File.Exists(path))
+            {
+                using (var reader = File.OpenText(path))
+                {
+                    var source = reader.ReadToEnd();
+                    return source;
+                }
+
+            }
+            // no startup script found
+            return null;
         }
 
         /// <summary>
@@ -385,28 +454,7 @@ namespace RevitPythonShell
 
             doc.Save(GetSettingsFile());
         }
-
-        /// <summary>
-        /// Returns the list of variables to be included with the scope in RevitPythonShell scripts.
-        /// </summary>
-        /// <returns></returns>
-        public static IDictionary<string, string> GetVariables()
-        {
-            return GetSettings().Root.Descendants("StringVariable").ToDictionary(v => v.Attribute("name").Value,
-                                                                                  v => v.Attribute("value").Value);
-        }
-
-        /// <summary>
-        /// Returns a list of search paths to be added to python interpreter engines.
-        /// </summary>
-        public static IEnumerable<string> GetSearchPaths()
-        {
-            foreach (var searchPathNode in GetSettings().Root.Descendants("SearchPath"))
-            {
-                yield return searchPathNode.Attribute("name").Value;
-            }
-        }
-
+                        
         public static IEnumerable<Repository> GetRepositories()
         {
             foreach (var repositoryNode in GetSettings().Root.Descendants("Repository"))

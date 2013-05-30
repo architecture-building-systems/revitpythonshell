@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RpsRuntime
 {
     public partial class ScriptOutput : Form
     {

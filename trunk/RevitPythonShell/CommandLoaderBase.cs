@@ -4,6 +4,7 @@ using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Attributes;
+using RevitPythonShell.RpsRuntime;
 
 namespace RevitPythonShell
 {
@@ -38,7 +39,7 @@ namespace RevitPythonShell
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             // FIXME: somehow fetch back message after script execution...
-            var executor = new ScriptExecutor(commandData, message, elements);
+            var executor = new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, message, elements);
 
             string source;
             using (var reader = File.OpenText(_scriptSource))
