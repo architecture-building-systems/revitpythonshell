@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitPythonShell", "RevitPythonShell\RevitPythonShell.csproj", "{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup_RevitPythonShell", "Setup\Setup_RevitPythonShell.vdproj", "{B8A79BD7-683C-4742-97F3-23442C184C2B}"
@@ -13,6 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterRevit2012Addin", "R
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{84677A26-E049-48B3-AFB0-3B3F99955849}"
 	ProjectSection(SolutionItems) = preProject
+		Setup_RevitPythonShell_2014.iss = Setup_RevitPythonShell_2014.iss
 		Setup_RevitPythonShell_Vasari_Beta1.iss = Setup_RevitPythonShell_Vasari_Beta1.iss
 		Setup_RevitPythonShell_Vasari_Beta2.iss = Setup_RevitPythonShell_Vasari_Beta2.iss
 		Setup_RevitPythonShell_Vasari_TP2.1.iss = Setup_RevitPythonShell_Vasari_TP2.1.iss
