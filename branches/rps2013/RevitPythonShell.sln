@@ -16,8 +16,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Setup_RevitPythonShell_2014.iss = Setup_RevitPythonShell_2014.iss
 		Setup_RevitPythonShell_Vasari_Beta1.iss = Setup_RevitPythonShell_Vasari_Beta1.iss
 		Setup_RevitPythonShell_Vasari_Beta2.iss = Setup_RevitPythonShell_Vasari_Beta2.iss
-		Setup_RevitPythonShell_Vasari_TP2.1.iss = Setup_RevitPythonShell_Vasari_TP2.1.iss
-		Setup_RevitPythonShell_Vasari_TP2.5.iss = Setup_RevitPythonShell_Vasari_TP2.5.iss
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RegisterRevit2013Addin", "RegisterRevit2013Addin\RegisterRevit2013Addin.csproj", "{40518988-A5EB-464E-9CAE-4F913A483C81}"
