@@ -143,9 +143,12 @@ namespace RevitPythonShell.RpsRuntime
             Array.Copy(buffer, offset, actualBuffer, 0, count);
             var text = Encoding.UTF8.GetString(actualBuffer);
             Debug.WriteLine(text);
-            _gui.txtStdOut.AppendText(text);
-            _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
-            _gui.txtStdOut.ScrollToCaret();
+            _gui.Invoke((Action) delegate()
+            {
+                _gui.txtStdOut.AppendText(text);
+                _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
+                _gui.txtStdOut.ScrollToCaret();
+            });
             Application.DoEvents();    
         
         }
