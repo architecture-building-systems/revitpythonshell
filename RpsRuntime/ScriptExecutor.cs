@@ -129,6 +129,10 @@ namespace RevitPythonShell.RpsRuntime
 
             // add the search paths
             AddSearchPaths(engine);
+
+            // reference RevitAPI and RevitAPIUI
+            engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.DB.Document).Assembly);
+            engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);            
         }
 
         /// <summary>
