@@ -121,19 +121,18 @@ namespace RevitPythonShell.RpsRuntime
             scope.SetVariable("__elements__", _elements);
             scope.SetVariable("__result__", (int)Result.Succeeded);
 
-            // add two special variables: __revit__ and __vars__ to be globally visible everywhere:
-            var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(engine);
-            var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
-            pythonContext.BuiltinModuleDict.Add("__revit__", _revit);
-            pythonContext.BuiltinModuleDict.Add("__vars__", _config.GetVariables());
-
+            // add two special variables: __revit__ and __vars__ to be globally visible everywhere:            
+            var builtin = IronPython.Hosting.Python.GetBuiltinModule(engine);
+            builtin.SetVariable("__revit__", _revit);
+            builtin.SetVariable("__vars__", _config.GetVariables());
+            
             // add the search paths
             AddSearchPaths(engine);
 
             // reference RevitAPI and RevitAPIUI
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.DB.Document).Assembly);
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);            
-        }
+        }        
 
         /// <summary>
         /// Be nasty and reach into the ScriptScope to get at its private '_scope' member,
