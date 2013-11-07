@@ -30,8 +30,8 @@ namespace RevitPythonShell.RpsRuntime
             _engine = engine;
             _gui.txtStdOut.KeyPress += KeyPressEventHandler;
             _gui.txtStdOut.KeyDown += KeyDownEventHandler;
-            _gui.Closing += ClosingEventHandler;
-            _gui.Closed += ClosedEventHandler;
+            //_gui.Closing += ClosingEventHandler;
+            //_gui.Closed += ClosedEventHandler;
 
             _gui.txtStdOut.Focus();
 
@@ -127,30 +127,32 @@ namespace RevitPythonShell.RpsRuntime
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            if (_gui.IsDisposed)
+            lock (this)
             {
-                return;
-            }
+                if (_gui.IsDisposed)
+                {
+                    return;
+                }
 
-            while (_bomCharsLeft > 0 && count > 0)
-            {
-                _bomCharsLeft--;
-                count--;
-                offset++;
-            }
+                while (_bomCharsLeft > 0 && count > 0)
+                {
+                    _bomCharsLeft--;
+                    count--;
+                    offset++;
+                }
 
-            var actualBuffer = new byte[count]; 
-            Array.Copy(buffer, offset, actualBuffer, 0, count);
-            var text = Encoding.UTF8.GetString(actualBuffer);
-            Debug.WriteLine(text);
-            _gui.Invoke((Action) delegate()
-            {
-                _gui.txtStdOut.AppendText(text);
-                _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
-                _gui.txtStdOut.ScrollToCaret();
-            });
-            Application.DoEvents();    
-        
+                var actualBuffer = new byte[count];
+                Array.Copy(buffer, offset, actualBuffer, 0, count);
+                var text = Encoding.UTF8.GetString(actualBuffer);
+                Debug.WriteLine(text);
+                _gui.BeginInvoke((Action)delegate()
+                {
+                    _gui.txtStdOut.AppendText(text);
+                    _gui.txtStdOut.SelectionStart = _gui.txtStdOut.Text.Length;
+                    _gui.txtStdOut.ScrollToCaret();
+                });
+                Application.DoEvents();
+            }
         }
 
         public override void Flush()

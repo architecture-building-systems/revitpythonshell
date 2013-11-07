@@ -32,38 +32,47 @@ namespace RevitPythonShell
 
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
-            // read in rpsaddin.xml
-            var rpsAddinXmlPath = GetAddinXmlPath(); // FIXME: do some argument checking here            
+            try
+            {
+                // read in rpsaddin.xml
+                var rpsAddinXmlPath = GetAddinXmlPath(); // FIXME: do some argument checking here            
 
-            _addinName = Path.GetFileNameWithoutExtension(rpsAddinXmlPath);
-            _rootFolder = Path.GetDirectoryName(rpsAddinXmlPath);
+                _addinName = Path.GetFileNameWithoutExtension(rpsAddinXmlPath);
+                _rootFolder = Path.GetDirectoryName(rpsAddinXmlPath);
 
-            _doc = XDocument.Load(rpsAddinXmlPath);
+                _doc = XDocument.Load(rpsAddinXmlPath);
 
-            // create subfolder
-            _outputFolder = CreateOutputFolder();
+                // create subfolder
+                _outputFolder = CreateOutputFolder();
 
-            // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
-            CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location);          // RpsAddin.dll
+                // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
+                CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location);          // RpsAddin.dll
 
-            var ironPythonPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
-            CopyFile(Path.Combine(ironPythonPath, "IronPython.dll"));                    // IronPython.dll
-            CopyFile(Path.Combine(ironPythonPath, "IronPython.Modules.dll"));            // IronPython.Modules.dll            
-            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.dll"));           // Microsoft.Scripting.dll
-            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.Metadata.dll"));  // Microsoft.Scripting.Metadata.dll
-            CopyFile(Path.Combine(ironPythonPath, "Microsoft.Dynamic.dll"));             // Microsoft.Dynamic.dll
+                var ironPythonPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
+                CopyFile(Path.Combine(ironPythonPath, "IronPython.dll"));                    // IronPython.dll
+                CopyFile(Path.Combine(ironPythonPath, "IronPython.Modules.dll"));            // IronPython.Modules.dll            
+                CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.dll"));           // Microsoft.Scripting.dll
+                CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.Metadata.dll"));  // Microsoft.Scripting.Metadata.dll
+                CopyFile(Path.Combine(ironPythonPath, "Microsoft.Dynamic.dll"));             // Microsoft.Dynamic.dll
 
-            // copy files mentioned (they must all be unique)
-            CopyIcons();
+                // copy files mentioned (they must all be unique)
+                CopyIcons();
 
-            CopyExplicitFiles();
+                CopyExplicitFiles();
 
-            // create addin assembly
-            CreateAssembly();
+                // create addin assembly
+                CreateAssembly();
 
-            TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
+                TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
 
-            return Result.Succeeded;
+                return Result.Succeeded;
+            }
+            catch (Exception exception)
+            {
+
+                TaskDialog.Show("Deploy RpsAddin", "Error deploying addin: " + exception.ToString());
+                return Result.Failed;
+            }
         }
 
         /// <summary>
