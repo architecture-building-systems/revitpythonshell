@@ -81,8 +81,6 @@ namespace RevitPythonShell
         private static void BuildRepositoryPanel(UIControlledApplication application, Repository repository, string dllfullpath)
         {
             var assembly = typeof(RevitPythonShellApplication).Assembly;
-            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
-            var smallImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole16x16.png");
 
             RibbonPanel ribbonPanel = application.CreateRibbonPanel(repository.Name);
 
@@ -94,7 +92,6 @@ namespace RevitPythonShell
         private static void BuildRibbonPanel(UIControlledApplication application, string dllfullpath)
         {
             var assembly = typeof(RevitPythonShellApplication).Assembly;
-            //var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
             var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
             var smallImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole16x16.png");
 
@@ -152,9 +149,6 @@ namespace RevitPythonShell
 
         private static void AddGroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, IEnumerable<IGrouping<string, Command>> groupedCommands)
         {
-            var largeImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript32x32.png");
-            var smallImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript16x16.png");
-
             foreach (var group in groupedCommands)
             {
                 SplitButtonData splitButtonData = new SplitButtonData(group.Key, group.Key);
@@ -162,8 +156,8 @@ namespace RevitPythonShell
                 foreach (var command in group)
                 {
                     var pbd = new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index);
-                    pbd.Image = smallImage;
-                    pbd.LargeImage = largeImage;
+                    pbd.Image = command.SmallImage;
+                    pbd.LargeImage = command.LargeImage;
                     splitButton.AddPushButton(pbd);
                 }
             }
@@ -172,9 +166,6 @@ namespace RevitPythonShell
 
         private static void AddUngroupedCommands(string dllfullpath, RibbonPanel ribbonPanel, List<Command> commands)
         {
-            var largeImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript32x32.png");
-            var smallImage = GetEmbeddedPng(typeof(RevitPythonShellApplication).Assembly, "RevitPythonShell.Resources.PythonScript16x16.png");
-
             // add canned commands as stacked pushbuttons (try to pack 3 commands per pushbutton, then 2)            
             while (commands.Count > 4 || commands.Count == 3)
             {
@@ -187,16 +178,16 @@ namespace RevitPythonShell
                 commands.RemoveAt(0);
 
                 PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
-                pbdA.Image = smallImage;
-                pbdA.LargeImage = largeImage;
+                pbdA.Image = command0.SmallImage;
+                pbdA.LargeImage = command0.LargeImage;
 
                 PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
-                pbdB.Image = smallImage;
-                pbdB.LargeImage = largeImage;
+                pbdB.Image = command1.SmallImage;
+                pbdB.LargeImage = command1.LargeImage;
 
                 PushButtonData pbdC = new PushButtonData(command2.Name, command2.Name, dllfullpath, "Command" + command2.Index);
-                pbdC.Image = smallImage;
-                pbdC.LargeImage = largeImage;
+                pbdC.Image = command2.SmallImage;
+                pbdC.LargeImage = command2.LargeImage;
 
                 ribbonPanel.AddStackedItems(pbdA, pbdB, pbdC);
             }
@@ -209,12 +200,12 @@ namespace RevitPythonShell
                 commands.RemoveAt(0);
 
                 PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
-                pbdA.Image = smallImage;
-                pbdA.LargeImage = largeImage;
+                pbdA.Image = command0.SmallImage;
+                pbdA.LargeImage = command0.LargeImage;
 
                 PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
-                pbdB.Image = smallImage;
-                pbdB.LargeImage = largeImage;
+                pbdB.Image = command0.SmallImage;
+                pbdB.LargeImage = command0.LargeImage;
 
                 ribbonPanel.AddStackedItems(pbdA, pbdB);
             }
@@ -226,12 +217,12 @@ namespace RevitPythonShell
                 commands.RemoveAt(0);
                 commands.RemoveAt(0);
                 PushButtonData pbdA = new PushButtonData(command0.Name, command0.Name, dllfullpath, "Command" + command0.Index);
-                pbdA.Image = smallImage;
-                pbdA.LargeImage = largeImage;
+                pbdA.Image = command0.SmallImage;
+                pbdA.LargeImage = command0.LargeImage;
 
                 PushButtonData pbdB = new PushButtonData(command1.Name, command1.Name, dllfullpath, "Command" + command1.Index);
-                pbdB.Image = smallImage;
-                pbdB.LargeImage = largeImage;
+                pbdB.Image = command1.SmallImage;
+                pbdB.LargeImage = command1.LargeImage;
 
                 ribbonPanel.AddStackedItems(pbdA, pbdB);
             }
@@ -240,8 +231,8 @@ namespace RevitPythonShell
                 // only one command defined, show as a big button...
                 var command = commands[0];
                 PushButtonData pbd = new PushButtonData(command.Name, command.Name, dllfullpath, "Command" + command.Index);
-                pbd.Image = smallImage;
-                pbd.LargeImage = largeImage;
+                pbd.Image = command.SmallImage;
+                pbd.LargeImage = command.LargeImage;
                 ribbonPanel.AddItem(pbd);
             }
         }
@@ -324,10 +315,72 @@ namespace RevitPythonShell
             int i = 0;
             foreach (var commandNode in repository.Root.Descendants("Command") ?? new List<XElement>())
             {
+                var addinAssembly = typeof(RevitPythonShellApplication).Assembly;
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
                 var group = commandNode.Attribute("group") == null ? "" : commandNode.Attribute("group").Value;
-                yield return new Command { Name = commandName, Source = commandSrc, Group = group, Index = i++ };
+                
+                ImageSource largeImage = null;
+                if (IsValidPath(commandNode.Attribute("largeImage")))
+                {
+                    var largeImagePath = GetAbsolutePath(commandNode.Attribute("largeImage").Value);
+                    largeImage = BitmapDecoder.Create(File.OpenRead(largeImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
+                }
+                else
+                {
+                    largeImage = GetEmbeddedPng(addinAssembly, "RevitPythonShell.Resources.PythonScript32x32.png");
+                }
+
+                ImageSource smallImage = null;
+                if (IsValidPath(commandNode.Attribute("smallImage")))
+                {
+                    var smallImagePath = GetAbsolutePath(commandNode.Attribute("smallImage").Value);
+                    smallImage = BitmapDecoder.Create(File.OpenRead(smallImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
+                }
+                else
+                {
+                    smallImage = GetEmbeddedPng(addinAssembly, "RevitPythonShell.Resources.PythonScript16x16.png");
+                }
+                
+                yield return new Command { 
+                        Name = commandName, 
+                        Source = commandSrc, 
+                        Group = group,
+                        LargeImage = largeImage,
+                        SmallImage = smallImage,
+                        Index = i++
+                };
+            }
+        }
+
+        /// <summary>
+        /// True, if the contents of the attribute is a valid absolute path (or relative path to the assembly) is
+        /// an existing path.
+        /// </summary>
+        private static bool IsValidPath(XAttribute pathAttribute)
+        {
+            if (pathAttribute != null && !string.IsNullOrEmpty(pathAttribute.Value))
+            {
+                return File.Exists(GetAbsolutePath(pathAttribute.Value));
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Return an absolute path for input path, with relative paths seen as
+        /// relative to the assembly location. No guarantees are made as to
+        /// wether the path exists or not.
+        /// </summary>
+        private static string GetAbsolutePath(string path)
+        {
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            else
+            {
+                var assembly = typeof(RevitPythonShellApplication).Assembly;
+                return Path.Combine(Path.GetDirectoryName(assembly.Location), path);
             }
         }
 
@@ -478,7 +531,9 @@ namespace RevitPythonShell
         public string Name;
         public string Group;
         public string Source;
-        public int Index;        
+        public int Index;
+        public ImageSource LargeImage;
+        public ImageSource SmallImage;        
 
         public override string ToString()
         {

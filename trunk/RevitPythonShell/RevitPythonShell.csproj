@@ -57,18 +57,23 @@
     </Reference>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="IronPython.Modules">
       <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Dynamic">
       <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Scripting">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
