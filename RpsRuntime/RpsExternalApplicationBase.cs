@@ -96,9 +96,9 @@ namespace RevitPythonShell.RpsRuntime
 
             var result = new PushButtonData(pbName, text, addinAssembly.Location, className);
 
-            if (xmlPushButton.Attribute("largeImage") != null && !string.IsNullOrEmpty(xmlPushButton.Attribute("largeImage").Value))
+            if (IsValidPath(xmlPushButton.Attribute("largeImage")))
             {
-                var largeImagePath = Path.Combine(addinAssembly.Location, xmlPushButton.Attribute("largeImage").Value);
+                var largeImagePath = GetAbsolutePath(xmlPushButton.Attribute("largeImage").Value);
                 result.LargeImage = BitmapDecoder.Create(File.OpenRead(largeImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
             }
             else
@@ -106,10 +106,10 @@ namespace RevitPythonShell.RpsRuntime
                 result.LargeImage = GetEmbeddedPng("RevitPythonShell.RpsRuntime.Resources.PythonScript32x32.png");
             }
 
-            if (xmlPushButton.Attribute("smallImage") != null && !string.IsNullOrEmpty(xmlPushButton.Attribute("smallImage").Value))
+            if (IsValidPath(xmlPushButton.Attribute("smallImage")))
             {
-                var largeImagePath = Path.Combine(addinAssembly.Location, xmlPushButton.Attribute("smallImage").Value);
-                result.LargeImage = BitmapDecoder.Create(File.OpenRead(largeImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
+                var smallImagePath = GetAbsolutePath(xmlPushButton.Attribute("smallImage").Value);
+                result.Image = BitmapDecoder.Create(File.OpenRead(smallImagePath), BitmapCreateOptions.None, BitmapCacheOption.None).Frames[0];
             }
             else
             {
@@ -117,6 +117,37 @@ namespace RevitPythonShell.RpsRuntime
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// True, if the contents of the attribute is a valid absolute path (or relative path to the assembly) is
+        /// an existing path.
+        /// </summary>
+        private static bool IsValidPath(XAttribute pathAttribute)
+        {
+            if (pathAttribute != null && !string.IsNullOrEmpty(pathAttribute.Value))
+            {
+                return File.Exists(GetAbsolutePath(pathAttribute.Value));
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Return an absolute path for input path, with relative paths seen as
+        /// relative to the assembly location. No guarantees are made as to
+        /// wether the path exists or not.
+        /// </summary>
+        private static string GetAbsolutePath(string path)
+        {
+            if (Path.IsPathRooted(path))
+            {
+                return path;
+            }
+            else
+            {
+                var assembly = typeof(RpsExternalApplicationBase).Assembly;
+                return Path.Combine(Path.GetDirectoryName(assembly.Location), path);
+            }
         }
 
         /// <summary>
