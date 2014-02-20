@@ -123,7 +123,7 @@ namespace RevitPythonShell.RpsRuntime
         /// True, if the contents of the attribute is a valid absolute path (or relative path to the assembly) is
         /// an existing path.
         /// </summary>
-        private static bool IsValidPath(XAttribute pathAttribute)
+        private bool IsValidPath(XAttribute pathAttribute)
         {
             if (pathAttribute != null && !string.IsNullOrEmpty(pathAttribute.Value))
             {
@@ -137,7 +137,7 @@ namespace RevitPythonShell.RpsRuntime
         /// relative to the assembly location. No guarantees are made as to
         /// wether the path exists or not.
         /// </summary>
-        private static string GetAbsolutePath(string path)
+        private string GetAbsolutePath(string path)
         {
             if (Path.IsPathRooted(path))
             {
@@ -145,7 +145,7 @@ namespace RevitPythonShell.RpsRuntime
             }
             else
             {
-                var assembly = typeof(RpsExternalApplicationBase).Assembly;
+                var assembly = this.GetType().Assembly;
                 return Path.Combine(Path.GetDirectoryName(assembly.Location), path);
             }
         }
