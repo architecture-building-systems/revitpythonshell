@@ -21,31 +21,53 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpsRuntime", "RpsRuntime\RpsRuntime.csproj", "{C8446636-C663-409F-82D0-72C0D55BBA1C}"
 EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug 2014|Any CPU = Debug 2014|Any CPU
+		Debug 2015|Any CPU = Debug 2015|Any CPU
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2014|Any CPU.ActiveCfg = Debug 2014|Any CPU
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2014|Any CPU.Build.0 = Debug 2014|Any CPU
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2015|Any CPU.ActiveCfg = Debug 2015|Any CPU
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2015|Any CPU.Build.0 = Debug 2015|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E112A1A-1FB7-4028-AC82-CB8612E3F5A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
+		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
 		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07988933-CD81-4B15-BEB4-9555FC492AAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40518988-A5EB-464E-9CAE-4F913A483C81}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
+		{40518988-A5EB-464E-9CAE-4F913A483C81}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
 		{40518988-A5EB-464E-9CAE-4F913A483C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{40518988-A5EB-464E-9CAE-4F913A483C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40518988-A5EB-464E-9CAE-4F913A483C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40518988-A5EB-464E-9CAE-4F913A483C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2014|Any CPU.ActiveCfg = Debug 2014|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2014|Any CPU.Build.0 = Debug 2014|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2015|Any CPU.ActiveCfg = Debug 2015|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2015|Any CPU.Build.0 = Debug 2015|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -53,9 +75,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
