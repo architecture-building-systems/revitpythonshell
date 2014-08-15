@@ -29,7 +29,33 @@ builder.BuildExternalCommandAssembly(
     {'HelloWorld': SCRIPT_PATH})
 
 panel = __uiControlledApplication__.CreateRibbonPanel('HelloWorldPanel')
+
+# a normal pushbutton
 pbd = PushButtonData('pb_HelloWorld', 'hello, world!', DLL_PATH, 'HelloWorld')
 pbd.Image = BitmapImage(Uri(SMALL_IMG_PATH))
 pbd.LargeImage = BitmapImage(Uri(LARGE_IMG_PATH))
 panel.AddItem(pbd)
+
+# a splitbutton
+sb = panel.AddItem(SplitButtonData('sp_HelloWorld', 'HelloBananaSplit'))
+for i in range(3):
+    pbd = PushButtonData('pb_HelloWorld_split%i' % i,
+                         'hello, world!', DLL_PATH, 'HelloWorld')
+    pbd.Image = BitmapImage(Uri(SMALL_IMG_PATH))
+    pbd.LargeImage = BitmapImage(Uri(LARGE_IMG_PATH))
+    sb.AddPushButton(pbd)
+
+# stacked buttons!
+pbd0 = PushButtonData('pb_HelloWorld_stack0',
+                      'hello, world!', DLL_PATH, 'HelloWorld')
+pbd0.Image = BitmapImage(Uri(SMALL_IMG_PATH))
+pbd0.LargeImage = BitmapImage(Uri(LARGE_IMG_PATH))
+pbd1 = PushButtonData('pb_HelloWorld_stack1',
+                      'hello, world!', DLL_PATH, 'HelloWorld')
+pbd1.Image = BitmapImage(Uri(SMALL_IMG_PATH))
+pbd1.LargeImage = BitmapImage(Uri(LARGE_IMG_PATH))
+pbd2 = PushButtonData('pb_HelloWorld_stack2',
+                      'hello, world!', DLL_PATH, 'HelloWorld')
+pbd2.Image = BitmapImage(Uri(SMALL_IMG_PATH))
+pbd2.LargeImage = BitmapImage(Uri(LARGE_IMG_PATH))
+panel.AddStackedItems(pbd0, pbd1, pbd2)
