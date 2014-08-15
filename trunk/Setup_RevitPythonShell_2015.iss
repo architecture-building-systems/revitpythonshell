@@ -1,7 +1,7 @@
 [Files]
-Source: RevitPythonShell\bin\Debug\PythonConsoleControl.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RevitPythonShell.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RpsRuntime.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2015\PythonConsoleControl.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2015\RevitPythonShell.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2015\RpsRuntime.dll; DestDir: {app};
 Source: RequiredLibraries\ICSharpCode.AvalonEdit.dll; DestDir: {app};
 Source: RequiredLibraries\IronPython.dll; DestDir: {app};
 Source: RequiredLibraries\IronPython.Modules.dll; DestDir: {app};
