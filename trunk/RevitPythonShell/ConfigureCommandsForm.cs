@@ -12,8 +12,7 @@ namespace RevitPythonShell
 {
     public partial class ConfigureCommandsForm : Form
     {
-        private List<Command> _commands;
-        private List<Repository> _repositories;
+        private List<Command> _commands;        
         private List<string> _searchPaths;
         private List<KeyValuePair<string, string>> _variables;
 
@@ -38,10 +37,7 @@ namespace RevitPythonShell
         {
             _commands = RevitPythonShellApplication.GetCommands(
                 RevitPythonShellApplication.GetSettings()).ToList();
-            lstCommands.DataSource = _commands;
-
-            _repositories = RevitPythonShellApplication.GetRepositories().ToList();
-            lstRepositories.DataSource = _repositories;
+            lstCommands.DataSource = _commands;      
 
             _searchPaths = RevitPythonShellApplication.GetConfig().GetSearchPaths().ToList();
             lstSearchPaths.DataSource = _searchPaths;
@@ -201,16 +197,6 @@ namespace RevitPythonShell
             lstCommands.SelectedIndex = newPosition;
         }
 
-        private void btnRepositoryMoveUp_Click(object sender, EventArgs e)
-        {
-            int oldPosition = lstCommands.SelectedIndex;
-            int newPosition = Math.Max(0, oldPosition - 1);
-
-            SwapPositions(_repositories, oldPosition, newPosition);
-            RefreshBindingContext(lstRepositories, _repositories);
-            lstRepositories.SelectedIndex = newPosition;
-        }
-
         private void SwapPositions<T>(List<T> container, int oldPosition, int newPosition)
         {
             var temp = container[newPosition];
@@ -230,21 +216,13 @@ namespace RevitPythonShell
             lstCommands.SelectedIndex = newPosition;
         }
 
-        private void btnRepositoryMoveDown_Click(object sender, EventArgs e)
-        {
-            int oldPosition = lstRepositories.SelectedIndex;
-            int newPosition = Math.Min(_repositories.Count - 1, oldPosition + 1);
-            SwapPositions(_repositories, oldPosition, newPosition);
-            RefreshBindingContext(lstRepositories, _repositories);
-            lstRepositories.SelectedIndex = newPosition;
-        }
-
+ 
         /// <summary>
         /// Save changes to RevitPythonShell.xml and close Dialog.
         /// </summary>
         private void btnCommandSave_Click(object sender, EventArgs e)
         {
-            RevitPythonShellApplication.WriteSettings(_commands, _repositories, _searchPaths, _variables, txtInitScript.Text);
+            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text);
             Close();
         }
 
@@ -369,43 +347,6 @@ namespace RevitPythonShell
 
             _variables.RemoveAt(lstVariables.SelectedIndex);
             RefreshBindingContext(lstVariables, _variables);
-        }
-
-        private void btnRepositoryRemove_Click(object sender, EventArgs e)
-        {
-            if (lstRepositories.SelectedIndex < 0)
-            {
-                return;
-            }
-
-            _repositories.RemoveAt(lstRepositories.SelectedIndex);
-            RefreshBindingContext(lstRepositories, _repositories);
-        }
-
-        private void btnRepositoryBrowse_Click(object sender, EventArgs e)
-        {
-            var dialog = new OpenFileDialog();
-            dialog.CheckFileExists = true;
-            dialog.CheckPathExists = true;
-            dialog.Multiselect = false;
-
-            if (dialog.ShowDialog(this) == DialogResult.OK)
-            {
-                txtRepositoryPath.Text = dialog.FileName;
-            }
-        }
-
-        private void btnRepositoryAdd_Click(object sender, EventArgs e)
-        {
-            var repository = Repository.FromPath(txtRepositoryPath.Text);
-            if (repository != null)
-            {
-                _repositories.Add(repository);
-                RefreshBindingContext(lstRepositories, _repositories);
-                lstRepositories.SelectedIndex = _repositories.Count - 1;
-
-                txtRepositoryPath.Text = "";
-            }
-        }        
+        }       
     }
 }
