@@ -168,17 +168,17 @@ namespace RevitPythonShell.RpsRuntime
         /// <summary>
         /// Execute the startup script (specified under /RpsAddin/StartupScript/@src)
         /// </summary>
-        /// <param name="application"></param>
-        private void ExecuteStartupScript(UIControlledApplication application, XDocument addinXml, Assembly addinAssembly)
+        /// <param name="uiControlledApplication"></param>
+        private void ExecuteStartupScript(UIControlledApplication uiControlledApplication, XDocument addinXml, Assembly addinAssembly)
         {
             // we need a UIApplication object to assign as `__revit__` in python...
-            var fi = application.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
-            var uiApplication = (UIApplication)fi.GetValue(application);
+            var fi = uiControlledApplication.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
+            var uiApplication = (UIApplication)fi.GetValue(uiControlledApplication);
             // execute StartupScript
             var startupScript = GetStartupScript(addinXml, addinAssembly);
             if (startupScript != null)
             {
-                var executor = new ScriptExecutor(GetConfig(), uiApplication);
+                var executor = new ScriptExecutor(GetConfig(), uiApplication, uiControlledApplication);
                 var result = executor.ExecuteScript(startupScript);
                 if (result == (int)Result.Failed)
                 {

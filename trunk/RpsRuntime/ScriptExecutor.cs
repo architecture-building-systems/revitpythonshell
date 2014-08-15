@@ -20,12 +20,14 @@ namespace RevitPythonShell.RpsRuntime
         private readonly ElementSet _elements;
         private readonly UIApplication _revit;
         private readonly IRpsConfig _config;
+        private readonly UIControlledApplication _uiControlledApplication;
 
-        public ScriptExecutor(IRpsConfig config, UIApplication uiApplication)
+        public ScriptExecutor(IRpsConfig config, UIApplication uiApplication, UIControlledApplication uiControlledApplication)
         {
             _config = config;
 
             _revit = uiApplication;
+            _uiControlledApplication = uiControlledApplication;
 
             // note, if this constructor is used, then this stuff is all null
             // (I'm just setting it here to be explete - this constructor is
@@ -43,6 +45,8 @@ namespace RevitPythonShell.RpsRuntime
             _commandData = commandData;
             _elements = elements;
             _message = message;
+
+            _uiControlledApplication = null;
         }
 
         public string Message
@@ -125,13 +129,22 @@ namespace RevitPythonShell.RpsRuntime
             var builtin = IronPython.Hosting.Python.GetBuiltinModule(engine);
             builtin.SetVariable("__revit__", _revit);
             builtin.SetVariable("__vars__", _config.GetVariables());
+
+            // allow access to the UIControlledApplication in the startup script...
+            if (_uiControlledApplication != null)
+            {
+                builtin.SetVariable("__uiControlledApplication__", _uiControlledApplication);
+            }
             
             // add the search paths
             AddSearchPaths(engine);
 
             // reference RevitAPI and RevitAPIUI
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.DB.Document).Assembly);
-            engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);            
+            engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);
+
+            // also, allow access to the RPS internals
+            engine.Runtime.LoadAssembly(typeof(RevitPythonShell.RpsRuntime.ScriptExecutor).Assembly);
         }        
 
         /// <summary>
