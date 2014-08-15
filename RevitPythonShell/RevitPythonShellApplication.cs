@@ -60,16 +60,16 @@ namespace RevitPythonShell
             }
         }
 
-        private static void ExecuteStartupScript(UIControlledApplication application)
+        private static void ExecuteStartupScript(UIControlledApplication uiControlledApplication)
         {
             // we need a UIApplication object to assign as `__revit__` in python...
-            var fi = application.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
-            var uiApplication = (UIApplication)fi.GetValue(application);            
+            var fi = uiControlledApplication.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
+            var uiApplication = (UIApplication)fi.GetValue(uiControlledApplication);            
             // execute StartupScript
             var startupScript = GetStartupScript();
             if (startupScript != null)
             {
-                var executor = new ScriptExecutor(GetConfig(), uiApplication);
+                var executor = new ScriptExecutor(GetConfig(), uiApplication, uiControlledApplication);
                 var result = executor.ExecuteScript(startupScript);
                 if (result == (int)Result.Failed)
                 {

@@ -26,7 +26,7 @@ namespace RevitPythonShell
         }
 
         /// <summary>
-        /// Overload this method to implement and external command within Revit.
+        /// Overload this method to implement an external command within Revit.
         /// </summary>
         /// <returns>
         /// The result indicates if the execution fails, succeeds, or was canceled by user. If it does not
