@@ -41,13 +41,7 @@ namespace RevitPythonShell
                 var settings = GetSettings();
 
                 CreateCommandLoaderAssembly(settings, dllfolder, assemblyName);
-                BuildRibbonPanel(application, dllfullpath);
-
-                foreach (var repository in GetRepositories())
-                {
-                    CreateCommandLoaderAssembly(XDocument.Load(repository.Url), dllfolder, repository.SafeName());
-                    BuildRepositoryPanel(application, repository, Path.Combine(dllfolder, repository.SafeName() + ".dll"));
-                }
+                BuildRibbonPanel(application, dllfullpath);                
 
                 ExecuteStartupScript(application);
 
@@ -76,17 +70,6 @@ namespace RevitPythonShell
                     TaskDialog.Show("RevitPythonShell - StartupScript", executor.Message);
                 }
             }
-        }
-
-        private static void BuildRepositoryPanel(UIControlledApplication application, Repository repository, string dllfullpath)
-        {
-            var assembly = typeof(RevitPythonShellApplication).Assembly;
-
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel(repository.Name);
-
-            var commands = GetCommands(XDocument.Load(repository.Url)).ToList();
-            AddGroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => !string.IsNullOrEmpty(c.Group)).GroupBy(c => c.Group));
-            AddUngroupedCommands(dllfullpath, ribbonPanel, commands.Where(c => string.IsNullOrEmpty(c.Group)).ToList());
         }
 
         private static void BuildRibbonPanel(UIControlledApplication application, string dllfullpath)
@@ -431,8 +414,7 @@ namespace RevitPythonShell
         /// Writes settings to the settings file, replacing the old commands.
         /// </summary>
         public static void WriteSettings(
-            IEnumerable<Command> commands, 
-            IEnumerable<Repository> repositories,
+            IEnumerable<Command> commands,
             IEnumerable<string> searchPaths, 
             IEnumerable<KeyValuePair<string, string>> variables,
             string initScript)
@@ -468,18 +450,7 @@ namespace RevitPythonShell
                         new XAttribute("group", command.Group)));
 
             }
-            doc.Root.Add(xmlCommands);
-
-            // add repositories
-            var xmlRepositories = new XElement("Repositories");
-            foreach (var repository in repositories)
-            {
-                xmlRepositories.Add(new XElement(
-                    "Repository",
-                        new XAttribute("name", repository.Name),
-                        new XAttribute("url", repository.Url)));
-            }
-            doc.Root.Add(xmlRepositories);
+            doc.Root.Add(xmlCommands);            
 
             // add search paths
             var xmlSearchPaths = new XElement("SearchPaths");
@@ -511,16 +482,6 @@ namespace RevitPythonShell
 
             doc.Save(GetSettingsFile());
         }
-                        
-        public static IEnumerable<Repository> GetRepositories()
-        {
-            foreach (var repositoryNode in GetSettings().Root.Descendants("Repository"))
-            {
-                var name = repositoryNode.Attribute("name").Value;
-                var url = repositoryNode.Attribute("url").Value;
-                yield return new Repository() { Name = name, Url = url };
-            }
-        }
     }
 
     /// <summary>
@@ -538,67 +499,6 @@ namespace RevitPythonShell
         public override string ToString()
         {
             return Name;
-        }
-    }
-
-    /// <summary>
-    /// A simple structure to hold information about repositories.
-    /// </summary>
-    internal class Repository
-    {
-        public string Name;
-        public string Url;
-
-        public override string ToString()
-        {
-            return Name;    
-        }
-
-        /// <summary>
-        /// Tries to load a repository from a specified path
-        /// (see documentation for XmlReader.Create(string))
-        /// </summary>
-        public static Repository FromPath(string path)
-        {
-            XDocument repositoryXml;
-            try
-            {
-                repositoryXml = XDocument.Load(path);
-            }
-            catch
-            {
-                return null;
-            }
-            var repositoryNode = repositoryXml.Root.Descendants("Repository").FirstOrDefault();
-            if (repositoryNode == null)
-            {
-                return null;
-            }
-            var nameAttribute = repositoryNode.Attribute("name");
-            if (nameAttribute == null)
-            {
-                return null;
-            }
-            var name = nameAttribute.Value;
-            if (string.IsNullOrEmpty(name))
-            {
-                return null;
-            }
-            return new Repository() { Name = name, Url = path };
-        }
-
-        /// <summary>
-        /// Return a version of the repositories name that can be used as
-        /// a filename.
-        /// </summary>
-        public string SafeName()
-        {
-            var invalidChars = new HashSet<char>(
-                System.IO.Path.GetInvalidFileNameChars())
-                .Union(System.IO.Path.GetInvalidPathChars());
-            var safeName = new string(
-                Name.Select(c => invalidChars.Contains(c) ? '_' : c).ToArray());
-            return safeName;
         }
     }
 }
