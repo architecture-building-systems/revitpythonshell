@@ -285,8 +285,17 @@ namespace RevitPythonShell
 
         private static string GetSettingsFile()
         {
-            string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell" + versionNumber);
+            string folder = GetSettingsFolder();
             return Path.Combine(folder, "RevitPythonShell.xml");
+        }
+
+        /// <summary>
+        /// Returns the name of the folder with the settings file. This folder
+        /// is also the default folder for relative paths in StartupScript and InitScript tags.
+        /// </summary>
+        private static string GetSettingsFolder()
+        {
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell" + versionNumber);
         }
 
         /// <summary>
@@ -374,13 +383,75 @@ namespace RevitPythonShell
         /// </summary>
         public static string GetInitScript()
         {
+            var path = GetInitScriptPath();
+            if (File.Exists(path))
+            {
+                using (var reader = File.OpenText(path))
+                {
+                    var source = reader.ReadToEnd();
+                    return source;
+                }
+            }
+
+            // backwards compatibility: InitScript used to have a CDATA section directly
+            // embedded in the settings xml file
             var initScriptTags = GetSettings().Root.Descendants("InitScript") ?? new List<XElement>();
             if (initScriptTags.Count() == 0)
             {
                 return null;
             }
             var firstScript = initScriptTags.First();
+            // backwards compatibility: InitScript used to be included as CDATA in the config file
             return firstScript.Value.Trim();
+        }
+
+        /// <summary>
+        /// Returns the path to the InitScript as configured in the settings file or "" if not
+        /// configured. This is used in the ConfigureCommandsForm.
+        /// </summary>
+        public static string GetInitScriptPath()
+        {
+            return GetScriptPath("InitScript");
+        }
+
+
+        /// <summary>
+        /// Returns the path to the StartupScript as configured in the settings file or "" if not
+        /// configured. This is used in the ConfigureCommandsForm.
+        /// </summary>
+        public static string GetStartupScriptPath()
+        {
+            return GetScriptPath("StartupScript");
+        }
+
+        /// <summary>
+        /// Returns the value of the "src" attribute for the tag "tagName" in the settings file
+        /// or "" if not configured.
+        /// </summary>        
+        private static string GetScriptPath(string tagName)
+        {
+            var tags = GetSettings().Root.Descendants(tagName) ?? new List<XElement>();
+            if (tags.Count() == 0)
+            {
+                return "";
+            }
+            var firstScript = tags.First();
+            if (firstScript.Attribute("src") != null)
+            {
+                var path = firstScript.Attribute("src").Value;
+                if (Path.IsPathRooted(path))
+                {
+                    return path;
+                }
+                else
+                {
+                    return Path.Combine(GetSettingsFolder(), path);
+                }
+            }
+            else
+            {
+                return "";
+            }
         }
 
         /// <summary>
@@ -390,13 +461,7 @@ namespace RevitPythonShell
         /// </summary>
         public static string GetStartupScript()
         {
-            var startupScriptTags = GetSettings().Root.Descendants("StartupScript") ?? new List<XElement>();
-            if (startupScriptTags.Count() == 0)
-            {
-                return null;
-            }
-            var tag = startupScriptTags.First();
-            var path = tag.Attribute("src").Value;
+            var path = GetStartupScriptPath();
             if (File.Exists(path))
             {
                 using (var reader = File.OpenText(path))
@@ -404,7 +469,6 @@ namespace RevitPythonShell
                     var source = reader.ReadToEnd();
                     return source;
                 }
-
             }
             // no startup script found
             return null;
@@ -417,7 +481,8 @@ namespace RevitPythonShell
             IEnumerable<Command> commands,
             IEnumerable<string> searchPaths, 
             IEnumerable<KeyValuePair<string, string>> variables,
-            string initScript)
+            string initScript,
+            string startupScript)
         {
             var doc = GetSettings();
 
@@ -437,6 +502,10 @@ namespace RevitPythonShell
             foreach (var xmlExistingInitScript in doc.Root.Descendants("InitScript").ToList())
             {
                 xmlExistingInitScript.Remove();
+            }
+            foreach (var xmlExistingStartupScript in doc.Root.Descendants("StartupScript").ToList())
+            {
+                xmlExistingStartupScript.Remove();
             }
 
             // add commnads
@@ -477,8 +546,13 @@ namespace RevitPythonShell
 
             // add init script
             var xmlInitScript = new XElement("InitScript");
-            xmlInitScript.Add(new XCData(initScript));
+            xmlInitScript.Add(new XAttribute("src", initScript));
             doc.Root.Add(xmlInitScript);
+
+            // add startup script
+            var xmlStartupScript = new XElement("StartupScript");
+            xmlStartupScript.Add(new XAttribute("src", startupScript));
+            doc.Root.Add(xmlStartupScript);
 
             doc.Save(GetSettingsFile());
         }

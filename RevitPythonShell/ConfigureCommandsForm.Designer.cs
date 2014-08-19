@@ -61,7 +61,13 @@
             this.btnVariableRemove = new System.Windows.Forms.Button();
             this.lstVariables = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnStartupScriptBrowse = new System.Windows.Forms.Button();
+            this.txtStartupScript = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.btnInitScriptBrowse = new System.Windows.Forms.Button();
             this.txtInitScript = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -389,6 +395,12 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label9);
+            this.tabPage4.Controls.Add(this.label8);
+            this.tabPage4.Controls.Add(this.btnStartupScriptBrowse);
+            this.tabPage4.Controls.Add(this.txtStartupScript);
+            this.tabPage4.Controls.Add(this.label7);
+            this.tabPage4.Controls.Add(this.btnInitScriptBrowse);
             this.tabPage4.Controls.Add(this.txtInitScript);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -397,14 +409,63 @@
             this.tabPage4.Text = "InitScript";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(3, 51);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(68, 13);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "StartupScript";
+            // 
+            // btnStartupScriptBrowse
+            // 
+            this.btnStartupScriptBrowse.Location = new System.Drawing.Point(442, 45);
+            this.btnStartupScriptBrowse.Name = "btnStartupScriptBrowse";
+            this.btnStartupScriptBrowse.Size = new System.Drawing.Size(99, 24);
+            this.btnStartupScriptBrowse.TabIndex = 26;
+            this.btnStartupScriptBrowse.Text = "Browse...";
+            this.btnStartupScriptBrowse.UseVisualStyleBackColor = true;
+            // 
+            // txtStartupScript
+            // 
+            this.txtStartupScript.Location = new System.Drawing.Point(78, 48);
+            this.txtStartupScript.Name = "txtStartupScript";
+            this.txtStartupScript.Size = new System.Drawing.Size(328, 20);
+            this.txtStartupScript.TabIndex = 25;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(3, 18);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(48, 13);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "InitScript";
+            // 
+            // btnInitScriptBrowse
+            // 
+            this.btnInitScriptBrowse.Location = new System.Drawing.Point(442, 12);
+            this.btnInitScriptBrowse.Name = "btnInitScriptBrowse";
+            this.btnInitScriptBrowse.Size = new System.Drawing.Size(99, 24);
+            this.btnInitScriptBrowse.TabIndex = 23;
+            this.btnInitScriptBrowse.Text = "Browse...";
+            this.btnInitScriptBrowse.UseVisualStyleBackColor = true;
+            // 
             // txtInitScript
             // 
-            this.txtInitScript.Location = new System.Drawing.Point(3, 2);
-            this.txtInitScript.Multiline = true;
+            this.txtInitScript.Location = new System.Drawing.Point(78, 15);
             this.txtInitScript.Name = "txtInitScript";
-            this.txtInitScript.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInitScript.Size = new System.Drawing.Size(544, 188);
-            this.txtInitScript.TabIndex = 0;
+            this.txtInitScript.Size = new System.Drawing.Size(328, 20);
+            this.txtInitScript.TabIndex = 22;
+            // 
+            // label9
+            // 
+            this.label9.Location = new System.Drawing.Point(3, 86);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(403, 109);
+            this.label9.TabIndex = 28;
+            this.label9.Text = resources.GetString("label9.Text");
             // 
             // ConfigureCommandsForm
             // 
@@ -463,8 +524,14 @@
         private System.Windows.Forms.TextBox txtVariableValue;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TextBox txtInitScript;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtCommandGroup;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnStartupScriptBrowse;
+        private System.Windows.Forms.TextBox txtStartupScript;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Button btnInitScriptBrowse;
+        private System.Windows.Forms.TextBox txtInitScript;
+        private System.Windows.Forms.Label label9;
     }
 }

@@ -173,7 +173,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="startup.py" />
     <None Include="Examples\HelloWorld.iss" />
+    <Content Include="init.py" />
     <None Include="Resources\ipy.ico" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Cut.png" />
