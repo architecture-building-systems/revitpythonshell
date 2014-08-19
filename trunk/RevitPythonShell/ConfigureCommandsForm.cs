@@ -46,14 +46,11 @@ namespace RevitPythonShell
             lstVariables.DataSource = _variables;
             lstVariables.DisplayMember = "Key";
 
-            string initScript = RevitPythonShellApplication.GetInitScript();
-            if (!initScript.Contains("\r\n"))
-            {
-                // quick hack to convert to DOS line endings. this could obviously be made less error prone ;)
-                initScript = initScript.Replace("\n", "\r\n");
-            }
-            txtInitScript.Text = initScript;
+            string initScriptPath = RevitPythonShellApplication.GetInitScriptPath();
+            txtInitScript.Text = initScriptPath;
 
+            string startupScriptPath = RevitPythonShellApplication.GetStartupScriptPath();
+            txtStartupScript.Text = startupScriptPath;
         }
 
         /// <summary>
@@ -222,7 +219,7 @@ namespace RevitPythonShell
         /// </summary>
         private void btnCommandSave_Click(object sender, EventArgs e)
         {
-            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text);
+            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text, txtStartupScript.Text);
             Close();
         }
 
@@ -347,6 +344,6 @@ namespace RevitPythonShell
 
             _variables.RemoveAt(lstVariables.SelectedIndex);
             RefreshBindingContext(lstVariables, _variables);
-        }       
+        } 
     }
 }

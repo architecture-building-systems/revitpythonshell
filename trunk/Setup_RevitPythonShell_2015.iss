@@ -8,7 +8,9 @@ Source: RequiredLibraries\IronPython.Modules.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Scripting.Metadata.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Dynamic.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Scripting.dll; DestDir: {app};
-Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell2015; Flags: onlyifdoesntexist; 
+Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell2015; Flags: onlyifdoesntexist;
+Source: RevitPythonShell\init.py; DestDir: {userappdata}\RevitPythonShell2015; Flags: onlyifdoesntexist;
+Source: RevitPythonShell\startup.py;  DestDir: {userappdata}\RevitPythonShell2015; Flags: onlyifdoesntexist;
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
