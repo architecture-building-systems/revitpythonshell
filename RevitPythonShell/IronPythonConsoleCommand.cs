@@ -14,10 +14,8 @@ using RevitPythonShell.RpsRuntime;
 namespace RevitPythonShell
 {
     /// <summary>
-    /// An object of this class is instantiated every time the user clicks on the
-    /// button for opening the shell.
+    /// Start an interactive shell in a modal window.
     /// </summary>
-    /// 
     [Regeneration(RegenerationOption.Manual)]
     [Transaction(TransactionMode.Manual)]
     public class IronPythonConsoleCommand : IExternalCommand
@@ -46,8 +44,7 @@ namespace RevitPythonShell
                     var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
                     scriptSource.Execute(host.Console.ScriptScope);
                 }                
-            });
-            gui.consoleControl.SetDispatcherWindow(gui);
+            }); 
             gui.ShowDialog();
             return Result.Succeeded;
         }

@@ -66,6 +66,7 @@ namespace PythonConsoleControl
             }
         }
 
+
         protected override CommandLine CreateCommandLine()
         {
             return new PythonCommandLine();

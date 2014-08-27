@@ -90,6 +90,15 @@ namespace RevitPythonShell
             pbdOpenPythonShell.LargeImage = largeImage;
             splitButton.AddPushButton(pbdOpenPythonShell);
 
+            PushButtonData pbdOpenNonModalShell = new PushButtonData(
+                            "NonModalRevitPythonShell",
+                            "Non-modal Shell",
+                            assembly.Location,
+                            "RevitPythonShell.NonModalConsoleCommand");
+            pbdOpenNonModalShell.Image = smallImage;
+            pbdOpenNonModalShell.LargeImage = largeImage;
+            splitButton.AddPushButton(pbdOpenNonModalShell);
+
 
             PushButtonData pbdConfigure = new PushButtonData(
                             "Configure", 
