@@ -28,12 +28,7 @@ namespace PythonConsoleControl
     /// </summary>
     public partial class IronPythonConsoleControl : UserControl
     {
-        PythonConsolePad pad;
-        
-        public void SetDispatcherWindow(Window window)
-        {
-            WithConsoleHost((host) => host.Console.SetDispatcherWindow(window));
-        }
+        PythonConsolePad pad;                
 
         /// <summary>
         /// Perform the action on an already instantiated PythonConsoleHost.

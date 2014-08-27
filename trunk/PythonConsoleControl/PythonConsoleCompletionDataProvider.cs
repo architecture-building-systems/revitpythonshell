@@ -19,10 +19,13 @@ namespace PythonConsoleControl
     /// <summary>
     /// Provides code completion for the Python Console window.
     /// </summary>
-    public class PythonConsoleCompletionDataProvider 
+    public class PythonConsoleCompletionDataProvider
     {
         CommandLine commandLine;
         internal volatile bool AutocompletionInProgress = false;
+
+        bool excludeCallables;
+        public bool ExcludeCallables { get { return excludeCallables; } set { excludeCallables = value; } }
 
         public PythonConsoleCompletionDataProvider(CommandLine commandLine)//IMemberProvider memberProvider)
         {
@@ -39,6 +42,9 @@ namespace PythonConsoleControl
             List<PythonCompletionData> items = new List<PythonCompletionData>(); //DefaultCompletionData
 
             string name = GetName(line);
+            // A very simple test of callables!
+            if (excludeCallables && name.Contains(')')) return null;
+
             if (!String.IsNullOrEmpty(name))
             {
                 System.IO.Stream stream = commandLine.ScriptScope.Engine.Runtime.IO.OutputStream;
@@ -50,7 +56,8 @@ namespace PythonConsoleControl
                     //object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(name, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
                     //IList<string> members = commandLine.ScriptScope.Engine.Operations.GetMemberNames(value);
                     Type type = TryGetType(name);
-                    if (type != null && type.Namespace != "IronPython.Runtime")
+                    // Use Reflection for everything except in-built Python types and COM pbjects. 
+                    if (type != null && type.Namespace != "IronPython.Runtime" && (type.Name != "__ComObject"))
                     {
                         PopulateFromCLRType(items, type, name);
                     }
