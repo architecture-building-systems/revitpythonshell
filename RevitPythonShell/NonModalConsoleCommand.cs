@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using RevitPythonShell.RpsRuntime;
 using System.Threading.Tasks;
 using IronPython.Runtime;
+using Microsoft.Scripting.Hosting;
 
 namespace RevitPythonShell
 {
@@ -64,6 +65,7 @@ namespace RevitPythonShell
                 });
             });
             gui.Topmost = true;
+            gui.Title = "RevitPythonShell (non-modal)";
             gui.Show();
             return Result.Succeeded;
         }
@@ -94,9 +96,32 @@ namespace RevitPythonShell
             while (_commands.Count > 0)
             {
                 var command = _commands.Dequeue();
-                command();
-                //await Task.Run(() => _gui.Dispatcher.Invoke(command));
-                _commandCompletedEvent.Set();
+                try
+                {
+                    command();
+                }
+                catch (Exception ex)
+                {
+                    try
+                    {
+                        _gui.consoleControl.WithConsoleHost((host) =>
+                        {
+                            ExceptionOperations eo;
+                            eo = host.Engine.GetService<ExceptionOperations>();
+                            var error = eo.FormatException(ex);
+                            host.Console.WriteLine(error, Microsoft.Scripting.Hosting.Shell.Style.Error);
+                            //TaskDialog.Show("Error", error);
+                        });
+                    }
+                    catch (Exception exception)
+                    {
+                        Debugger.Launch();
+                    }
+                }
+                finally
+                {
+                    _commandCompletedEvent.Set();
+                }
             }
         }
 
