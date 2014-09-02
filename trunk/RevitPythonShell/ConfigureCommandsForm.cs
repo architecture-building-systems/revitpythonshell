@@ -344,6 +344,30 @@ namespace RevitPythonShell
 
             _variables.RemoveAt(lstVariables.SelectedIndex);
             RefreshBindingContext(lstVariables, _variables);
+        }
+
+        private void btnInitScriptBrowse_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = true;
+            dialog.CheckPathExists = true;
+            dialog.Multiselect = false;
+            dialog.FileName = txtCommandPath.Text;
+
+            dialog.ShowDialog(this);
+            txtInitScript.Text = dialog.FileName;
+        }
+
+        private void btnStartupScriptBrowse_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+            dialog.CheckFileExists = true;
+            dialog.CheckPathExists = true;
+            dialog.Multiselect = false;
+            dialog.FileName = txtCommandPath.Text;
+
+            dialog.ShowDialog(this);
+            txtStartupScript.Text = dialog.FileName;
         } 
     }
 }

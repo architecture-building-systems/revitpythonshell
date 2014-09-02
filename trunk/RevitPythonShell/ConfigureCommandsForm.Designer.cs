@@ -61,13 +61,13 @@
             this.btnVariableRemove = new System.Windows.Forms.Button();
             this.lstVariables = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.btnStartupScriptBrowse = new System.Windows.Forms.Button();
             this.txtStartupScript = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.btnInitScriptBrowse = new System.Windows.Forms.Button();
             this.txtInitScript = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -409,6 +409,14 @@
             this.tabPage4.Text = "InitScript";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
+            // label9
+            // 
+            this.label9.Location = new System.Drawing.Point(3, 86);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(403, 109);
+            this.label9.TabIndex = 28;
+            this.label9.Text = resources.GetString("label9.Text");
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -426,6 +434,7 @@
             this.btnStartupScriptBrowse.TabIndex = 26;
             this.btnStartupScriptBrowse.Text = "Browse...";
             this.btnStartupScriptBrowse.UseVisualStyleBackColor = true;
+            this.btnStartupScriptBrowse.Click += new System.EventHandler(this.btnStartupScriptBrowse_Click);
             // 
             // txtStartupScript
             // 
@@ -451,6 +460,7 @@
             this.btnInitScriptBrowse.TabIndex = 23;
             this.btnInitScriptBrowse.Text = "Browse...";
             this.btnInitScriptBrowse.UseVisualStyleBackColor = true;
+            this.btnInitScriptBrowse.Click += new System.EventHandler(this.btnInitScriptBrowse_Click);
             // 
             // txtInitScript
             // 
@@ -458,14 +468,6 @@
             this.txtInitScript.Name = "txtInitScript";
             this.txtInitScript.Size = new System.Drawing.Size(328, 20);
             this.txtInitScript.TabIndex = 22;
-            // 
-            // label9
-            // 
-            this.label9.Location = new System.Drawing.Point(3, 86);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(403, 109);
-            this.label9.TabIndex = 28;
-            this.label9.Text = resources.GetString("label9.Text");
             // 
             // ConfigureCommandsForm
             // 
