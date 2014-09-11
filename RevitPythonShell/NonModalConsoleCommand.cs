@@ -114,8 +114,9 @@ namespace RevitPythonShell
                         });
                     }
                     catch (Exception exception)
-                    {
+                    {                       
                         Debugger.Launch();
+                        Trace.WriteLine(exception.ToString());
                     }
                 }
                 finally

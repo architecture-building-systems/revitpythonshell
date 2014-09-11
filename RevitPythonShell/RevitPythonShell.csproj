@@ -33,6 +33,12 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
   </PropertyGroup>
+  <PropertyGroup>
+    <!-- see: http://thebuildingcoder.typepad.com/blog/2013/06/processor-architecture-mismatch-warning.html -->
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+      None
+    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2014'">
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
