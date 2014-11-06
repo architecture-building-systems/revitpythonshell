@@ -1,14 +1,16 @@
 [Files]
-Source: RevitPythonShell\bin\Debug\PythonConsoleControl.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RevitPythonShell.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RpsRuntime.dll; DestDir: {app};
-Source: RequiredLibraries\ICSharpCode.AvalonEdit.dll; DestDir: {app};
-Source: RequiredLibraries\IronPython.dll; DestDir: {app};
-Source: RequiredLibraries\IronPython.Modules.dll; DestDir: {app};
-Source: RequiredLibraries\Microsoft.Scripting.Metadata.dll; DestDir: {app};
-Source: RequiredLibraries\Microsoft.Dynamic.dll; DestDir: {app};
-Source: RequiredLibraries\Microsoft.Scripting.dll; DestDir: {app};
-Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell2014; Flags: onlyifdoesntexist; 
+Source: "RevitPythonShell\bin\Debug 2014\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Debug 2014\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Debug 2014\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RequiredLibraries\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
+Source: "RequiredLibraries\IronPython.dll"; DestDir: "{app}"
+Source: "RequiredLibraries\IronPython.Modules.dll"; DestDir: "{app}"
+Source: "RequiredLibraries\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
+Source: "RequiredLibraries\Microsoft.Dynamic.dll"; DestDir: "{app}"
+Source: "RequiredLibraries\Microsoft.Scripting.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
+Source: "RevitPythonShell\init.py"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
+Source: "RevitPythonShell\startup.py"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
