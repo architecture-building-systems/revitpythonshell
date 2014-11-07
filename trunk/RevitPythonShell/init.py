@@ -25,4 +25,4 @@ class WindowWrapper(object):
         self.win.Dispatcher.Invoke(lambda *_: self.win.Close())
     def __getattr__(self, name):
         return getattr(self.win, name)
- __window__ = WindowWrapper(__window__)
+__window__ = WindowWrapper(__window__)
