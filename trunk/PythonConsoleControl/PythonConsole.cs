@@ -74,9 +74,8 @@ namespace PythonConsoleControl
         volatile bool executing = false;
 
         // This is the thread upon which all commands execute unless the dipatcher is overridden.
-        Thread dispatcherThread;
-        Window dispatcherWindow;
-        Dispatcher dispatcher;
+        Thread dispatcherThread;        
+        public Dispatcher dispatcher;
 
         string scriptText = String.Empty;
         bool consoleInitialized = false;
@@ -193,8 +192,7 @@ namespace PythonConsoleControl
 
         private void DispatcherThreadStartingPoint()
         {
-            dispatcherWindow = new Window();
-            dispatcher = dispatcherWindow.Dispatcher;
+            dispatcher = new Window().Dispatcher;
             while (true)
             {
                 try
@@ -326,7 +324,7 @@ namespace PythonConsoleControl
                     {
                         this.scriptText = scriptText;
                     }
-                    dispatcherWindow.Dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(); }));
+                    dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(); }));
                 }
             }
         }
