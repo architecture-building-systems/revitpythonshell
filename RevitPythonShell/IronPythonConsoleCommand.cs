@@ -44,7 +44,28 @@ namespace RevitPythonShell
                     var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
                     scriptSource.Execute(host.Console.ScriptScope);
                 }                
-            }); 
+            });
+
+            var dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
+            gui.consoleControl.WithConsoleHost((host) =>
+            {                
+                host.Console.SetCommandDispatcher((command) =>
+                {
+                    if (command != null)
+                    {
+                        // Slightly involved form to enable keyboard interrupt to work.
+                        var executing = true;
+                        var operation = dispatcher.BeginInvoke(DispatcherPriority.Normal, command);
+                        while (executing)
+                        {
+                            if (operation.Status != DispatcherOperationStatus.Completed)
+                                operation.Wait(TimeSpan.FromSeconds(1));
+                            if (operation.Status == DispatcherOperationStatus.Completed)
+                                executing = false;
+                        }
+                    }                 
+                });
+            });
             gui.ShowDialog();
             return Result.Succeeded;
         }
