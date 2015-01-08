@@ -35,6 +35,7 @@ namespace RevitPythonShell.RpsRuntime
             {
                 yield return searchPathNode.Attribute("name").Value;
             }
+            yield return System.IO.Path.GetDirectoryName(_settingsPath);
         }
 
         /// <summary>

@@ -161,6 +161,7 @@ namespace RevitPythonShell.RpsRuntime
 
         /// <summary>
         /// Add the search paths defined in the ini file to the engine.
+        /// The data folder (%APPDATA%/RevitPythonShell20XX) is also added
         /// </summary>
         private void AddSearchPaths(ScriptEngine engine)
         {
