@@ -110,7 +110,7 @@ namespace RevitPythonShell
         {
             foreach (var xmlFile in _doc.Descendants("Files").SelectMany(f => f.Descendants("File")))
             {
-                var source = xmlFile.Attribute("source").Value;
+                var source = xmlFile.Attribute("src").Value;
                 var sourcePath = GetRootedPath(_rootFolder, source);
 
                 if (!File.Exists(sourcePath))
@@ -124,7 +124,7 @@ namespace RevitPythonShell
                 File.Copy(sourcePath, Path.Combine(_outputFolder, fileName));
 
                 // remove path information for deployment
-                xmlFile.Attribute("source").Value = fileName;
+                xmlFile.Attribute("src").Value = fileName;
             }
         }
 
@@ -189,7 +189,7 @@ namespace RevitPythonShell
             foreach (var xmlPushButton in _doc.Descendants("PushButton"))
             {
                 var scriptFile = GetRootedPath(
-                    _rootFolder, xmlPushButton.Attribute("script").Value);              // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
+                    _rootFolder, xmlPushButton.Attribute("src").Value);              // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
                 var newScriptFile = Path.GetFileName(scriptFile);                        // e.g. "helloworld.py" - strip path for embedded resource
                 var className = "ec_" + Path.GetFileNameWithoutExtension(newScriptFile); // e.g. "ec_helloworld", "ec" stands for ExternalCommand
 
@@ -197,7 +197,7 @@ namespace RevitPythonShell
                 moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
 
                 // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                xmlPushButton.Attribute("script").Value = newScriptFile;
+                xmlPushButton.Attribute("src").Value = newScriptFile;
 
                 var typeBuilder = moduleBuilder.DefineType(
                     className,
@@ -214,13 +214,13 @@ namespace RevitPythonShell
             if (_doc.Descendants("StartupScript").Count() > 0)
             {
                 var tag = _doc.Descendants("StartupScript").First();
-                var scriptFile = GetRootedPath(_rootFolder, tag.Attribute("script").Value);
+                var scriptFile = GetRootedPath(_rootFolder, tag.Attribute("src").Value);
                 var newScriptFile = Path.GetFileName(scriptFile);
                 var scriptStream = File.OpenRead(scriptFile);
                 moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
 
                 // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                tag.Attribute("script").Value = newScriptFile;
+                tag.Attribute("src").Value = newScriptFile;
             }
 
             AddRpsAddinXmlToAssembly(_addinName, _doc, moduleBuilder);
