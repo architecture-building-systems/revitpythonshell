@@ -88,7 +88,7 @@ namespace RevitPythonShell.RpsRuntime
         /// </summary>
         private PushButtonData BuildPushButtonData(Assembly addinAssembly, XElement xmlPushButton)
         {
-            var script = xmlPushButton.Attribute("script").Value;       // e.g. "helloworld.py"
+            var script = xmlPushButton.Attribute("src").Value;       // e.g. "helloworld.py"
             var scriptName = Path.GetFileNameWithoutExtension(script);  // e.g. "helloworld"
             var pbName = "pb_" + scriptName;                            // e.g. "pb_helloworld  ("pb" stands for "PushButton")
             var className = "ec_" + scriptName;                         // e.g. "ec_helloworld" ("ec" stands for "ExternalCommand")
@@ -200,8 +200,8 @@ namespace RevitPythonShell.RpsRuntime
             {
                 return null;
             }
-            var tag = startupScriptTags.First();
-            var scriptName = tag.Attribute("script").Value;
+            var tag = startupScriptTags.First();            
+            var scriptName = tag.Attribute("src").Value;
             var source = new StreamReader(addinAssembly.GetManifestResourceStream(scriptName)).ReadToEnd();
             return source;
         }
