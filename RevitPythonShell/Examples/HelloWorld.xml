@@ -2,6 +2,6 @@
 <RpsAddin>
   <RibbonPanel text="Hello World">
     <!-- the script is always searched relative to the location of the RpsAddin xml file -->
-    <PushButton text="Hello World!" script="helloworld.py"/>
+    <PushButton text="Hello World!" src="helloworld.py"/>
   </RibbonPanel>
 </RpsAddin>
