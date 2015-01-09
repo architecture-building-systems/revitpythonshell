@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using Autodesk.Revit;
 using IronPython.Runtime.Exceptions;
@@ -64,7 +65,7 @@ namespace RevitPythonShell.RpsRuntime
         {
             try
             {
-                var engine = IronPython.Hosting.Python.CreateEngine(new Dictionary<string, object>() { { "Frames", true }, { "FullFrames", true } });
+                var engine = CreateEngine();
                 var scope = SetupEnvironment(engine);
 
                 var scriptOutput = new ScriptOutput();
@@ -105,6 +106,25 @@ namespace RevitPythonShell.RpsRuntime
             }
         }
 
+        private ScriptEngine CreateEngine()
+        {
+            var engine = IronPython.Hosting.Python.CreateEngine(new Dictionary<string, object>() { { "Frames", true }, { "FullFrames", true } });                        
+            return engine;
+        }
+
+        private void AddEmbeddedLib(ScriptEngine engine)
+        {
+            // use embedded python lib
+            var asm = this.GetType().Assembly;
+            var resQuery = from name in asm.GetManifestResourceNames()
+                           where name.ToLowerInvariant().EndsWith("python_27_lib.zip")
+                           select name;
+            var resName = resQuery.Single();
+            var importer = new IronPython.Modules.ResourceMetaPathImporter(asm, resName);
+            dynamic sys = IronPython.Hosting.Python.GetSysModule(engine);
+            sys.meta_path.append(importer);            
+        }
+
         /// <summary>
         /// Set up an IronPython environment - for interactive shell or for canned scripts
         /// </summary>
@@ -138,6 +158,7 @@ namespace RevitPythonShell.RpsRuntime
             
             // add the search paths
             AddSearchPaths(engine);
+            AddEmbeddedLib(engine);
 
             // reference RevitAPI and RevitAPIUI
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.DB.Document).Assembly);
