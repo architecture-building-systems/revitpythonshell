@@ -1,14 +1,17 @@
 [Files]
-Source: RevitPythonShell\bin\Debug\PythonConsoleControl.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RevitPythonShell.dll; DestDir: {app};
-Source: RevitPythonShell\bin\Debug\RpsRuntime.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2014\PythonConsoleControl.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2014\RevitPythonShell.dll; DestDir: {app};
+Source: RevitPythonShell\bin\Debug 2014\RpsRuntime.dll; DestDir: {app};
 Source: RequiredLibraries\ICSharpCode.AvalonEdit.dll; DestDir: {app};
 Source: RequiredLibraries\IronPython.dll; DestDir: {app};
 Source: RequiredLibraries\IronPython.Modules.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Scripting.Metadata.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Dynamic.dll; DestDir: {app};
 Source: RequiredLibraries\Microsoft.Scripting.dll; DestDir: {app};
-Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell2014; Flags: onlyifdoesntexist; 
+Source: RevitPythonShell\RevitPythonShell.xml; DestDir: {userappdata}\RevitPythonShell_Vasari; Flags: onlyifdoesntexist; 
+Source: "RevitPythonShell\init.py"; DestDir: "{userappdata}\RevitPythonShell_Vasari"; Flags: onlyifdoesntexist
+Source: "RevitPythonShell\startup.py"; DestDir: "{userappdata}\RevitPythonShell_Vasari"; Flags: onlyifdoesntexist
+
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
@@ -22,7 +25,7 @@ begin
   begin
 
 	{ GET LOCATION OF USER AppData (Roaming) }
-	AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Vasari\Addins\2014\RevitPythonShell2014.addin');
+	AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Vasari\Addins\2014\RevitPythonShell_Vasari.addin');
 
 	{ CREATE NEW ADDIN FILE }
 	AddInFileContents := '<?xml version="1.0" encoding="utf-16" standalone="no"?>' + #13#10;
@@ -51,8 +54,8 @@ ShowLanguageDialog=auto
 FlatComponentsList=false
 UninstallFilesDir={app}\Uninstall
 UninstallDisplayName=RevitPythonShell for Vasari Beta3
-AppVersion=2014.0
-VersionInfoVersion=2014.0
+AppVersion=2014.1
+VersionInfoVersion=2014.1
 VersionInfoDescription=RevitPythonShell for Vasari Beta3
 VersionInfoTextVersion=RevitPythonShell for Vasari Beta3
 

@@ -31,7 +31,10 @@ namespace RevitPythonShell
             try
             {
                 versionNumber = application.ControlledApplication.VersionNumber;
-
+                if (application.ControlledApplication.VersionName.ToLower().Contains("vasari"))
+                {
+                    versionNumber = "_Vasari";
+                }
                 var dllfolder = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "RevitPythonShell" + versionNumber);
