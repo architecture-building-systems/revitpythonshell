@@ -24,7 +24,35 @@ become a Revit API Ninja :)
 
 ## Contribute
 
+- Issue Tracker: https://github.com/architecture-building-systems/revitpythonshell/issues
+- Source Code: https://github.com/architecture-building-systems/revitpythonshell
+
 ## Support
+
+- [RevitPythonShell discussion group](http://groups.google.com/group/RevitPythonShell)
+- [stackoverflow](http://stackoverflow.com) (Note: use the ```revit```, ``revit-api`` and ``revitpythonshell`` tags)
+
+## Getting started:
+
+Learn some python:
+
+  * [The Python Tutorial](https://docs.python.org/2/tutorial/)
+  * [Dive Into Python](http://www.diveintopython.net/)
+
+Learn about the Revit API:
+
+  * [Autodesk Developer Network](T)
+  * [Jeremy Tammiks blog "The Building Coder"](http://thebuildingcoder.typepad.com/)
+
+You can find sample scripts here:
+
+  * [Sample RPS Scripts on GitHub](https://github.com/daren-thomas/rps-sample-scripts)
+    * feel free to send me your own scripts for inclusion!
+  * [Nathan's Revit API Notebook using the RevitPythonShell](http://wiki.theprovingground.org/revit-api)
+    * Nathan Miller even has a [Mobius Surface for Vasari](http://wiki.theprovingground.org/revit-api-py-parametric) sample
+  * [dp stuff (Python Scripts Archives)](http://dp-stuff.org/category/python-scripts)
+    * lots of scripts
+  * [my own blog](http://darenatwork.blogspot.com/) contains the odd sample script
 
 ## License
 
