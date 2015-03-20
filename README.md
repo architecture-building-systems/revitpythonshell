@@ -2,7 +2,7 @@
 
 The RevitPythonShell adds an IronPython interpreter to Autodesk Revit. 
 
-This lets you to write plugins for Revit in Python, my favourite scripting language! But even better, it provide you with an
+The RevitPythonShell (RPS) lets you to write plugins for Revit in Python, my favourite scripting language! But even better, it provide you with an
 interactive shell that lets you see the results of your code *as you type it*. This is great for exploring the Revit API while 
 writing your Revit Addins - use this in combination with the (RevitLookup)[https://github.com/jeremytammik/RevitLookup] to 
 become a Revit API Ninja :)
@@ -13,10 +13,10 @@ become a Revit API Ninja :)
   - with syntax highlighting
   - autocompletion (press CTRL+SPACE after a period)
   - based on the [IronLab](http://code.google.com/p/ironlab/) project
-- Batteries included! (Python standard library is bundled as a resource in the `RpsRuntime.dll`)
-- IronPython pad (also from the IronLab project)
+- batteries included! (Python standard library is bundled as a resource in the `RpsRuntime.dll`)
+- full access to the .NET framework and the Revit API
 - configurable "environment" variables that can be used in your scripts
-- reusable scripts for collecting your awesome scripts
+- save "external scripts" for reuse and start collecting your awesome hacks!
 - run scripts at Revit startup
 - deploy scripts as standalone Revit Addins
 
