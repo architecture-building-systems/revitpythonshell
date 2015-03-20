@@ -126,7 +126,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(550, 211);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Commands";
+            this.tabPage1.Text = "External Scripts";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // label6
@@ -406,7 +406,7 @@
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(550, 211);
             this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "InitScript";
+            this.tabPage4.Text = "InitScript / StartupScript";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // label9
@@ -479,7 +479,7 @@
             this.Controls.Add(this.btnSave);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ConfigureCommandsForm";
-            this.Text = "Configure Commands";
+            this.Text = "Configure RevitPythonShell";
             this.Load += new System.EventHandler(this.ConfigureCommandsForm_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
