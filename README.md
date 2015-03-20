@@ -1,6 +1,6 @@
 # RevitPythonShell
 
-The RevitPythonShell adds an IronPython interpreter to Autodesk Revit. 
+The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari. 
 
 The RevitPythonShell (RPS) lets you to write plugins for Revit in Python, my favourite scripting language! But even better, it provide you with an
 interactive shell that lets you see the results of your code *as you type it*. This is great for exploring the Revit API while 
