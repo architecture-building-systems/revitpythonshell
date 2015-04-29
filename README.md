@@ -22,9 +22,11 @@ become a Revit API Ninja :)
 
 ## Installation
 
-- [latest release (Revit 2014, 2015 & Vasari Beta 3)](https://github.com/architecture-building-systems/revitpythonshell/releases/tag/2015.03.20)
+- [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2015.04.29/2015.04.29_Setup_RevitPythonShell_2016.exe)
+- [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2015.04.29/2015.04.29_Setup_RevitPythonShell_2015.exe)
 
 Older versions:
+- [Release 2015.03.20](Revit 2014, 2015 & Vasari Beta 3)](https://github.com/architecture-building-systems/revitpythonshell/releases/tag/2015.03.20)
 - [Installer for Autodesk Revit 2015](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2015.exe)
 - [Installer for Autodesk Revit 2014](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2014.exe)
 - [Installer for Autodesk Revit 2013](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2013_r159.msi)
