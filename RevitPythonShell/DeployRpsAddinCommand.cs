@@ -188,8 +188,21 @@ namespace RevitPythonShell
 
             foreach (var xmlPushButton in _doc.Descendants("PushButton"))
             {
-                var scriptFile = GetRootedPath(
-                    _rootFolder, xmlPushButton.Attribute("src").Value);              // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
+                string scriptFileName;
+                if (xmlPushButton.Attribute("src") != null)
+                {                    
+                    scriptFileName = xmlPushButton.Attribute("src").Value;
+                }
+                else if (xmlPushButton.Attribute("script") != null)  // Backwards compatibility
+                {
+                    scriptFileName = xmlPushButton.Attribute("script").Value;
+                }
+                else
+                {
+                    throw new ApplicationException("<PushButton/> tag missing a src attribute in addin manifest");
+                }
+
+                var scriptFile = GetRootedPath(_rootFolder, scriptFileName);             // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
                 var newScriptFile = Path.GetFileName(scriptFile);                        // e.g. "helloworld.py" - strip path for embedded resource
                 var className = "ec_" + Path.GetFileNameWithoutExtension(newScriptFile); // e.g. "ec_helloworld", "ec" stands for ExternalCommand
 
