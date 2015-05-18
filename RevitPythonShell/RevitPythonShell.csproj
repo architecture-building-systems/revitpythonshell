@@ -40,7 +40,7 @@
     </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2015'">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>

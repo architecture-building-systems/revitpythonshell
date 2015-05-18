@@ -60,5 +60,8 @@ docs/_build/
 
 *.swp
 
-# Mac OS X stuff
+# project specific stuff 
 .DS_Store
+RevitPythonShell/Examples/Output
+RevitPythonShell/Examples/Output_HelloWorld
+*.suo

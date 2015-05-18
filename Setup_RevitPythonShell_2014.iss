@@ -9,8 +9,8 @@ Source: "RequiredLibraries\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Dynamic.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Scripting.dll"; DestDir: "{app}"
 Source: "RevitPythonShell\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
-Source: "RevitPythonShell\init.py"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
-Source: "RevitPythonShell\startup.py"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
+Source: RevitPythonShell\init.py; DestDir: {userappdata}\RevitPythonShell2014; Flags: confirmoverwrite; 
+Source: RevitPythonShell\startup.py; DestDir: {userappdata}\RevitPythonShell2014; Flags: confirmoverwrite; 
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
@@ -41,7 +41,6 @@ begin
 
   end;
 end;
-
 
 [Setup]
 AppName=RevitPythonShell for Autodesk Revit 2014
