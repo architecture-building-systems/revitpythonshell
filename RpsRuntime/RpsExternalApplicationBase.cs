@@ -175,11 +175,12 @@ namespace RevitPythonShell.RpsRuntime
             var fi = uiControlledApplication.GetType().GetField("m_application", BindingFlags.NonPublic | BindingFlags.Instance);
             var uiApplication = (UIApplication)fi.GetValue(uiControlledApplication);
             // execute StartupScript
-            var startupScript = GetStartupScript(addinXml, addinAssembly);
+            var scriptName = GetStartupScriptName(addinXml);
+            var startupScript = GetEmbeddedScript(scriptName, addinAssembly);
             if (startupScript != null)
             {
-                var executor = new ScriptExecutor(GetConfig(), uiApplication, uiControlledApplication);
-                var result = executor.ExecuteScript(startupScript);
+                var executor = new ScriptExecutor(GetConfig(), uiApplication, uiControlledApplication);                
+                var result = executor.ExecuteScript(startupScript, Path.Combine(addinAssembly.Location, scriptName));
                 if (result == (int)Result.Failed)
                 {
                     // FIXME: make the TaskDialog show the addins name.
@@ -193,17 +194,22 @@ namespace RevitPythonShell.RpsRuntime
         /// If this is not specified as a path to an existing file in the XML file (under /RpsAddin/StartupScript/@src),
         /// then null is returned.
         /// </summary>
-        private string GetStartupScript(XDocument addinXml, Assembly addinAssembly)
+        private string GetEmbeddedScript(string scriptName, Assembly addinAssembly)
+        {         
+            var source = new StreamReader(addinAssembly.GetManifestResourceStream(scriptName)).ReadToEnd();
+            return source;
+        }
+
+        private string GetStartupScriptName(XDocument addinXml)
         {
             var startupScriptTags = addinXml.Root.Descendants("StartupScript") ?? new List<XElement>();
             if (startupScriptTags.Count() == 0)
             {
                 return null;
             }
-            var tag = startupScriptTags.First();            
+            var tag = startupScriptTags.First();
             var scriptName = tag.Attribute("src").Value;
-            var source = new StreamReader(addinAssembly.GetManifestResourceStream(scriptName)).ReadToEnd();
-            return source;
+            return scriptName;
         }
 
         /// <summary>

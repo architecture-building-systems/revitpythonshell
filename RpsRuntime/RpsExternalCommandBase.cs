@@ -29,7 +29,7 @@ namespace RevitPythonShell.RpsRuntime
 
             var source = new StreamReader(assembly.GetManifestResourceStream(scriptName)).ReadToEnd();
 
-            var result = executor.ExecuteScript(source);
+            var result = executor.ExecuteScript(source, Path.Combine(assembly.Location, scriptName));
             message = executor.Message;
             switch (result)
             {

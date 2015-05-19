@@ -61,7 +61,7 @@ namespace RevitPythonShell.RpsRuntime
         /// <summary>
         /// Run the script and print the output to a new output window.
         /// </summary>
-        public int ExecuteScript(string source)
+        public int ExecuteScript(string source, string sourcePath)
         {
             try
             {
@@ -73,6 +73,7 @@ namespace RevitPythonShell.RpsRuntime
                 var outputStream = new ScriptOutputStream(scriptOutput, engine);
 
                 scope.SetVariable("__window__", scriptOutput);
+                scope.SetVariable("__file__", sourcePath);
 
                 engine.Runtime.IO.SetOutput(outputStream, Encoding.UTF8);
                 engine.Runtime.IO.SetErrorOutput(outputStream, Encoding.UTF8);

@@ -49,7 +49,7 @@ namespace RevitPythonShell.RpsRuntime
                 source = reader.ReadToEnd();
             }
 
-            var result = executor.ExecuteScript(source);
+            var result = executor.ExecuteScript(source, _scriptSource);
             message = executor.Message;
             switch (result)
             {

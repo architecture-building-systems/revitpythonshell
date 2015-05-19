@@ -67,7 +67,7 @@ namespace RevitPythonShell
             if (startupScript != null)
             {
                 var executor = new ScriptExecutor(GetConfig(), uiApplication, uiControlledApplication);
-                var result = executor.ExecuteScript(startupScript);
+                var result = executor.ExecuteScript(startupScript, GetStartupScriptPath());
                 if (result == (int)Result.Failed)
                 {
                     TaskDialog.Show("RevitPythonShell - StartupScript", executor.Message);
