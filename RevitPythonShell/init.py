@@ -40,7 +40,7 @@ class RevitLookup(object):
     def __init__(self, uiApplication):
         '''
         for RevitSnoop to function properly, it needs to be instantiated
-        with a reverence to the Revit Application object.
+        with a reference to the Revit Application object.
         '''
         # find the RevitLookup plugin
         try:
