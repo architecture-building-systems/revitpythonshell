@@ -63,6 +63,13 @@ namespace RevitPythonShell
                     externalEvent.Raise();
                     commandCompletedEvent.WaitOne();
                 });
+
+                host.Editor.SetCompletionDispatcher((command) =>
+                {
+                    externalEventHandler.Enqueue(command);
+                    externalEvent.Raise();
+                    commandCompletedEvent.WaitOne();                    
+                });
             });
             gui.Topmost = true;
             gui.Title = "RevitPythonShell (non-modal)";
