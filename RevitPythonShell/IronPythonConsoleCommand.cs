@@ -65,6 +65,18 @@ namespace RevitPythonShell
                         }
                     }                 
                 });
+                host.Editor.SetCompletionDispatcher((command) =>
+                {
+                    var executing = true;
+                    var operation = dispatcher.BeginInvoke(DispatcherPriority.Normal, command);
+                    while (executing)
+                    {
+                        if (operation.Status != DispatcherOperationStatus.Completed)
+                            operation.Wait(TimeSpan.FromSeconds(1));
+                        if (operation.Status == DispatcherOperationStatus.Completed)
+                            executing = false;
+                    }
+                });
             });
             gui.ShowDialog();
             return Result.Succeeded;

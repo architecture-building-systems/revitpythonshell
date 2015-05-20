@@ -38,6 +38,11 @@ namespace PythonConsoleControl
             get { return pythonConsole; }
         }
 
+        public PythonTextEditor Editor
+        {
+            get { return textEditor; }
+        }
+
         protected override Type Provider
         {
             get { return typeof(PythonContext); }
