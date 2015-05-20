@@ -18,6 +18,7 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 - save "external scripts" for reuse and start collecting your awesome hacks!
 - run scripts at Revit startup
 - deploy scripts as standalone Revit Addins
+- `lookup()` function for snooping `Element`, `ElementSet` and `ElementId` objects in [RevitLookup](https://github.com/jeremytammik/RevitLookup)
 
 ## Installation
 
