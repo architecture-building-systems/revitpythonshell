@@ -19,7 +19,7 @@ namespace PythonConsoleControl
     /// <summary>
     /// Provides code completion for the Python Console window.
     /// </summary>
-    public class PythonConsoleCompletionDataProvider
+    public class PythonConsoleCompletionDataProvider 
     {
         CommandLine commandLine;
         internal volatile bool AutocompletionInProgress = false;
@@ -38,7 +38,7 @@ namespace PythonConsoleControl
         /// '>>>' as this will be ignored.
         /// </summary>
         public ICompletionData[] GenerateCompletionData(string line)
-        {
+        {         
             List<PythonCompletionData> items = new List<PythonCompletionData>(); //DefaultCompletionData
 
             string name = GetName(line);

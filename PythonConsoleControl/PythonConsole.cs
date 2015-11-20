@@ -28,7 +28,7 @@ using Style = Microsoft.Scripting.Hosting.Shell.Style;
 namespace PythonConsoleControl
 {
     public delegate void ConsoleInitializedEventHandler(object sender, EventArgs e);
-
+    
     /// <summary>
     /// Custom IronPython console. The command dispacher runs on a separate UI thread from the REPL
     /// and also from the WPF control.
@@ -46,10 +46,10 @@ namespace PythonConsoleControl
         public bool DisableAutocompletionForCallables
         {
             get { return disableAutocompletionForCallables; }
-            set
+            set 
             {
                 if (textEditor.CompletionProvider != null) textEditor.CompletionProvider.ExcludeCallables = value;
-                disableAutocompletionForCallables = value;
+                disableAutocompletionForCallables = value; 
             }
         }
 
@@ -59,7 +59,7 @@ namespace PythonConsoleControl
             get { return allowCtrlSpaceAutocompletion; }
             set { allowCtrlSpaceAutocompletion = value; }
         }
-
+        
         PythonTextEditor textEditor;
         int lineReceivedEventIndex = 0; // The index into the waitHandles array where the lineReceivedEvent is stored.
         ManualResetEvent lineReceivedEvent = new ManualResetEvent(false);
@@ -80,7 +80,7 @@ namespace PythonConsoleControl
         string scriptText = String.Empty;
         bool consoleInitialized = false;
         string prompt;
-
+      
         public event ConsoleInitializedEventHandler ConsoleInitialized;
 
         public ScriptScope ScriptScope
@@ -89,7 +89,7 @@ namespace PythonConsoleControl
         }
 
         public PythonConsole(PythonTextEditor textEditor, CommandLine commandLine)
-        {
+        {   
             waitHandles = new WaitHandle[] { lineReceivedEvent, disposedEvent };
 
             this.commandLine = commandLine;
@@ -167,7 +167,7 @@ namespace PythonConsoleControl
                 var operation = dispatcher.BeginInvoke(DispatcherPriority.Normal, command);
                 while (executing)
                 {
-                    if (operation.Status != DispatcherOperationStatus.Completed)
+                    if (operation.Status != DispatcherOperationStatus.Completed) 
                         operation.Wait(TimeSpan.FromSeconds(1));
                     if (operation.Status == DispatcherOperationStatus.Completed)
                         executing = false;
@@ -281,7 +281,7 @@ namespace PythonConsoleControl
                 // convert text back to correct newlines for this document
                 string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
                 string text = TextUtilities.NormalizeNewLines(Clipboard.GetText(), newLine);
-                string[] commands = text.Split(new String[] { newLine }, StringSplitOptions.None);
+                string[] commands = text.Split(new String[] {newLine}, StringSplitOptions.None);
                 string scriptText = "";
                 if (commands.Length > 1)
                 {
@@ -307,7 +307,7 @@ namespace PythonConsoleControl
                     }
                     else if (rectangular && textArea.Selection.IsEmpty)
                     {
-                        if (!RectangleSelection.PerformRectangularPaste(textArea, textArea.Caret.Offset, text, false))
+                        if (!RectangleSelection.PerformRectangularPaste(textArea, textArea.Caret.Position, text, false))
                             textEditor.Write(text, false);
                     }
                     else
@@ -337,9 +337,9 @@ namespace PythonConsoleControl
                 // Send the 'Ctrl-C' abort 
                 //if (!IsInReadOnlyRegion)
                 //{
-                MoveToHomePosition();
-                //textEditor.Column = GetLastTextEditorLine().Length + 1;
-                //textEditor.Write(Environment.NewLine);
+                    MoveToHomePosition();
+                    //textEditor.Column = GetLastTextEditorLine().Length + 1;
+                    //textEditor.Write(Environment.NewLine);
                 //}
                 dispatcherThread.Abort(new Microsoft.Scripting.KeyboardInterruptException(""));
                 args.Handled = true;

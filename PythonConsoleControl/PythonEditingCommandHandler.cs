@@ -83,7 +83,7 @@ namespace PythonConsoleControl
                 else
                 {
                     CopySelectedText(textArea);
-                    textArea.Selection.ReplaceSelectionWithText(textArea, string.Empty);
+                    textArea.Selection.ReplaceSelectionWithText(string.Empty);
                 }
                 textArea.Caret.BringCaretToView();
                 args.Handled = true;
@@ -105,7 +105,7 @@ namespace PythonConsoleControl
                 return;
             }
 
-            string text = textArea.Selection.GetText(textArea.Document);
+            string text = textArea.Selection.GetText();
             text = TextUtilities.NormalizeNewLines(text, Environment.NewLine);
             //textArea.OnTextCopied(new TextEventArgs(text));
         }
@@ -173,7 +173,7 @@ namespace PythonConsoleControl
                                 // If nothing in the selection is deletable; then reset caret+selection
                                 // to the previous value. This prevents the caret from moving through read-only sections.
                                 textArea.Caret.Position = oldCaretPosition;
-                                textArea.Selection = Selection.Empty;
+                                textArea.Selection = null;
                             }
                         }
                         method = textAreaType.GetMethod("RemoveSelectedText", BindingFlags.Instance | BindingFlags.NonPublic);

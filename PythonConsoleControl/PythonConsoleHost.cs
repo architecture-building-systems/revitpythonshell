@@ -15,7 +15,6 @@ using Microsoft.Scripting.Hosting.Shell;
 namespace PythonConsoleControl
 {
     public delegate void ConsoleCreatedEventHandler(object sender, EventArgs e);
-    
 
     /// <summary>
     /// Hosts the python console.
@@ -24,7 +23,7 @@ namespace PythonConsoleControl
     {
         Thread thread;
         PythonTextEditor textEditor;
-        PythonConsole pythonConsole;       
+        PythonConsole pythonConsole;
 
         public event ConsoleCreatedEventHandler ConsoleCreated;
 
@@ -70,7 +69,6 @@ namespace PythonConsoleControl
                 thread.Join();
             }
         }
-
 
         protected override CommandLine CreateCommandLine()
         {
@@ -134,7 +132,7 @@ namespace PythonConsoleControl
             return srs;
         }
 
-        protected override void ParseHostOptions(string/*!*/[]/*!*/ args)
+        protected override void ParseHostOptions(string[] args)
         {
             // Python doesn't want any of the DLR base options.
             foreach (string s in args)

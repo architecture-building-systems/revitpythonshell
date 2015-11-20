@@ -143,13 +143,15 @@ namespace PythonConsoleControl
             if (text == "\n" || text == "\r\n")
             {
                 string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
-                using (textArea.Document.RunUpdate())
-                {
-                    textArea.Selection.ReplaceSelectionWithText(textArea, newLine);
-                }
+                this.textEditor.AppendText(newLine);
+                //using (textArea.Document.RunUpdate())
+                //{
+                   
+                //    textArea.Selection.ReplaceSelectionWithText(textArea, newLine);
+                //}
             }
             else
-                textArea.Selection.ReplaceSelectionWithText(textArea, text);
+                this.textEditor.AppendText(text);
             textArea.Caret.BringCaretToView();
         }
 
@@ -238,7 +240,7 @@ namespace PythonConsoleControl
         {
             get
             {
-                return textArea.Selection.IsMultiline(textArea.Document);
+                return textArea.Selection.IsMultiline;
             }
         }
 
