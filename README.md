@@ -41,6 +41,7 @@ Older versions:
 
 - [RevitPythonShell discussion group](http://groups.google.com/group/RevitPythonShell)
 - [stackoverflow](http://stackoverflow.com) (Note: use the ```revit```, ``revit-api`` and ``revitpythonshell`` tags)
+- read up on [How To Ask Questions The Smart Way](http://www.catb.org/esr/faqs/smart-questions.html) first
 
 ## Getting started:
 
