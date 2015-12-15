@@ -65,3 +65,4 @@ docs/_build/
 RevitPythonShell/Examples/Output
 RevitPythonShell/Examples/Output_HelloWorld
 *.suo
+WpfApplication1/obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
