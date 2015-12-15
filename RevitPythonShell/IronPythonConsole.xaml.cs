@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Hosting.Shell;
 using ICSharpCode.AvalonEdit.Highlighting;
 using System.IO;
@@ -20,6 +21,7 @@ using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Microsoft.Scripting;
 using System.Threading;
+using PythonConsoleControl;
 
 namespace RevitPythonShell
 {
@@ -28,10 +30,17 @@ namespace RevitPythonShell
     /// </summary>
     public partial class IronPythonConsole : Window
     {
+        public event EventHandler<EventArgs> ConsoleInitialized;
+
         private ConsoleOptions consoleOptionsProvider;
 
         // this is the name of the file currently being edited in the pad
         private string currentFileName;
+
+        public void WithHost(Action<PythonConsoleHost> hostAction)
+        {
+            consoleControl.WithHost(hostAction);
+        }
 
         public IronPythonConsole()
         {
@@ -56,8 +65,31 @@ namespace RevitPythonShell
             textEditor.SyntaxHighlighting = pythonHighlighting;
             textEditor.PreviewKeyDown += new KeyEventHandler(textEditor_PreviewKeyDown);
             consoleOptionsProvider = new ConsoleOptions(consoleControl.Pad);
+
+            consoleControl.Pad.Host.ConsoleCreated += new PythonConsoleControl.ConsoleCreatedEventHandler(Host_ConsoleCreated);
         }
-        
+
+        void Host_ConsoleCreated(object sender, EventArgs e)
+        {
+            consoleControl.Pad.Console.ConsoleInitialized += new PythonConsoleControl.ConsoleInitializedEventHandler(Console_ConsoleInitialized);
+        }
+
+        void Console_ConsoleInitialized(object sender, EventArgs e)
+        {
+            if (ConsoleInitialized != null)
+                ConsoleInitialized(this, new EventArgs());
+
+            string startupScipt = "import IronPythonConsole";
+            ScriptSource scriptSource = consoleControl.Pad.Console.ScriptScope.Engine.CreateScriptSourceFromString(startupScipt, SourceCodeKind.Statements);
+            try
+            {
+                scriptSource.Execute();
+            }
+            catch { }
+            //double[] test = new double[] { 1.2, 4.6 };
+            //console.Pad.Console.ScriptScope.SetVariable("test", test);
+        }
+
         void MainWindow_Initialized(object sender, EventArgs e)
         {
             //propertyGridComboBox.SelectedIndex = 1;

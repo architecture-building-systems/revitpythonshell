@@ -74,10 +74,10 @@ namespace PythonConsoleControl
         volatile bool executing = false;
 
         // This is the thread upon which all commands execute unless the dipatcher is overridden.
-        Thread dispatcherThread;        
-        public Dispatcher dispatcher;
+        Thread dispatcherThread;
+        Window dispatcherWindow;
+        Dispatcher dispatcher;
 
-        string scriptText = String.Empty;
         bool consoleInitialized = false;
         string prompt;
       
@@ -133,29 +133,11 @@ namespace PythonConsoleControl
                 this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Cut, PythonEditingCommandHandler.OnCut, CanCut));
                 this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Undo, OnUndo, CanUndo));
                 this.textEditor.textArea.CommandBindings.Add(new CommandBinding(ApplicationCommands.Delete, PythonEditingCommandHandler.OnDelete(ApplicationCommands.NotACommand), CanDeleteCommand));
-
-            }));            
+			
+            }));
+            CodeContext codeContext = DefaultContext.Default;
             // Set dispatcher to run on a UI thread independent of both the Control UI thread and thread running the REPL.
-            WhenConsoleInitialized(delegate
-            {
-                SetCommandDispatcher(DispatchCommand);
-            });                       
-        }
-
-        public Action<Action> GetCommandDispatcher()
-        {
-            var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(commandLine.ScriptScope.Engine);
-            var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
-            var result = pythonContext.GetSetCommandDispatcher(null);
-            pythonContext.GetSetCommandDispatcher(result);
-            return result;
-        }
-
-        public void SetCommandDispatcher(Action<Action> newDispatcher)
-        {
-            var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(commandLine.ScriptScope.Engine);
-            var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
-            pythonContext.GetSetCommandDispatcher(newDispatcher);
+            ClrModule.SetCommandDispatcher(codeContext, DispatchCommand);
         }
 
         protected void DispatchCommand(Delegate command)
@@ -175,24 +157,10 @@ namespace PythonConsoleControl
             }
         }
 
-        /// <summary>
-        /// Perform action only after the console was initialized.
-        /// </summary>
-        public void WhenConsoleInitialized(Action action)
-        {
-            if (consoleInitialized)
-            {
-                action();
-            }
-            else
-            {
-                ConsoleInitialized += (sender, args) => action();
-            }
-        }
-
         private void DispatcherThreadStartingPoint()
         {
-            dispatcher = new Window().Dispatcher;
+            dispatcherWindow = new Window();
+            dispatcher = dispatcherWindow.Dispatcher;
             while (true)
             {
                 try
@@ -320,11 +288,7 @@ namespace PythonConsoleControl
 
                 if (commands.Length > 1)
                 {
-                    lock (this.scriptText)
-                    {
-                        this.scriptText = scriptText;
-                    }
-                    dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(); }));
+                    dispatcherWindow.Dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(scriptText); }));
                 }
             }
         }
@@ -361,17 +325,25 @@ namespace PythonConsoleControl
         public void RunStatements(string statements)
         {
             MoveToHomePosition();
-            lock (this.scriptText)
-            {
-                this.scriptText = statements;
-            }
-            dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(); }));
+           
+            dispatcher.BeginInvoke(new Action(delegate() { ExecuteStatements(statements); }));
+        }
+
+        /// <summary>
+        /// Run externally provided statements in the Console Engine. 
+        /// </summary>
+        /// <param name="statements"></param>
+        public void RunStatementsSync(string statements)
+        {
+            MoveToHomePosition();
+      
+            dispatcher.Invoke(new Action(delegate() { ExecuteStatements(statements); }));
         }
 
         /// <summary>
         /// Run on the statement execution thread. 
         /// </summary>
-        void ExecuteStatements()
+        void ExecuteStatements(string scriptText)
         {
             lock (scriptText)
             {
@@ -381,7 +353,7 @@ namespace PythonConsoleControl
                 try
                 {
                     executing = true;
-                    GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
+                    scriptSource.Execute(commandLine.ScriptScope);
                 }
                 catch (ThreadAbortException tae)
                 {

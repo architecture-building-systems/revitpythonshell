@@ -33,7 +33,7 @@ namespace RevitPythonShell
         {
             var messageCopy = message;
             var gui = new IronPythonConsole();
-            gui.consoleControl.WithConsoleHost((host) =>
+            gui.consoleControl.WithHost((host) =>
             {
                 // now that the console is created and initialized, the script scope should
                 // be accessible...
@@ -53,9 +53,9 @@ namespace RevitPythonShell
             var commandCompletedEvent = new AutoResetEvent(false);
             var externalEventHandler = new IronPythonExternalEventDispatcher(gui, commandCompletedEvent);
             var externalEvent = ExternalEvent.Create(externalEventHandler);
-            gui.consoleControl.WithConsoleHost((host) =>
+            gui.consoleControl.WithHost((host) =>
             {
-                var oldDispatcher = host.Console.GetCommandDispatcher();
+                /*var oldDispatcher = host.Console.GetCommandDispatcher();
                 host.Console.SetCommandDispatcher((command) =>
                 {
                     //externalEventHandler.Enqueue(() => oldDispatcher(command));                    
@@ -69,7 +69,7 @@ namespace RevitPythonShell
                     externalEventHandler.Enqueue(command);
                     externalEvent.Raise();
                     commandCompletedEvent.WaitOne();                    
-                });
+                });*/
             });
             gui.Topmost = true;
             gui.Title = "RevitPythonShell (non-modal)";
@@ -111,7 +111,7 @@ namespace RevitPythonShell
                 {
                     try
                     {
-                        _gui.consoleControl.WithConsoleHost((host) =>
+                        _gui.consoleControl.WithHost((host) =>
                         {
                             ExceptionOperations eo;
                             eo = host.Engine.GetService<ExceptionOperations>();

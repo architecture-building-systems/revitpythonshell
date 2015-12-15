@@ -34,7 +34,6 @@ namespace PythonConsoleControl
         AutoResetEvent descriptionRequestedEvent = new AutoResetEvent(false);
         Thread completionThread;
         PythonConsoleCompletionDataProvider completionProvider = null;
-        Action<Action> completionDispatcher = new Action<Action>((command) => command()); // dummy completion dispatcher
 
         public PythonTextEditor(TextEditor textEditor)
         {
@@ -46,15 +45,6 @@ namespace PythonConsoleControl
             //completionThread.SetApartmentState(ApartmentState.STA);
             completionThread.IsBackground = true;
             completionThread.Start();
-        }
-
-        /// <summary>
-        /// Set the dispatcher to use to force code completion to happen on a specific thread
-        /// if necessary.
-        /// </summary>
-        public void SetCompletionDispatcher(Action<Action> newDispatcher)
-        {
-            completionDispatcher = newDispatcher;
         }
 
         public bool WriteInProgress
@@ -325,50 +315,28 @@ namespace PythonConsoleControl
                 itemForCompletion = textArea.Document.GetText(line);
             }));
 
-            
-            completionDispatcher.Invoke(new Action(delegate()
-            {
-                try
-                {
-                    ICompletionData[] completions = completionProvider.GenerateCompletionData(itemForCompletion);
-                            
-                    if (completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
-                    {
-                        completionWindow = new PythonConsoleCompletionWindow(textArea, this);
-                        IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
-                        foreach (ICompletionData completion in completions)
-                        {
-                            data.Add(completion);
-                        }
-                        completionWindow.Show();
-                        completionWindow.Closed += delegate
-                        {
-                            completionWindow = null;
-                        };
-                    }));
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.ToString(), "Error");
-                }
+            ICompletionData[] completions = completionProvider.GenerateCompletionData(itemForCompletion);
 
-            }));            
+            if (completions != null && completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
+            {
+                completionWindow = new PythonConsoleCompletionWindow(textArea, this);
+                IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
+                foreach (ICompletionData completion in completions)
+                {
+                    data.Add(completion);
+                }
+                completionWindow.Show();
+                completionWindow.Closed += delegate
+                {
+                    completionWindow = null;
+                };
+            }));
+            
         }
 
         internal void BackgroundUpdateCompletionDescription()
         {
-            completionDispatcher.Invoke(new Action(delegate()
-            {
-                try
-                {
-                    completionWindow.UpdateCurrentItemDescription();
-                }
-                catch (Exception exception)
-                {
-                    MessageBox.Show(exception.ToString(), "Error");
-                }
-
-            }));            
+            completionWindow.UpdateCurrentItemDescription();
         }
 
         public void RequestCompletioninsertion(TextCompositionEventArgs e)

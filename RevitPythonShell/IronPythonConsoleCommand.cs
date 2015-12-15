@@ -28,28 +28,28 @@ namespace RevitPythonShell
         {            
             var messageCopy = message;
             var gui = new IronPythonConsole();
-            gui.consoleControl.WithConsoleHost((host) =>
+            gui.consoleControl.WithHost((host) =>
             {
                 // now that the console is created and initialized, the script scope should
                 // be accessible...
-                new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
-                    .SetupEnvironment(host.Engine, host.Console.ScriptScope);
+                //new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
+                //    .SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
-                host.Console.ScriptScope.SetVariable("__window__", gui);
+                //host.Console.ScriptScope.SetVariable("__window__", gui);
 
                 // run the initscript
-                var initScript = RevitPythonShellApplication.GetInitScript();
-                if (initScript != null)
-                {
-                    var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
-                    scriptSource.Execute(host.Console.ScriptScope);
-                }                
+                //var initScript = RevitPythonShellApplication.GetInitScript();
+                //if (initScript != null)
+                //{
+                //    var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
+                //    scriptSource.Execute(host.Console.ScriptScope);
+                //}                
             });
 
             var dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
-            gui.consoleControl.WithConsoleHost((host) =>
+            gui.consoleControl.WithHost((host) =>
             {                
-                host.Console.SetCommandDispatcher((command) =>
+                /*host.Console.SetCommandDispatcher((command) =>
                 {
                     if (command != null)
                     {
@@ -64,8 +64,8 @@ namespace RevitPythonShell
                                 executing = false;
                         }
                     }                 
-                });
-                host.Editor.SetCompletionDispatcher((command) =>
+                });*/
+                /*host.Editor.SetCompletionDispatcher((command) =>
                 {
                     var executing = true;
                     var operation = dispatcher.BeginInvoke(DispatcherPriority.Normal, command);
@@ -76,7 +76,7 @@ namespace RevitPythonShell
                         if (operation.Status == DispatcherOperationStatus.Completed)
                             executing = false;
                     }
-                });
+                });*/
             });
             gui.ShowDialog();
             return Result.Succeeded;

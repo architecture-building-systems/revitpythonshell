@@ -37,11 +37,6 @@ namespace PythonConsoleControl
             get { return pythonConsole; }
         }
 
-        public PythonTextEditor Editor
-        {
-            get { return textEditor; }
-        }
-
         protected override Type Provider
         {
             get { return typeof(PythonContext); }
@@ -92,18 +87,6 @@ namespace PythonConsoleControl
             pythonConsole = new PythonConsole(textEditor, commandLine);
             if (ConsoleCreated != null) ConsoleCreated(this, EventArgs.Empty);
             return pythonConsole;
-        }
-
-        public void WhenConsoleCreated(Action<PythonConsoleHost> action)
-        {            
-            if (pythonConsole != null)
-            {
-                pythonConsole.WhenConsoleInitialized(() => action(this));
-            }
-            else
-            {
-                ConsoleCreated += (sender, args) => WhenConsoleCreated(action);
-            }
         }
 
         protected virtual void SetOutput(PythonOutputStream stream)

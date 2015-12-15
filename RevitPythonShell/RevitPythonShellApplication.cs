@@ -18,7 +18,7 @@ namespace RevitPythonShell
 {
     [Regeneration(RegenerationOption.Manual)]
     [Transaction(TransactionMode.Manual)]
-    class RevitPythonShellApplication : IExternalApplication
+    public class RevitPythonShellApplication : IExternalApplication
     {
         private static string versionNumber;
 
@@ -573,7 +573,7 @@ namespace RevitPythonShell
     /// <summary>
     /// A simple structure to hold information about canned commands.
     /// </summary>
-    internal class Command
+    public class Command
     {
         public string Name;
         public string Group;

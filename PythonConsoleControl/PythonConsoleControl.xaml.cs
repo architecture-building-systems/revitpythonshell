@@ -28,16 +28,8 @@ namespace PythonConsoleControl
     /// </summary>
     public partial class IronPythonConsoleControl : UserControl
     {
-        PythonConsolePad pad;                
-
-        /// <summary>
-        /// Perform the action on an already instantiated PythonConsoleHost.
-        /// </summary>
-        public void WithConsoleHost(Action<PythonConsoleHost> action)
-        {
-            pad.Host.WhenConsoleCreated(action);
-        }
-
+        PythonConsolePad pad;
+        
         public IronPythonConsoleControl()
         {
             InitializeComponent();
@@ -63,6 +55,41 @@ namespace PythonConsoleControl
             {
                 if (transformers[i] is HighlightingColorizer) transformers[i] = new PythonConsoleHighlightingColorizer(pythonHighlighting, pad.Control.Document);
             }
+
+            pad.Control.Loaded += (sender, args) => pad.Control.Focus();
+
+        }
+
+        /// <summary>
+        /// Performs the specified action on the console host but only once the console
+        /// has initialized.
+        /// </summary>
+        public void WithHost(Action<PythonConsoleHost> hostAction)
+        {
+            this.hostAction = hostAction;
+            Host.ConsoleCreated += new ConsoleCreatedEventHandler(Host_ConsoleCreated);
+        }
+
+        Action<PythonConsoleHost> hostAction;
+
+        void Host_ConsoleCreated(object sender, EventArgs e)
+        {
+            Console.ConsoleInitialized += new ConsoleInitializedEventHandler(Console_ConsoleInitialized);
+        }
+
+        void Console_ConsoleInitialized(object sender, EventArgs e)
+        {
+            hostAction.Invoke(Host);
+        }
+
+        public PythonConsole Console
+        {
+            get { return pad.Console; }
+        }
+
+        public PythonConsoleHost Host
+        {
+            get { return pad.Host; }
         }
 
         public PythonConsolePad Pad
