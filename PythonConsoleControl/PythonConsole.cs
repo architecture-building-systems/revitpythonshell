@@ -381,7 +381,17 @@ namespace PythonConsoleControl
                 try
                 {
                     executing = true;
-                    GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
+                    var errors = new ErrorReporter();
+                    var command = scriptSource.Compile(errors);
+                    if (command == null)
+                    {
+                        // compilation failed
+                        error = "Syntax Error: " + string.Join("\nSyntax Error: ", errors.Errors) + "\n";
+                    }
+                    else
+                    {
+                        GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
+                    }                    
                 }
                 catch (ThreadAbortException tae)
                 {
@@ -713,6 +723,21 @@ namespace PythonConsoleControl
 
             // Put cursor at end.
             textEditor.Column = promptLength + text.Length + 1;
+        }
+    }
+
+    public class ErrorReporter : ErrorListener
+    {
+        public List<String> Errors = new List<string>();
+
+        public override void ErrorReported(ScriptSource source, string message, SourceSpan span, int errorCode, Severity severity)
+        {
+            Errors.Add(string.Format("{0} (line {1})", message, span.Start.Line));
+        }
+
+        public int Count
+        {
+            get { return Errors.Count; }
         }
     }
 }

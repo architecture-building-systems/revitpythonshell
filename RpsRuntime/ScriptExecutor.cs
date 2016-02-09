@@ -80,6 +80,16 @@ namespace RevitPythonShell.RpsRuntime
                 engine.Runtime.IO.SetInput(outputStream, Encoding.UTF8);
 
                 var script = engine.CreateScriptSourceFromString(source, SourceCodeKind.Statements);
+                var errors = new ErrorReporter();
+                var command = script.Compile(errors);
+                if (command == null)
+                {
+                    // compilation failed
+                    _message = string.Join("\n", errors.Errors);
+                    return (int)Result.Failed;
+                }
+
+
                 try
                 {
                     script.Execute(scope);
@@ -193,6 +203,22 @@ namespace RevitPythonShell.RpsRuntime
                 searchPaths.Add(path);
             }
             engine.SetSearchPaths(searchPaths);
+        }
+    }
+
+
+    public class ErrorReporter : ErrorListener
+    {
+        public List<String> Errors = new List<string>();
+
+        public override void ErrorReported(ScriptSource source, string message, SourceSpan span, int errorCode, Severity severity)
+        {
+            Errors.Add(string.Format("{0} (line {1})", message, span.Start.Line));
+        }
+
+        public int Count
+        {
+            get { return Errors.Count; }
         }
     }
 }
