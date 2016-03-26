@@ -5,7 +5,7 @@ Please notice that this addin does not include the python shell from original RP
 
 
 ## License
-As its parent project, this project is also licensed under the terms of the MIT License. See [License](https://github.com/eirannejad/revitpythonloader/blob/master/LICENSE.txt).
+As its parent project, this project is also licensed under the terms of the [MIT License](https://github.com/eirannejad/revitpythonloader/blob/master/LICENSE.txt).
 
 ## Credits
 
