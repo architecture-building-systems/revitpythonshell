@@ -1,7 +1,7 @@
 # IronPython Startup Script Loader for Autodesk Revit and Vasari®
-This is a heavily modified and scaled down version of [RevitPythonShell](https://github.com/architecture-building-systems/revitpythonshell) that will load a script named `userSetup.py` at load time. This project has been solely created to accompany the [pyRevit](https://github.com/eirannejad/pyRevit) IronPython script library and provide an independent `userSetup.py` loader for pyRevit.
+This is a heavily modified and scaled down version of [RevitPythonShell](https://github.com/architecture-building-systems/revitpythonshell) that will load a script named `__init__.py` at load time. This project has been solely created to accompany the [pyRevit](https://github.com/eirannejad/pyRevit) IronPython script library and to provide an independent `__init__.py` loader for pyRevit. The `__init__.py` script must be located in the same folder as `RevitPythonLoader.dll`.
 
-Please notice that this addin does not provide the python shell. For that you still need to install the RPS since it's the best at what it does and I have no intention of creating another one. This will resolve pyRevit's dependency on the existence of RPS as a host and make it easier to use in a larger environment with users of varied skills that might not need to have access to RPS as a tool but want to use the pyRevit tools thorugh the Revit UI.
+Please notice that this addin does not include the python shell from original RPS. For that you still need to install the RPS since it's the best at what it does and I have no intention of creating another one. This addin will resolve pyRevit's dependency on the existence of RPS as a host and make it easier to use in a larger environment with users of varied skill levels that might not need to have access to RPS but want to use the pyRevit tools through the Revit interface.
 
 
 ## License
