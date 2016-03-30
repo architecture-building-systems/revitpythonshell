@@ -10,5 +10,10 @@ namespace RevitPythonLoader
             InitializeComponent();
             txtStdOut.Text = "";            
         }
+
+        private void ScriptOutput_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
