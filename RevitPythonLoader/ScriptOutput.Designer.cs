@@ -51,7 +51,7 @@
             this.Controls.Add(this.txtStdOut);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ScriptOutput";
-            this.Text = "pyRevit output";
+            this.Text = "pyRevit";
             this.Load += new System.EventHandler(this.ScriptOutput_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

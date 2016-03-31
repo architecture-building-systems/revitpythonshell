@@ -168,7 +168,7 @@ namespace RevitPythonLoader
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.DB.Document).Assembly);
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);
 
-            // also, allow access to the RPS internals
+            // also, allow access to the RPL internals
             engine.Runtime.LoadAssembly(typeof(RevitPythonLoader.ScriptExecutor).Assembly);
         }        
 
