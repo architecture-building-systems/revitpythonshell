@@ -66,18 +66,26 @@ namespace RevitPythonLoader
 
         public static string GetStartupScriptPath()
         {
-            // var dllfolder = AppDomain.CurrentDomain.BaseDirectory;
-            var dllfolder = Path.GetDirectoryName( Assembly.GetExecutingAssembly().Location );
-            var dllfullpath = Path.Combine( dllfolder, "__init__.py");
-            return dllfullpath;
+            var startupScriptName = "__init__.py";
+
+            var pyrevitEnvVar = Environment.GetEnvironmentVariable("pyrevit");
+            if (Directory.Exists(pyrevitEnvVar))
+            {
+                return Path.Combine(pyrevitEnvVar, startupScriptName);
+            }
+            else  // if location can not be aquired from the environment var, check dll folder for __init__.py script
+            {
+                var dllfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                return Path.Combine(dllfolder, startupScriptName);
+            }
         }
 
         public static string GetStartupScript()
         {
-            var path = GetStartupScriptPath();
-            if (File.Exists(path))
+            var startupScriptFullPath = GetStartupScriptPath();
+            if (File.Exists(startupScriptFullPath))
             {
-                using (var reader = File.OpenText(path))
+                using (var reader = File.OpenText(startupScriptFullPath))
                 {
                     var source = reader.ReadToEnd();
                     return source;
