@@ -354,8 +354,10 @@ namespace RevitPythonShell
             dialog.Multiselect = false;
             dialog.FileName = txtCommandPath.Text;
 
-            dialog.ShowDialog(this);
-            txtInitScript.Text = dialog.FileName;
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                txtInitScript.Text = dialog.FileName;
+            }
         }
 
         private void btnStartupScriptBrowse_Click(object sender, EventArgs e)
@@ -366,8 +368,10 @@ namespace RevitPythonShell
             dialog.Multiselect = false;
             dialog.FileName = txtCommandPath.Text;
 
-            dialog.ShowDialog(this);
-            txtStartupScript.Text = dialog.FileName;
+            if (dialog.ShowDialog(this) == DialogResult.OK)
+            {
+                txtStartupScript.Text = dialog.FileName;
+            }
         } 
     }
 }
