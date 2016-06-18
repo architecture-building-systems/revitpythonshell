@@ -35,6 +35,7 @@ Z:\Revit API\revitpythonloader\RevitPythonLoader\bin\Release\IronPython.Modules.
 Z:\Revit API\revitpythonloader\RevitPythonLoader\bin\Release\Microsoft.Dynamic.pdb
 Z:\Revit API\revitpythonloader\RevitPythonLoader\bin\Release\Microsoft.Scripting.pdb
 Z:\Revit API\revitpythonloader\RevitPythonLoader\bin\Release\Microsoft.Scripting.Metadata.pdb
+Z:\Revit API\revitpythonloader\RevitPythonLoader\obj\Release\revitPythonLoader.csprojResolveAssemblyReference.cache
 Z:\Revit API\revitpythonloader\RevitPythonLoader\obj\Release\RevitPythonLoader.Properties.Resources.resources
 Z:\Revit API\revitpythonloader\RevitPythonLoader\obj\Release\RevitPythonLoader.ScriptOutput.resources
 Z:\Revit API\revitpythonloader\RevitPythonLoader\obj\Release\revitPythonLoader.csproj.GenerateResource.Cache
