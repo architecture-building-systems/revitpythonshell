@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitPythonShell", "RevitPythonShell\RevitPythonShell.csproj", "{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PythonConsoleControl", "PythonConsoleControl\PythonConsoleControl.csproj", "{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}"
@@ -15,14 +17,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RpsRuntime", "RpsRuntime\RpsRuntime.csproj", "{C8446636-C663-409F-82D0-72C0D55BBA1C}"
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug 2014|Any CPU = Debug 2014|Any CPU
 		Debug 2015|Any CPU = Debug 2015|Any CPU
 		Debug 2016|Any CPU = Debug 2016|Any CPU
+		Debug 2017|Any CPU = Debug 2017|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2014|Any CPU.ActiveCfg = Debug 2014|Any CPU
@@ -31,20 +30,30 @@ Global
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2015|Any CPU.Build.0 = Debug 2015|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2016|Any CPU.ActiveCfg = Debug 2016|Any CPU
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2016|Any CPU.Build.0 = Debug 2016|Any CPU
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2017|Any CPU.ActiveCfg = Debug 2017|Any CPU
+		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2017|Any CPU.Build.0 = Debug 2017|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2014|Any CPU.Build.0 = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.Build.0 = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2016|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2016|Any CPU.Build.0 = Debug|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2017|Any CPU.ActiveCfg = Debug 2017|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2017|Any CPU.Build.0 = Debug 2017|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2014|Any CPU.ActiveCfg = Debug 2014|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2014|Any CPU.Build.0 = Debug 2014|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2015|Any CPU.ActiveCfg = Debug 2015|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2015|Any CPU.Build.0 = Debug 2015|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2016|Any CPU.ActiveCfg = Debug 2016|Any CPU
 		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2016|Any CPU.Build.0 = Debug 2016|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2017|Any CPU.ActiveCfg = Debug 2017|Any CPU
+		{C8446636-C663-409F-82D0-72C0D55BBA1C}.Debug 2017|Any CPU.Build.0 = Debug 2017|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
