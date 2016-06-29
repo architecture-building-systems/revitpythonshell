@@ -198,6 +198,10 @@ namespace RevitPythonShell.RpsRuntime
         /// </summary>
         private string GetEmbeddedScript(string scriptName, Assembly addinAssembly)
         {         
+            if (scriptName == null)
+            {
+                return null;
+            }
             var source = new StreamReader(addinAssembly.GetManifestResourceStream(scriptName)).ReadToEnd();
             return source;
         }
