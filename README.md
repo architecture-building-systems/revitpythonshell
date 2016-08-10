@@ -55,6 +55,10 @@ Learn about the Revit API:
 
   * [Autodesk Developer Network](T)
   * [Jeremy Tammiks blog "The Building Coder"](http://thebuildingcoder.typepad.com/)
+   
+Tutorials recommended by the community:
+
+  * [Mono IronPython Winforms Tutorial](http://zetcode.com/tutorials/ironpythontutorial/) - recommended by Callum
 
 You can find sample scripts here:
 
