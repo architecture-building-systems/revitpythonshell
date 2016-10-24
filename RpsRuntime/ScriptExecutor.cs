@@ -75,7 +75,7 @@ namespace RevitPythonShell.RpsRuntime
                 scope.SetVariable("__window__", scriptOutput);
                 scope.SetVariable("__file__", sourcePath);
 
-                //Add script directory address to sys search paths
+                // Add script directory address to sys search paths
                 var path = engine.GetSearchPaths();
                 path.Add(System.IO.Path.GetDirectoryName(sourcePath));
                 engine.SetSearchPaths(path);
