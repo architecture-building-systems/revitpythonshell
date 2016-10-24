@@ -69,6 +69,7 @@ You can find sample scripts here:
   * [dp stuff (Python Scripts Archives)](http://dp-stuff.org/category/python-scripts)
     * lots of scripts
   * [my own blog](http://darenatwork.blogspot.com/) contains the odd sample script
+  * [Check out pyRevit](http://eirannejad.github.io/pyRevit/whatspyrevit/) by Ehsan Iran-Nejad - it includes a library of interesting scripts and some additions to make writing your own easier!
 
 ## License
 
