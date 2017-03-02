@@ -30,7 +30,9 @@ def get_selected_elements(doc):
         # old method
         return list(__revit__.ActiveUIDocument.Selection.Elements)
 selection = get_selected_elements(doc)
-
+# convenience variable for first element in selection
+if len(selection):
+    s0 = selection[0]
 
 #------------------------------------------------------------------------------
 import clr
