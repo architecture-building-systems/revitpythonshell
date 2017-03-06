@@ -330,7 +330,7 @@ namespace PythonConsoleControl
                 {
                     ICompletionData[] completions = completionProvider.GenerateCompletionData(itemForCompletion);
                             
-                    if (completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
+                    if (completions != null && completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
                     {
                         completionWindow = new PythonConsoleCompletionWindow(textArea, this);
                         IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
