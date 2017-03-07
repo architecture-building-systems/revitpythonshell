@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RevitPythonShell", "RevitPythonShell\RevitPythonShell.csproj", "{7E37F14E-D840-42F8-8CA6-90FFC5497972}"
 EndProject
@@ -34,8 +34,8 @@ Global
 		{7E37F14E-D840-42F8-8CA6-90FFC5497972}.Debug 2017|Any CPU.Build.0 = Debug 2017|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2014|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2014|Any CPU.Build.0 = Debug|Any CPU
-		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.ActiveCfg = Debug|Any CPU
-		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.Build.0 = Debug|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.ActiveCfg = Debug 2015|Any CPU
+		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2015|Any CPU.Build.0 = Debug 2015|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2016|Any CPU.ActiveCfg = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2016|Any CPU.Build.0 = Debug|Any CPU
 		{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}.Debug 2017|Any CPU.ActiveCfg = Debug 2017|Any CPU
