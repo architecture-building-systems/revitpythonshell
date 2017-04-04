@@ -233,6 +233,8 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\Number.png" />
+    <Resource Include="Images\Paragraph.png" />
     <Content Include="startup.py" />
     <None Include="Examples\HelloWorld.iss" />
     <Content Include="init.py" />
