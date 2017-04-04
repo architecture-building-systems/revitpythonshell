@@ -144,8 +144,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=4.0.0.5949, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\PythonConsoleControl\RequiredLibraries\AvalonEdit\ICSharpCode.AvalonEdit.dll</HintPath>
+    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
+      <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
@@ -169,6 +169,12 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="PythonConsoleControl">
+      <HintPath>..\PythonConsoleControl\bin\Debug 2017\PythonConsoleControl.dll</HintPath>
+    </Reference>
+    <Reference Include="RpsRuntime">
+      <HintPath>..\RpsRuntime\bin\Debug 2017\RpsRuntime.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -230,6 +236,7 @@
     <Content Include="startup.py" />
     <None Include="Examples\HelloWorld.iss" />
     <Content Include="init.py" />
+    <None Include="packages.config" />
     <None Include="Resources\ipy.ico" />
     <Resource Include="Images\Copy.png" />
     <Resource Include="Images\Cut.png" />
@@ -257,16 +264,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\Python.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
-      <Project>{F1152D68-346B-4F48-8DB7-BE67B5CB1F49}</Project>
-      <Name>PythonConsoleControl</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
-      <Project>{C8446636-C663-409F-82D0-72C0D55BBA1C}</Project>
-      <Name>RpsRuntime</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

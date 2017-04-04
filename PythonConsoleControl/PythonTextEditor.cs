@@ -145,11 +145,11 @@ namespace PythonConsoleControl
                 string newLine = TextUtilities.GetNewLineFromDocument(textArea.Document, textArea.Caret.Line);
                 using (textArea.Document.RunUpdate())
                 {
-                    textArea.Selection.ReplaceSelectionWithText(textArea, newLine);
+                    textArea.Selection.ReplaceSelectionWithText(newLine);
                 }
             }
             else
-                textArea.Selection.ReplaceSelectionWithText(textArea, text);
+                textArea.Selection.ReplaceSelectionWithText(text);
             textArea.Caret.BringCaretToView();
         }
 
@@ -238,7 +238,7 @@ namespace PythonConsoleControl
         {
             get
             {
-                return textArea.Selection.IsMultiline(textArea.Document);
+                return textArea.Selection.IsMultiline;
             }
         }
 

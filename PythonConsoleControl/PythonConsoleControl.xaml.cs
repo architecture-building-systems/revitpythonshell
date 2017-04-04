@@ -61,7 +61,7 @@ namespace PythonConsoleControl
             IList<IVisualLineTransformer> transformers = pad.Control.TextArea.TextView.LineTransformers;
             for (int i = 0; i < transformers.Count; ++i)
             {
-                if (transformers[i] is HighlightingColorizer) transformers[i] = new PythonConsoleHighlightingColorizer(pythonHighlighting.MainRuleSet, pad.Control.Document);
+                if (transformers[i] is HighlightingColorizer) transformers[i] = new PythonConsoleHighlightingColorizer(pythonHighlighting, pad.Control.Document);
             }
         }
 
