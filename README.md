@@ -22,7 +22,7 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 
 ## Installation
 
-- [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2017.exe)
+- [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.05/2017.04.05_Setup_RevitPythonShell_2017.exe)
 - [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2016.exe)
 - [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2015.exe)
 
