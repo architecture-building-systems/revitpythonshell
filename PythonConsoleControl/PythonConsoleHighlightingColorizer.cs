@@ -27,7 +27,7 @@ namespace PythonConsoleControl
         /// Creates a new HighlightingColorizer instance.
         /// </summary>
         /// <param name="ruleSet">The root highlighting rule set.</param>
-        public PythonConsoleHighlightingColorizer(HighlightingRuleSet ruleSet, TextDocument document)
+        public PythonConsoleHighlightingColorizer(IHighlightingDefinition ruleSet, TextDocument document)
             : base(ruleSet)
         {
             if (document == null)

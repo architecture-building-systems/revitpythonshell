@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Scripting.Hosting.Shell;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
 using System.IO;
 using System.Xml;
@@ -107,10 +108,20 @@ namespace RevitPythonShell
         {
             string statementsToRun = "";
             if (textEditor.TextArea.Selection.Length > 0)
-                statementsToRun = textEditor.TextArea.Selection.GetText(textEditor.TextArea.Document);
+                statementsToRun = textEditor.TextArea.Selection.GetText();
             else
                 statementsToRun = textEditor.TextArea.Document.Text;
             consoleControl.Pad.Console.RunStatements(statementsToRun);
-        }         
+        }
+
+        // Clear the contents on first click inside the editor
+        private void textEditor_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextEditor tb = (TextEditor)sender;
+            tb.Text = string.Empty;
+            // Remove the handler from the list otherwise this handler will clear
+            // editor contents every time the editor gains focus.
+            tb.GotFocus -= textEditor_GotFocus;
+        }
     }
 }
