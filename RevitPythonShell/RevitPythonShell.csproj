@@ -235,6 +235,14 @@
   <ItemGroup>
     <Resource Include="Images\Number.png" />
     <Resource Include="Images\Paragraph.png" />
+    <EmbeddedResource Include="Resources\Console-16.png" />
+    <EmbeddedResource Include="Resources\Console-32.png" />
+    <EmbeddedResource Include="Resources\Deployment-16.png" />
+    <EmbeddedResource Include="Resources\Deployment-32.png" />
+    <EmbeddedResource Include="Resources\Python-16.png" />
+    <EmbeddedResource Include="Resources\Python-32.png" />
+    <EmbeddedResource Include="Resources\Settings-16.png" />
+    <EmbeddedResource Include="Resources\Settings-32.png" />
     <Content Include="startup.py" />
     <None Include="Examples\HelloWorld.iss" />
     <Content Include="init.py" />

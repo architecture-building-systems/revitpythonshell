@@ -80,8 +80,9 @@ namespace RevitPythonShell
         private static void BuildRibbonPanel(UIControlledApplication application, string dllfullpath)
         {
             var assembly = typeof(RevitPythonShellApplication).Assembly;
-            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole32x32.png");
-            var smallImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.PythonConsole16x16.png");
+            var smallImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Python-16.png");
+            var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Python-32.png");
+            
 
             RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
             var splitButton = ribbonPanel.AddItem(new SplitButtonData("splitButtonRevitPythonShell", "RevitPythonShell")) as SplitButton;
@@ -110,8 +111,8 @@ namespace RevitPythonShell
                             "Configure...", 
                             assembly.Location, 
                             "RevitPythonShell.ConfigureCommand");
-            pbdConfigure.Image = smallImage;
-            pbdConfigure.LargeImage = largeImage;
+            pbdConfigure.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-16.png");
+            pbdConfigure.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-32.png");
             splitButton.AddPushButton(pbdConfigure);
 
             PushButtonData pbdDeployRpsAddin = new PushButtonData(
@@ -119,8 +120,8 @@ namespace RevitPythonShell
                 "Deploy RpsAddin",
                 assembly.Location,
                 "RevitPythonShell.DeployRpsAddinCommand");
-            pbdDeployRpsAddin.Image = smallImage;
-            pbdDeployRpsAddin.LargeImage = largeImage;
+            pbdDeployRpsAddin.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-16.png");
+            pbdDeployRpsAddin.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-32.png");
             splitButton.AddPushButton(pbdDeployRpsAddin);
 
             var commands = GetCommands(GetSettings()).ToList();
