@@ -57,13 +57,14 @@ namespace PythonConsoleControl
                     //IList<string> members = commandLine.ScriptScope.Engine.Operations.GetMemberNames(value);
                     Type type = TryGetType(name);
                     // Use Reflection for everything except in-built Python types and COM pbjects. 
-                    if (type != null && type.Namespace != "IronPython.Runtime" && (type.Name != "__ComObject"))
+                    if (type != null && type.Namespace != "IronPython.Runtime" && !type.FullName.Contains("IronPython.NewTypes") && (type.Name != "__ComObject"))
                     {
                         PopulateFromCLRType(items, type, name);
                     }
                     else
                     {
-                        string dirCommand = "dir(" + name + ")";
+                        //string dirCommand = "dir(" + name + ")";
+                        string dirCommand = "sorted([m for m in dir(" + name + ") if not m.startswith('__')], key = str.lower) + sorted([m for m in dir(" + name + ") if m.startswith('__')])";
                         object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(dirCommand, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
                         AutocompletionInProgress = false;
                         foreach (object member in (value as IronPython.Runtime.List))
