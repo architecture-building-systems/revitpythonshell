@@ -309,11 +309,11 @@ namespace PythonConsoleControl
                     else if (rectangular && textArea.Selection.IsEmpty)
                     {
                         if (!RectangleSelection.PerformRectangularPaste(textArea, textArea.Caret.Position, text, false))
-                            textEditor.Write(text, false);
+                            textEditor.Write(text, false, false);
                     }
                     else
                     {
-                        textEditor.Write(text, false);
+                        textEditor.Write(text, false, false);
                     }
                 }
                 textArea.Caret.BringCaretToView();

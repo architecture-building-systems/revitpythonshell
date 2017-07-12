@@ -69,19 +69,22 @@ namespace PythonConsoleControl
 
         public void Write(string text)
         {
-            Write(text, false);
+            Write(text, false, true);
         }
 
         Stopwatch sw;
 
-        public void Write(string text, bool allowSynchronous)
+        public void Write(string text, bool allowSynchronous, bool moveToEnd)
         {
             //text = text.Replace("\r\r\n", "\r\n");
             text = text.Replace("\r\r\n", "\r");
             text = text.Replace("\r\n", "\r");
             if (allowSynchronous)
             {
-                MoveToEnd();
+                if (moveToEnd)
+                {
+                    MoveToEnd();
+                }
                 PerformTextInput(text);
                 return;
             }
@@ -92,13 +95,15 @@ namespace PythonConsoleControl
             if (!writeInProgress)
             {
                 writeInProgress = true;
-                ThreadPool.QueueUserWorkItem(new WaitCallback(CheckAndOutputWriteBuffer));
+                ThreadPool.QueueUserWorkItem(new WaitCallback(CheckAndOutputWriteBuffer), moveToEnd);
                 sw = Stopwatch.StartNew();
             }
         }
 
         private void CheckAndOutputWriteBuffer(Object stateInfo)
         {
+            bool moveToEnd = (bool)stateInfo;
+
             AutoResetEvent writeCompletedEvent = new AutoResetEvent(false);
             Action action = new Action(delegate()
             {
@@ -109,10 +114,14 @@ namespace PythonConsoleControl
                     writeBuffer.Remove(0, writeBuffer.Length);
                     //writeBuffer.Clear();
                 }
-                MoveToEnd();
+                if (moveToEnd)
+                {
+                    MoveToEnd();
+                }
                 PerformTextInput(toWrite);
                 writeCompletedEvent.Set();
             });
+
             while (true)
             {
                 // Clear writeBuffer and write out.
