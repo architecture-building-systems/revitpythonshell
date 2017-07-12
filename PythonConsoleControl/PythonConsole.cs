@@ -571,7 +571,7 @@ namespace PythonConsoleControl
         {
             if (e.Text.Length > 0)
             {
-                if (!char.IsLetterOrDigit(e.Text[0]))
+                if (!char.IsLetterOrDigit(e.Text[0]) || e.Text[0] == '_') // Underscore is a fairly common character in Revit API names.
                 {
                     // Whenever a non-letter is typed while the completion window is open,
                     // insert the currently selected element.
