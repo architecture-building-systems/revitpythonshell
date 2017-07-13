@@ -52,6 +52,9 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2017'">
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2018'">
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -111,6 +114,16 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2018|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug 2018\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug 2014'">
     <Reference Include="RevitAPI">
       <HintPath>..\RequiredLibraries\Revit2014\RevitAPI.dll</HintPath>
@@ -143,6 +156,14 @@
       <HintPath>..\RequiredLibraries\Revit2017\RevitAPIUI.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug 2018'">
+    <Reference Include="RevitAPI">
+      <HintPath>..\RequiredLibraries\Revit2018\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\RequiredLibraries\Revit2018\RevitAPIUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
@@ -172,8 +193,14 @@
     <Reference Include="PythonConsoleControl">
       <HintPath>..\PythonConsoleControl\bin\Debug 2017\PythonConsoleControl.dll</HintPath>
     </Reference>
+    <Reference Include="PythonConsoleControl">
+      <HintPath>..\PythonConsoleControl\bin\Debug 2018\PythonConsoleControl.dll</HintPath>
+    </Reference>
     <Reference Include="RpsRuntime">
       <HintPath>..\RpsRuntime\bin\Debug 2017\RpsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="RpsRuntime">
+      <HintPath>..\RpsRuntime\bin\Debug 2018\RpsRuntime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
