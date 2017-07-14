@@ -54,7 +54,7 @@ namespace PythonConsoleControl
             }
         }
 
-        bool allowCtrlSpaceAutocompletion = false;
+        bool allowCtrlSpaceAutocompletion = true;
         public bool AllowCtrlSpaceAutocompletion
         {
             get { return allowCtrlSpaceAutocompletion; }
