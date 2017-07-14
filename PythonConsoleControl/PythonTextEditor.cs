@@ -329,7 +329,7 @@ namespace PythonConsoleControl
             textArea.Dispatcher.Invoke(new Action(delegate()
             {
                 DocumentLine line = textArea.Document.Lines[textArea.Caret.Line - 1];
-                itemForCompletion = textArea.Document.GetText(line);
+                itemForCompletion = textArea.Document.GetText(line.Offset, textArea.Caret.Column - 1);
             }));
 
             
@@ -337,22 +337,32 @@ namespace PythonConsoleControl
             {
                 try
                 {
-                    ICompletionData[] completions = completionProvider.GenerateCompletionData(itemForCompletion);
-                            
-                    if (completions != null && completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
+                    var completionInfo = completionProvider.GenerateCompletionData(itemForCompletion);
+
+                    if (completionInfo != null)
                     {
-                        completionWindow = new PythonConsoleCompletionWindow(textArea, this);
-                        IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
-                        foreach (ICompletionData completion in completions)
+                        ICompletionData[] completions = completionInfo.Item1;
+                        string objectName = completionInfo.Item2;
+                        string memberName = completionInfo.Item3;
+
+                        if (completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
                         {
-                            data.Add(completion);
-                        }
-                        completionWindow.Show();
-                        completionWindow.Closed += delegate
-                        {
-                            completionWindow = null;
-                        };
-                    }));
+                            completionWindow = new PythonConsoleCompletionWindow(textArea, this);
+                            IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
+                            foreach (ICompletionData completion in completions)
+                            {
+                                data.Add(completion);
+                            }
+                            completionWindow.Show();
+                            completionWindow.Closed += delegate
+                            {
+                                completionWindow = null;
+                            };
+
+                            completionWindow.StartOffset -= memberName.Length;
+                            completionWindow.CompletionList.SelectItem(textArea.Document.GetText(completionWindow.StartOffset, memberName.Length));
+                        }));
+                    }
                 }
                 catch (Exception exception)
                 {

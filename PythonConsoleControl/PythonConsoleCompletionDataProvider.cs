@@ -13,6 +13,7 @@ using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting;
 using System.Threading;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace PythonConsoleControl
 {
@@ -37,54 +38,68 @@ namespace PythonConsoleControl
         /// the dot character that triggered the completion. The text can contain the command line prompt
         /// '>>>' as this will be ignored.
         /// </summary>
-        public ICompletionData[] GenerateCompletionData(string line)
+        public Tuple<ICompletionData[], string, string> GenerateCompletionData(string line)
         {
             List<PythonCompletionData> items = new List<PythonCompletionData>(); //DefaultCompletionData
 
-            string name = GetName(line);
-            // A very simple test of callables!
-            if (excludeCallables && name.Contains(')')) return null;
+            string objectName = string.Empty;
+            string memberName = string.Empty;
 
-            if (!String.IsNullOrEmpty(name))
+            int lastDelimiterIndex = FindLastDelimiter(line);
+
+            string name = line.Substring(lastDelimiterIndex + 1);
+
+            // A very simple test of callables!
+            bool isCallable = name.Contains(')');
+
+            if (excludeCallables && isCallable) return null;
+
+            System.IO.Stream stream = commandLine.ScriptScope.Engine.Runtime.IO.OutputStream;
+            try
             {
-                System.IO.Stream stream = commandLine.ScriptScope.Engine.Runtime.IO.OutputStream;
-                try
+                AutocompletionInProgress = true;
+                // Another possibility:
+                //commandLine.ScriptScope.Engine.Runtime.IO.SetOutput(new System.IO.MemoryStream(), Encoding.UTF8);
+                //object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(name, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
+                //IList<string> members = commandLine.ScriptScope.Engine.Operations.GetMemberNames(value);
+
+                var lastWord = GetLastWord(name);
+                var beforeLastWord = name.Substring(0, name.Length - lastWord.Length);
+                if (beforeLastWord.EndsWith("."))
                 {
-                    AutocompletionInProgress = true;
-                    // Another possibility:
-                    //commandLine.ScriptScope.Engine.Runtime.IO.SetOutput(new System.IO.MemoryStream(), Encoding.UTF8);
-                    //object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(name, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
-                    //IList<string> members = commandLine.ScriptScope.Engine.Operations.GetMemberNames(value);
-                    Type type = TryGetType(name);
-                    // Use Reflection for everything except in-built Python types and COM pbjects. 
-                    if (type != null && type.Namespace != "IronPython.Runtime" && !type.FullName.Contains("IronPython.NewTypes") && (type.Name != "__ComObject"))
-                    {
-                        PopulateFromCLRType(items, type, name);
-                    }
-                    else
-                    {
-                        //string dirCommand = "dir(" + name + ")";
-                        string dirCommand = "sorted([m for m in dir(" + name + ") if not m.startswith('__')], key = str.lower) + sorted([m for m in dir(" + name + ") if m.startswith('__')])";
-                        object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(dirCommand, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
-                        AutocompletionInProgress = false;
-                        foreach (object member in (value as IronPython.Runtime.List))
-                        {
-                            items.Add(new PythonCompletionData((string)member, name, commandLine, false));
-                        }
-                    }
+                    objectName = beforeLastWord.Substring(0, beforeLastWord.Length - 1);
+                    memberName = lastWord;
                 }
-                catch (ThreadAbortException tae)
+                else
                 {
-                    if (tae.ExceptionState is Microsoft.Scripting.KeyboardInterruptException) Thread.ResetAbort();
+                    objectName = string.Empty;
+                    memberName = lastWord;
                 }
-                catch
+
+                Type type = TryGetType(objectName);
+
+                // Use Reflection for everything except in-built Python types and COM pbjects. 
+                if (type != null && type.Namespace != "IronPython.Runtime" && !type.FullName.Contains("IronPython.NewTypes") && (type.Name != "__ComObject"))
                 {
-                    // Do nothing.
+                    PopulateFromCLRType(items, type, objectName);
                 }
-                commandLine.ScriptScope.Engine.Runtime.IO.SetOutput(stream, Encoding.UTF8);
-                AutocompletionInProgress = false;
+                else
+                {
+                    PopulateFromPythonType(items, objectName);
+                    AutocompletionInProgress = false;
+                }
             }
-            return items.ToArray();
+            catch (ThreadAbortException tae)
+            {
+                if (tae.ExceptionState is Microsoft.Scripting.KeyboardInterruptException) Thread.ResetAbort();
+            }
+            catch
+            {
+                // Do nothing.
+            }
+            commandLine.ScriptScope.Engine.Runtime.IO.SetOutput(stream, Encoding.UTF8);
+            AutocompletionInProgress = false;
+            return Tuple.Create(items.Cast<ICompletionData>().ToArray(), objectName, memberName);
         }
 
         protected Type TryGetType(string name)
@@ -141,6 +156,24 @@ namespace PythonConsoleControl
             }
         }
 
+        protected void PopulateFromPythonType(List<PythonCompletionData> items, string name)
+        {
+            //string dirCommand = "dir(" + objectName + ")";
+            string dirCommand = "sorted([m for m in dir(" + name + ") if not m.startswith('__')], key = str.lower) + sorted([m for m in dir(" + name + ") if m.startswith('__')])";
+            object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(dirCommand, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
+            foreach (object member in (value as IronPython.Runtime.List))
+            {
+                bool isInstance = false;
+
+                if (name == string.Empty) // Special case for globals
+                {
+                    isInstance = TryGetType((string)member) != null;
+                }
+
+                items.Add(new PythonCompletionData((string)member, name, commandLine, isInstance));
+            }
+        }
+
         /// <summary>
         /// Generates completion data for the specified text. The text should be everything before
         /// the dot character that triggered the completion. The text can contain the command line prompt
@@ -160,8 +193,30 @@ namespace PythonConsoleControl
                     //object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(item, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
                     //description = commandLine.ScriptScope.Engine.Operations.GetDocumentation(value);
                     string docCommand = "";
-                    if (isInstance) docCommand = "type(" + stub + ")" + "." + item + ".__doc__";
-                    else docCommand = stub + "." + item + ".__doc__";
+
+                    if (isInstance)
+                    {
+                        if (stub != string.Empty)
+                        {
+                            docCommand = "type(" + stub + ")" + "." + item + ".__doc__";
+                        }
+                        else
+                        {
+                            docCommand = "type(" + item + ")" + ".__doc__";
+                        }
+                    }
+                    else
+                    {
+                        if (stub != string.Empty)
+                        {
+                            docCommand = stub + "." + item + ".__doc__";
+                        }
+                        else
+                        {
+                            docCommand = item + ".__doc__";
+                        }
+                    }
+
                     object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(docCommand, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
                     description = (string)value;
                     AutocompletionInProgress = false;
@@ -181,13 +236,111 @@ namespace PythonConsoleControl
             }
         }
 
+        private static readonly Regex MATCH_ALL_WORD = new Regex(@"^\w+$");
+        private static readonly Regex MATCH_LAST_WORD = new Regex(@"\w+$");
 
-        string GetName(string text)
+        private static readonly char[] DELIMITING_CHARS = { ',', '\t', ' ', ':', ';', '+', '-', '=', '*', '/', '&', '|', '^', '%', '~', '<', '>' };
+
+        static string GetLastWord(string text)
         {
-            text = text.Replace("\t", "   ");
-            int startIndex = text.LastIndexOf(' ');
-            return text.Substring(startIndex + 1).Trim('.');
+            return MATCH_LAST_WORD.Match(text).Value;
         }
 
+        static int FindLastDelimiter(string text)
+        {
+            int lastDelimitingIndex = -1;
+
+            // TODO: handle balanced but malformed cases such as '( [ ) ]'
+            int lastUnbalancedParenthesisIndex = FindLastUnbalancedChar(text, '(', ')');
+            int lastUnbalancedBracketIndex = FindLastUnbalancedChar(text, '[', ']');
+
+            lastDelimitingIndex = System.Math.Max(lastUnbalancedParenthesisIndex, lastUnbalancedBracketIndex);
+
+            bool insideDoubleQuotedString = false;
+            bool insideSingleQuotedString = false;
+
+            for (int i = (lastDelimitingIndex + 1); i < text.Length; i++)
+            {
+                char c = text[i];
+                
+                // NOTE: rudimentary string detection (doesn't handle escaped quotes or triple quotes!)
+                if (c == '"' && !insideSingleQuotedString)
+                {
+                    insideDoubleQuotedString = !insideDoubleQuotedString;
+                }
+                else if (c == '\'' && !insideDoubleQuotedString)
+                {
+                    insideSingleQuotedString = !insideSingleQuotedString;
+                }
+                else if (!insideDoubleQuotedString && !insideSingleQuotedString)
+                {
+                    if (c == '(')
+                    {
+                        int lastClosed = FindLastUnbalancedChar(text.Substring(i+1), '(', ')');
+                        i = i + 1 + lastClosed;
+                    }
+                    else if (c == '[')
+                    {
+                        int lastClosed = FindLastUnbalancedChar(text.Substring(i+1), '[', ']');
+                        i = i + 1 + lastClosed;
+                    }
+                    else if (DELIMITING_CHARS.Contains(c))
+                    {
+                        lastDelimitingIndex = i;
+                    }
+                }
+            }
+
+            return lastDelimitingIndex;
+        }
+
+        static int FindLastUnbalancedChar(string text, char openedChar, char closedChar)
+        {
+            int lastIndex = -1;
+
+            bool insideDoubleQuotedString = false;
+            bool insideSingleQuotedString = false;
+            var unbalancedIndices = new Stack<int>();
+
+            for (int i = 0; i < text.Length; i++)
+            {
+                char c = text[i];
+                
+                // NOTE: rudimentary string detection (doesn't handle escaped quotes or triple quotes!)
+                if (c == '"' && !insideSingleQuotedString)
+                {
+                    insideDoubleQuotedString = !insideDoubleQuotedString;
+                }
+                else if (c == '\'' && !insideDoubleQuotedString)
+                {
+                    insideSingleQuotedString = !insideSingleQuotedString;
+                }
+                else if (!insideDoubleQuotedString && !insideSingleQuotedString)
+                {
+                    if (c == openedChar)
+                    {
+                        unbalancedIndices.Push(i);
+                    }
+                    else if (c == closedChar)
+                    {
+                        if (unbalancedIndices.Count == 0)
+                        {
+                            lastIndex = i;
+                        }
+                        else
+                        {
+                            unbalancedIndices.Pop();
+                        }
+                    }
+                }
+            }
+
+            if (unbalancedIndices.Count > 0)
+            {
+                lastIndex = unbalancedIndices.Pop();
+            }
+
+            return lastIndex;
+        }
     }
 }
