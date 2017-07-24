@@ -52,7 +52,10 @@ namespace RevitPythonShell
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Error setting up RevitPythonShell", ex.ToString());
+                var td = new TaskDialog("Error setting up RevitPythonShell");
+                td.MainInstruction = ex.Message;
+                td.ExpandedContent = ex.ToString();
+                td.Show();
                 return Result.Failed;
             }
         }
@@ -61,7 +64,7 @@ namespace RevitPythonShell
         {
             // we need a UIApplication object to assign as `__revit__` in python...
             var versionNumber = uiControlledApplication.ControlledApplication.VersionNumber;
-            var fieldName = versionNumber == "2017" ? "m_uiapplication": "m_application";
+            var fieldName = int.Parse(versionNumber) >= 2017 ? "m_uiapplication": "m_application";
             var fi = uiControlledApplication.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
             var uiApplication = (UIApplication)fi.GetValue(uiControlledApplication);            
             // execute StartupScript
