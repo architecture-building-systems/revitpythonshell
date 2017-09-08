@@ -83,6 +83,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   * Akimitsu Hogge (original port to Vasari)
   * Joe Moorhouse (interactive shell was taken from his project [IronLab](http://ironlab.net/))
   * Jason Schaeffer (port to Revit 2011)
+  * [@DanRumery](https://github.com/danrumery) improved autocompletion with PR #59
   * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
