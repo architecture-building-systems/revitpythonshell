@@ -69,19 +69,22 @@ namespace PythonConsoleControl
 
         public void Write(string text)
         {
-            Write(text, false);
+            Write(text, false, true);
         }
 
         Stopwatch sw;
 
-        public void Write(string text, bool allowSynchronous)
+        public void Write(string text, bool allowSynchronous, bool moveToEnd)
         {
             //text = text.Replace("\r\r\n", "\r\n");
             text = text.Replace("\r\r\n", "\r");
             text = text.Replace("\r\n", "\r");
             if (allowSynchronous)
             {
-                MoveToEnd();
+                if (moveToEnd)
+                {
+                    MoveToEnd();
+                }
                 PerformTextInput(text);
                 return;
             }
@@ -92,13 +95,15 @@ namespace PythonConsoleControl
             if (!writeInProgress)
             {
                 writeInProgress = true;
-                ThreadPool.QueueUserWorkItem(new WaitCallback(CheckAndOutputWriteBuffer));
+                ThreadPool.QueueUserWorkItem(new WaitCallback(CheckAndOutputWriteBuffer), moveToEnd);
                 sw = Stopwatch.StartNew();
             }
         }
 
         private void CheckAndOutputWriteBuffer(Object stateInfo)
         {
+            bool moveToEnd = (bool)stateInfo;
+
             AutoResetEvent writeCompletedEvent = new AutoResetEvent(false);
             Action action = new Action(delegate()
             {
@@ -109,10 +114,14 @@ namespace PythonConsoleControl
                     writeBuffer.Remove(0, writeBuffer.Length);
                     //writeBuffer.Clear();
                 }
-                MoveToEnd();
+                if (moveToEnd)
+                {
+                    MoveToEnd();
+                }
                 PerformTextInput(toWrite);
                 writeCompletedEvent.Set();
             });
+
             while (true)
             {
                 // Clear writeBuffer and write out.
@@ -320,7 +329,7 @@ namespace PythonConsoleControl
             textArea.Dispatcher.Invoke(new Action(delegate()
             {
                 DocumentLine line = textArea.Document.Lines[textArea.Caret.Line - 1];
-                itemForCompletion = textArea.Document.GetText(line);
+                itemForCompletion = textArea.Document.GetText(line.Offset, textArea.Caret.Column - 1);
             }));
 
             
@@ -328,22 +337,32 @@ namespace PythonConsoleControl
             {
                 try
                 {
-                    ICompletionData[] completions = completionProvider.GenerateCompletionData(itemForCompletion);
-                            
-                    if (completions != null && completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
+                    var completionInfo = completionProvider.GenerateCompletionData(itemForCompletion);
+
+                    if (completionInfo != null)
                     {
-                        completionWindow = new PythonConsoleCompletionWindow(textArea, this);
-                        IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
-                        foreach (ICompletionData completion in completions)
+                        ICompletionData[] completions = completionInfo.Item1;
+                        string objectName = completionInfo.Item2;
+                        string memberName = completionInfo.Item3;
+
+                        if (completions.Length > 0) textArea.Dispatcher.BeginInvoke(new Action(delegate()
                         {
-                            data.Add(completion);
-                        }
-                        completionWindow.Show();
-                        completionWindow.Closed += delegate
-                        {
-                            completionWindow = null;
-                        };
-                    }));
+                            completionWindow = new PythonConsoleCompletionWindow(textArea, this);
+                            IList<ICompletionData> data = completionWindow.CompletionList.CompletionData;
+                            foreach (ICompletionData completion in completions)
+                            {
+                                data.Add(completion);
+                            }
+                            completionWindow.Show();
+                            completionWindow.Closed += delegate
+                            {
+                                completionWindow = null;
+                            };
+
+                            completionWindow.StartOffset -= memberName.Length;
+                            completionWindow.CompletionList.SelectItem(textArea.Document.GetText(completionWindow.StartOffset, memberName.Length));
+                        }));
+                    }
                 }
                 catch (Exception exception)
                 {
