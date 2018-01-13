@@ -166,7 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.3\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
+      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
@@ -191,13 +191,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PythonConsoleControl">
-      <HintPath>..\PythonConsoleControl\bin\Debug 2017\PythonConsoleControl.dll</HintPath>
-    </Reference>
-    <Reference Include="PythonConsoleControl">
       <HintPath>..\PythonConsoleControl\bin\Debug 2018\PythonConsoleControl.dll</HintPath>
-    </Reference>
-    <Reference Include="RpsRuntime">
-      <HintPath>..\RpsRuntime\bin\Debug 2017\RpsRuntime.dll</HintPath>
     </Reference>
     <Reference Include="RpsRuntime">
       <HintPath>..\RpsRuntime\bin\Debug 2018\RpsRuntime.dll</HintPath>
@@ -324,6 +318,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
+      <Project>{f1152d68-346b-4f48-8db7-be67b5cb1f49}</Project>
+      <Name>PythonConsoleControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
+      <Project>{c8446636-c663-409f-82d0-72c0d55bba1c}</Project>
+      <Name>RpsRuntime</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
