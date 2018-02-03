@@ -117,11 +117,14 @@ namespace RevitPythonShell
         // Clear the contents on first click inside the editor
         private void textEditor_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextEditor tb = (TextEditor)sender;
-            tb.Text = string.Empty;
-            // Remove the handler from the list otherwise this handler will clear
-            // editor contents every time the editor gains focus.
-            tb.GotFocus -= textEditor_GotFocus;
+            if (this.currentFileName == null)
+            {
+                TextEditor tb = (TextEditor)sender;
+                tb.Text = string.Empty;
+                // Remove the handler from the list otherwise this handler will clear
+                // editor contents every time the editor gains focus.
+                tb.GotFocus -= textEditor_GotFocus;
+            }            
         }
     }
 }
