@@ -81,5 +81,14 @@ namespace RevitPythonShell
             gui.ShowDialog();
             return Result.Succeeded;
         }
-    }    
+    }
+
+    public class IronPythonConsoleCommandAvail : IExternalCommandAvailability {
+        public IronPythonConsoleCommandAvail() {
+        } 
+
+        public bool IsCommandAvailable(UIApplication uiApp, CategorySet selectedCategories) {
+            return true;
+        }
+    }
 }

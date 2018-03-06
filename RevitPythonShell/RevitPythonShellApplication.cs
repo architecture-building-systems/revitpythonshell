@@ -92,22 +92,23 @@ namespace RevitPythonShell
 
             PushButtonData pbdOpenPythonShell = new PushButtonData(
                             "RevitPythonShell", 
-                            "Interactive Python Shell", 
+                            "Interactive\nPython Shell", 
                             assembly.Location, 
                             "RevitPythonShell.IronPythonConsoleCommand");
             pbdOpenPythonShell.Image = smallImage;
             pbdOpenPythonShell.LargeImage = largeImage;
+            pbdOpenPythonShell.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
             splitButton.AddPushButton(pbdOpenPythonShell);
 
             PushButtonData pbdOpenNonModalShell = new PushButtonData(
                             "NonModalRevitPythonShell",
-                            "Non-modal Shell",
+                            "Non-modal\nShell",
                             assembly.Location,
                             "RevitPythonShell.NonModalConsoleCommand");
             pbdOpenNonModalShell.Image = smallImage;
             pbdOpenNonModalShell.LargeImage = largeImage;
+            pbdOpenNonModalShell.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
             splitButton.AddPushButton(pbdOpenNonModalShell);
-
 
             PushButtonData pbdConfigure = new PushButtonData(
                             "Configure", 
@@ -116,6 +117,7 @@ namespace RevitPythonShell
                             "RevitPythonShell.ConfigureCommand");
             pbdConfigure.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-16.png");
             pbdConfigure.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-32.png");
+            pbdConfigure.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
             splitButton.AddPushButton(pbdConfigure);
 
             PushButtonData pbdDeployRpsAddin = new PushButtonData(
@@ -125,6 +127,7 @@ namespace RevitPythonShell
                 "RevitPythonShell.DeployRpsAddinCommand");
             pbdDeployRpsAddin.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-16.png");
             pbdDeployRpsAddin.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-32.png");
+            pbdDeployRpsAddin.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
             splitButton.AddPushButton(pbdDeployRpsAddin);
 
             var commands = GetCommands(GetSettings()).ToList();
