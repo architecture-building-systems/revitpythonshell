@@ -503,6 +503,7 @@ namespace RevitPythonShell
             string startupScript)
         {
             var doc = GetSettings();
+            var settingsFolder = GetSettingsFolder();
 
             // clean out current stuff
             foreach (var xmlExistingCommands in (doc.Root.Descendants("Commands") ?? new List<XElement>()).ToList())
@@ -546,6 +547,13 @@ namespace RevitPythonShell
                 xmlSearchPaths.Add(new XElement(
                     "SearchPath",
                         new XAttribute("name", path)));
+
+            }
+            // ensure settings directory is added to the search paths
+            if (!searchPaths.Contains(settingsFolder)) {
+                xmlSearchPaths.Add(new XElement(
+                    "SearchPath",
+                        new XAttribute("name", settingsFolder)));
 
             }
             doc.Root.Add(xmlSearchPaths);
