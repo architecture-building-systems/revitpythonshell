@@ -92,7 +92,7 @@ class WindowWrapper(object):
     def __getattr__(self, name):
         return getattr(self.win, name)
 
-    def set_text_sizes(self, size):
+    def set_font_size(self, size):
         self.rps_repl = self.win.Content.Children[0].Children[0].Content.Children[0]
         self.rps_editor = self.win.Content.Children[2].Children[1].Children[0]
         self.rps_repl.FontSize = size
