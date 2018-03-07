@@ -46,9 +46,9 @@ class RevitLookup(object):
         '''
         # find the RevitLookup plugin
         try:
-			rlapp = [app for app in uiApplication.LoadedApplications
-					 if app.GetType().Namespace == 'RevitLookup'
-					 and app.GetType().Name == 'App'][0]
+            rlapp = [app for app in uiApplication.LoadedApplications
+                    if app.GetType().Namespace == 'RevitLookup'
+                    and app.GetType().Name == 'App'][0]
         except IndexError:
             self.RevitLookup = None
             return
@@ -62,8 +62,8 @@ class RevitLookup(object):
 
     def lookup(self, element):
         if not self.RevitLookup:
-			print 'RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.'
-			return
+            print 'RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.'
+            return
         if isinstance(element, int):
             element = self.revit.ActiveUIDocument.Document.GetElement(ElementId(element))
         if isinstance(element, ElementId):
@@ -91,4 +91,11 @@ class WindowWrapper(object):
 
     def __getattr__(self, name):
         return getattr(self.win, name)
+
+    def set_font_size(self, size):
+        self.rps_repl = self.win.Content.Children[0].Children[0].Content.Children[0]
+        self.rps_editor = self.win.Content.Children[2].Children[1].Children[0]
+        self.rps_repl.FontSize = size
+        self.rps_editor.FontSize = size
+
 __window__ = WindowWrapper(__window__)
