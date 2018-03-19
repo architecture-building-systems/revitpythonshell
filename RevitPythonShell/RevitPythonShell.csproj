@@ -221,21 +221,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLoaderBase.cs" />
-    <Compile Include="CompletionToolTip.cs" />
-    <Compile Include="ConfigureCommand.cs" />
-    <Compile Include="ConfigureCommandsForm.cs">
+    <Compile Include="Views\CompletionToolTip.cs" />
+    <Compile Include="RevitCommands\ConfigureCommand.cs" />
+    <Compile Include="Views\ConfigureCommandsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigureCommandsForm.Designer.cs">
+    <Compile Include="Views\ConfigureCommandsForm.Designer.cs">
       <DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConsoleOptions.cs" />
-    <Compile Include="DeployRpsAddinCommand.cs" />
-    <Compile Include="IronPythonConsole.xaml.cs">
+    <Compile Include="Views\ConsoleOptions.cs" />
+    <Compile Include="RevitCommands\DeployRpsAddinCommand.cs" />
+    <Compile Include="Views\IronPythonConsole.xaml.cs">
       <DependentUpon>IronPythonConsole.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IronPythonConsoleCommand.cs" />
-    <Compile Include="NonModalConsoleCommand.cs" />
+    <Compile Include="RevitCommands\IronPythonConsoleCommand.cs" />
+    <Compile Include="RevitCommands\NonModalConsoleCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -245,7 +245,7 @@
     <Compile Include="RevitPythonShellApplication.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="ConfigureCommandsForm.resx">
+    <EmbeddedResource Include="Views\ConfigureCommandsForm.resx">
       <DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -254,8 +254,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Number.png" />
-    <Resource Include="Images\Paragraph.png" />
+    <Resource Include="Resources\Theme\Redo.png" />
+    <Resource Include="Resources\Theme\Run.png" />
+    <Resource Include="Resources\Theme\Save.png" />
+    <Resource Include="Resources\Theme\Undo.png" />
+    <Resource Include="Resources\Theme\WordWrap.png" />
     <EmbeddedResource Include="Resources\Console-16.png" />
     <EmbeddedResource Include="Resources\Console-32.png" />
     <EmbeddedResource Include="Resources\Deployment-16.png" />
@@ -264,35 +267,24 @@
     <EmbeddedResource Include="Resources\Python-32.png" />
     <EmbeddedResource Include="Resources\Settings-16.png" />
     <EmbeddedResource Include="Resources\Settings-32.png" />
-    <Content Include="startup.py" />
+    <Content Include="DefaultConfig\startup.py" />
     <None Include="Examples\HelloWorld.iss" />
-    <Content Include="init.py" />
+    <Content Include="DefaultConfig\init.py" />
     <None Include="packages.config" />
-    <None Include="Resources\ipy.ico" />
-    <Resource Include="Images\Copy.png" />
-    <Resource Include="Images\Cut.png" />
-    <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\Open.png" />
-    <Resource Include="Images\Paste.png" />
-    <Resource Include="Images\Redo.png" />
-    <Resource Include="Images\Run.png" />
-    <Resource Include="Images\Save.png" />
-    <Resource Include="Images\Undo.png" />
-    <Resource Include="Images\WordWrap.png" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
     <Content Include="Examples\HelloWorld.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Resources\py.ico" />
-    <Content Include="Resources\pycon.ico" />
-    <EmbeddedResource Include="Resources\PythonConsole32x32.png" />
-    <EmbeddedResource Include="Resources\PythonConsole16x16.png" />
-    <EmbeddedResource Include="Resources\PythonScript16x16.png" />
-    <EmbeddedResource Include="Resources\PythonScript32x32.png" />
-    <Content Include="RevitPythonShell.xml">
+    <Resource Include="Resources\Theme\Copy.png" />
+    <Resource Include="Resources\Theme\Cut.png" />
+    <Resource Include="Resources\Theme\Delete.png" />
+    <Resource Include="Resources\Theme\Number.png" />
+    <Resource Include="Resources\Theme\Open.png" />
+    <Resource Include="Resources\Theme\Paragraph.png" />
+    <Resource Include="Resources\Theme\Paste.png" />
+    <Content Include="DefaultConfig\RevitPythonShell.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\Python.xshd" />
   </ItemGroup>
@@ -314,7 +306,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="IronPythonConsole.xaml">
+    <Page Include="Views\IronPythonConsole.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -329,6 +321,7 @@
       <Name>RpsRuntime</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

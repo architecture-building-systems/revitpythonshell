@@ -8,9 +8,9 @@ Source: "RequiredLibraries\IronPython.Modules.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Dynamic.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Scripting.dll"; DestDir: "{app}"
-Source: "RevitPythonShell\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell2018"; Flags: onlyifdoesntexist
-Source: RevitPythonShell\init.py; DestDir: {userappdata}\RevitPythonShell2018; Flags: confirmoverwrite; 
-Source: RevitPythonShell\startup.py; DestDir: {userappdata}\RevitPythonShell2018; Flags: confirmoverwrite; 
+Source: "RevitPythonShell\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell2018"; Flags: onlyifdoesntexist
+Source: RevitPythonShell\DefaultConfig\init.py; DestDir: {userappdata}\RevitPythonShell2018; Flags: confirmoverwrite; 
+Source: RevitPythonShell\DefaultConfig\startup.py; DestDir: {userappdata}\RevitPythonShell2018; Flags: confirmoverwrite; 
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }

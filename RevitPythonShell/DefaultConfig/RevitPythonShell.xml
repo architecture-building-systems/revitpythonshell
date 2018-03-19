@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RevitPythonShell>
+  <SearchPaths>
+    <!-- a list of paths to add to the engines search path -->
+  </SearchPaths>
+  <Variables>
+    <!-- a list of string variables to add to the scope -->
+  </Variables>
+  <Commands>
+    <!-- a list of preconfigured commands -->
+  </Commands>
+  <InitScript src="init.py"/>
+  <StartupScript src="startup.py"/>
+</RevitPythonShell>
