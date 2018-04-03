@@ -29,26 +29,29 @@ def get_selected_elements(doc):
     except:
         # old method
         return list(__revit__.ActiveUIDocument.Selection.Elements)
+
+
 selection = get_selected_elements(doc)
 # convenience variable for first element in selection
 if len(selection):
     s0 = selection[0]
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 import clr
 from Autodesk.Revit.DB import ElementSet, ElementId
 
+
 class RevitLookup(object):
     def __init__(self, uiApplication):
-        '''
+        """
         for RevitSnoop to function properly, it needs to be instantiated
         with a reference to the Revit Application object.
-        '''
+        """
         # find the RevitLookup plugin
         try:
-			rlapp = [app for app in uiApplication.LoadedApplications
-					 if app.GetType().Namespace == 'RevitLookup'
-					 and app.GetType().Name == 'App'][0]
+            rlapp = [app for app in uiApplication.LoadedApplications
+                     if app.GetType().Namespace == 'RevitLookup'
+                     and app.GetType().Name == 'App'][0]
         except IndexError:
             self.RevitLookup = None
             return
@@ -62,8 +65,8 @@ class RevitLookup(object):
 
     def lookup(self, element):
         if not self.RevitLookup:
-			print 'RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.'
-			return
+            print('RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.')
+            return
         if isinstance(element, int):
             element = self.revit.ActiveUIDocument.Document.GetElement(ElementId(element))
         if isinstance(element, ElementId):
@@ -75,11 +78,16 @@ class RevitLookup(object):
             element = elementSet
         form = self.RevitLookup.Snoop.Forms.Objects(element)
         form.ShowDialog()
+
+
 _revitlookup = RevitLookup(__revit__)
+
+
 def lookup(element):
     _revitlookup.lookup(element)
 
-#------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
+
 
 # a fix for the __window__.Close() bug introduced with the non-modal console
 class WindowWrapper(object):
@@ -91,4 +99,12 @@ class WindowWrapper(object):
 
     def __getattr__(self, name):
         return getattr(self.win, name)
+
+    def set_font_sizes(self, size):
+        self.rps_repl = self.win.Content.Children[0].Children[0].Content.Children[0]
+        self.rps_editor = self.win.Content.Children[2].Children[1].Children[0]
+        self.rps_repl.FontSize = size
+        self.rps_editor.FontSize = size
+
+
 __window__ = WindowWrapper(__window__)
