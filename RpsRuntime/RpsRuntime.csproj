@@ -9,7 +9,6 @@
     <RootNamespace>RevitPythonShell.RpsRuntime</RootNamespace>
     <AssemblyName>RpsRuntime</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <!-- see: http://thebuildingcoder.typepad.com/blog/2013/06/processor-architecture-mismatch-warning.html -->
@@ -18,7 +17,7 @@
     </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2015'">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -31,6 +30,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2018'">
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2014|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -82,22 +84,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2014\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2014\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2015'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2015\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2015\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2019|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug 2019\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug 2016'">
     <Reference Include="RevitAPI">
       <HintPath>..\RequiredLibraries\Revit2016\RevitAPI.dll</HintPath>
@@ -120,6 +115,14 @@
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\RequiredLibraries\Revit2018\RevitAPIUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <Reference Include="RevitAPI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPIUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +151,14 @@
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="RevitAPI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

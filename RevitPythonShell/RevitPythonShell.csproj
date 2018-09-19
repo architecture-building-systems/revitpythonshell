@@ -32,7 +32,6 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <!-- see: http://thebuildingcoder.typepad.com/blog/2013/06/processor-architecture-mismatch-warning.html -->
@@ -41,7 +40,7 @@
     </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2015'">
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -54,6 +53,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2018'">
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -124,22 +126,15 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2014\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2014\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2015'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2015\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2015\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2019|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug 2019\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup Condition="'$(Configuration)' == 'Debug 2016'">
     <Reference Include="RevitAPI">
       <HintPath>..\RequiredLibraries\Revit2016\RevitAPI.dll</HintPath>
@@ -162,6 +157,14 @@
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\RequiredLibraries\Revit2018\RevitAPIUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <Reference Include="RevitAPI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPIUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +195,6 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="PythonConsoleControl">
       <HintPath>..\PythonConsoleControl\bin\Debug 2018\PythonConsoleControl.dll</HintPath>
-    </Reference>
-    <Reference Include="RpsRuntime">
-      <HintPath>..\RpsRuntime\bin\Debug 2018\RpsRuntime.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -254,6 +254,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <Resource Include="Resources\Theme\Redo.png" />
     <Resource Include="Resources\Theme\Run.png" />
     <Resource Include="Resources\Theme\Save.png" />
@@ -270,7 +271,6 @@
     <Content Include="DefaultConfig\startup.py" />
     <None Include="Examples\HelloWorld.iss" />
     <Content Include="DefaultConfig\init.py" />
-    <None Include="packages.config" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
     <Content Include="Examples\HelloWorld.xml">
