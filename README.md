@@ -22,13 +22,14 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 
 ## Installation
 
+- [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
 - [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
 - [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.06/2017.04.06_Setup_RevitPythonShell_2017.exe)
-- [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2016.exe)
-- [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2015.exe)
+
 
 Older versions:
-- [Release 2015.03.20](Revit 2014, 2015 & Vasari Beta 3)](https://github.com/architecture-building-systems/revitpythonshell/releases/tag/2015.03.20)
+- [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2016.exe)
+- [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2015.exe)
 - [Installer for Autodesk Revit 2015](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2015.exe)
 - [Installer for Autodesk Revit 2014](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2014.exe)
 - [Installer for Autodesk Revit 2013](http://sustain.arch.ethz.ch/DPV/Setup_RevitPythonShell_2013_r159.msi)
@@ -85,7 +86,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   * Jason Schaeffer (port to Revit 2011)
   * [Ehsan Iran-Nejad (@eirannejad)](https://github.com/eirannejad) countless improvements, the awesome [pyRevit](https://github.com/eirannejad/pyRevit) tool and a special thanks for helping maintain RPS! 
   * [@DanRumery](https://github.com/danrumery) improved autocompletion with PR #59
-  * [Petr Mitev (@mitevp)](https://github.com/mitevpi) ported to Revit 2019 with RP #86
+  * [Petr Mitev (@mitevpi)](https://github.com/mitevpi) ported to Revit 2019 with RP #86
   * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
