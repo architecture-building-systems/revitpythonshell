@@ -83,7 +83,9 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   * Akimitsu Hogge (original port to Vasari)
   * Joe Moorhouse (interactive shell was taken from his project [IronLab](http://ironlab.net/))
   * Jason Schaeffer (port to Revit 2011)
+  * [Ehsan Iran-Nejad (@eirannejad)](https://github.com/eirannejad) countless improvements, the awesome [pyRevit](https://github.com/eirannejad/pyRevit) tool and a special thanks for helping maintain RPS! 
   * [@DanRumery](https://github.com/danrumery) improved autocompletion with PR #59
+  * [Petr Mitev (@mitevp)](https://github.com/mitevpi) ported to Revit 2019 with RP #86
   * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
