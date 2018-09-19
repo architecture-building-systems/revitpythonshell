@@ -9,7 +9,6 @@
     <RootNamespace>RevitPythonShell.RpsRuntime</RootNamespace>
     <AssemblyName>RpsRuntime</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup>
     <!-- see: http://thebuildingcoder.typepad.com/blog/2013/06/processor-architecture-mismatch-warning.html -->
@@ -31,6 +30,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug 2018'">
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2014|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
@@ -113,6 +115,14 @@
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\RequiredLibraries\Revit2018\RevitAPIUI.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="'$(Configuration)' == 'Debug 2019'">
+    <Reference Include="RevitAPI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPI.dll</HintPath>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>..\RequiredLibraries\Revit2019\RevitAPIUI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
