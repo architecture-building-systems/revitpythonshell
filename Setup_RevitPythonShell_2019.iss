@@ -2,7 +2,7 @@
 Source: "RevitPythonShell\bin\Debug 2019\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "RevitPythonShell\bin\Debug 2019\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "RevitPythonShell\bin\Debug 2019\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
+Source: "packages\AvalonEdit.6.0.1\lib\Net40\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\IronPython.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\IronPython.Modules.dll"; DestDir: "{app}"
 Source: "RequiredLibraries\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
