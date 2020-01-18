@@ -100,7 +100,7 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.1.0" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
     <PackageReference Include="AvalonEdit" Version="6.0.1">
-      <IncludeAssets>all</IncludeAssets>
+      <IncludeAssets></IncludeAssets>
     </PackageReference>
     <PackageReference Include="IronPython" Version="2.7.9">
       <IncludeAssets>compile</IncludeAssets>
