@@ -1,27 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Scripting.Hosting.Shell;
-using ICSharpCode.AvalonEdit;
+﻿using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Highlighting;
-using System.IO;
-using System.Xml;
 using Microsoft.Win32;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
-using Microsoft.Scripting;
-using System.Threading;
+using System;
+using System.IO;
 using System.Reflection;
+using System.Windows;
+using System.Windows.Input;
+using System.Xml;
 
 namespace RevitPythonShell
 {
@@ -62,13 +47,13 @@ namespace RevitPythonShell
             // get application version and show in title
             Title = String.Format("RevitPythonShell | {0}", Assembly.GetExecutingAssembly().GetName().Version.ToString());
         }
-        
-        void MainWindow_Initialized(object sender, EventArgs e)
+
+        private void MainWindow_Initialized(object sender, EventArgs e)
         {
             //propertyGridComboBox.SelectedIndex = 1;
         }
 
-        void openFileClick(object sender, RoutedEventArgs e)
+        private void openFileClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.CheckFileExists = true;
@@ -80,7 +65,7 @@ namespace RevitPythonShell
             }
         }
 
-        void saveFileClick(object sender, EventArgs e)
+        private void saveFileClick(object sender, EventArgs e)
         {
             if (currentFileName == null)
             {
@@ -98,17 +83,17 @@ namespace RevitPythonShell
             textEditor.Save(currentFileName);
         }
 
-        void runClick(object sender, EventArgs e)
+        private void runClick(object sender, EventArgs e)
         {
             RunStatements();
         }
 
-        void textEditor_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void textEditor_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5) RunStatements();
         }
 
-        void RunStatements()
+        private void RunStatements()
         {
             string statementsToRun = "";
             if (textEditor.TextArea.Selection.Length > 0)
@@ -128,7 +113,7 @@ namespace RevitPythonShell
                 // Remove the handler from the list otherwise this handler will clear
                 // editor contents every time the editor gains focus.
                 tb.GotFocus -= textEditor_GotFocus;
-            }            
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace RevitPythonShell
     class RevitPythonShellApplication : IExternalApplication
     {
         private static string versionNumber;
+        private static string dllfolder;
 
         /// <summary>
         /// Hook into Revit to allow starting a command.
@@ -35,9 +36,14 @@ namespace RevitPythonShell
                 {
                     versionNumber = "_Vasari";
                 }
-                var dllfolder = Path.Combine(
+
+#if DEBUG
+                dllfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+#else
+                dllfolder = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
                         "RevitPythonShell" + versionNumber);
+#endif
                 var assemblyName = "CommandLoaderAssembly";
                 var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
@@ -316,7 +322,11 @@ namespace RevitPythonShell
         /// </summary>
         private static string GetSettingsFolder()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell" + versionNumber);
+#if DEBUG
+            return Path.Combine(dllfolder, "DefaultConfig");
+#else
+            return dllfolder;
+#endif
         }
 
         /// <summary>

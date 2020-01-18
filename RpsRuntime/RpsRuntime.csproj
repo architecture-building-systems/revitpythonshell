@@ -103,10 +103,16 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.1.0" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
-    <PackageReference Include="Costura.Fody" Version="4.1.0" />
-    <PackageReference Include="IronPython" Version="2.7.9" />
+    <PackageReference Include="AvalonEdit" Version="5.0.4">
+      <IncludeAssets>all</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="IronPython" Version="2.7.9">
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0">
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">

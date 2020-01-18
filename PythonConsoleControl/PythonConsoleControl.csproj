@@ -19,6 +19,7 @@
       -->
     <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471</TargetFrameworks>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug One'">
@@ -98,10 +99,15 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.1.0" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
-    <PackageReference Include="AvalonEdit" Version="6.0.1" />
-    <PackageReference Include="Costura.Fody" Version="4.1.0" />
-    <PackageReference Include="IronPython" Version="2.7.9" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+    <PackageReference Include="AvalonEdit" Version="6.0.1">
+      <IncludeAssets>all</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="IronPython" Version="2.7.9">
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0">
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">

@@ -5,6 +5,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <ActiveDebugProfile>Revit 2020 W Drive</ActiveDebugProfile>
+    <ShowAllFiles>false</ShowAllFiles>
   </PropertyGroup>
   <ItemGroup>
     <None Update="Manifests\AddinTemplate.addin">
