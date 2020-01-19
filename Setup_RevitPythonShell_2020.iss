@@ -48,7 +48,7 @@ end;
 AppName=RevitPythonShell for Autodesk Revit 2020
 AppVerName=RevitPythonShell for Autodesk Revit 2020
 RestartIfNeededByRun=false
-DefaultDirName={pf32}\RevitPythonShell2020
+DefaultDirName={pf32}\RevitPythonShell\2020
 OutputBaseFilename=Setup_RevitPythonShell_2020
 ShowLanguageDialog=auto
 FlatComponentsList=false

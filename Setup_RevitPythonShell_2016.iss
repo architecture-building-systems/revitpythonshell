@@ -48,7 +48,7 @@ end;
 AppName=RevitPythonShell for Autodesk Revit 2016
 AppVerName=RevitPythonShell for Autodesk Revit 2016
 RestartIfNeededByRun=false
-DefaultDirName={pf32}\RevitPythonShell2016
+DefaultDirName={pf32}\RevitPythonShell\2016
 OutputBaseFilename=Setup_RevitPythonShell_2016
 ShowLanguageDialog=auto
 FlatComponentsList=false
