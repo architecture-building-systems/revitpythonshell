@@ -83,7 +83,7 @@
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
     <DebugType>full</DebugType>
-    <OutputPath>..\bin\Debug\$(RevitVersion)</OutputPath>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
 

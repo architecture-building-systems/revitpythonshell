@@ -76,7 +76,7 @@
 
     <!-- Override 'OutputPath' to Debug/Release + Revit version -->
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>..\bin\$(Configuration)\$(RevitVersion)</OutputPath>
+    <OutDir>.\bin\$(Configuration)\$(RevitVersion)</OutDir>
     <PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>
     <Product>RevitPythonShell</Product>
     <Authors>RIPS</Authors>
@@ -86,7 +86,7 @@
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
     <DefineConstants>TRACE;REVIT2020;WINFORMS;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
-    <OutputPath>..\bin\Debug\$(RevitVersion)</OutputPath>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net471|x64'">
@@ -129,9 +129,6 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <!--<Reference Include="System.Windows.Controls.WpfPropertyGrid">
-      <HintPath>..\RequiredLibraries\System.Windows.Controls.WpfPropertyGrid.dll</HintPath>
-    </Reference>-->
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -187,6 +184,7 @@
       <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
+    <None Include="Manifests\SetupRPSTemplate.iss" />
     <Resource Include="Resources\Theme\Redo.png" />
     <Resource Include="Resources\Theme\Run.png" />
     <Resource Include="Resources\Theme\Save.png" />
@@ -237,9 +235,16 @@
     <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj" />
   </ItemGroup>
 
+  <!--<PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <AssemblyPath>"$(AssemblyName).dll"</AssemblyPath>
+  </PropertyGroup>b
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <_FullPath>$([System.IO.Path]::GetFullPath($(Filepath)))</_FullPath>
+  </PropertyGroup>-->
+
   <Target Name="CreateAddinManifest" AfterTargets="AfterBuild">
     <ItemGroup>
-      <AddinManifest Include="$(OutputPath)\$(AssemblyName).addin" />
+      <AddinManifest Include="$(OutDir)\$(AssemblyName).addin" />
     </ItemGroup>
     <ReplaceFileText InputFilename="Manifests/AddinTemplate.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="FullClassName&gt;((.*?)\.)+" ReplacementText="FullClassName&gt;$(RootNamespace)." />
@@ -247,6 +252,19 @@
     <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
     <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
     <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
+  </Target>
+  
+  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild">
+    <PropertyGroup>
+      <OutputDirPath>$(SolutionName)\bin\$(Configuration)\$(RevitVersion)\</OutputDirPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <InnoSetup Include="$(SolutionDir)\Setup_$(AssemblyName)_$(RevitVersion).iss" />
+    </ItemGroup>
+    <ReplaceFileText InputFilename="Manifests/SetupRPSTemplate.iss" OutputFilename="@(InnoSetup)" MatchExpression="{OUTDIR}" ReplacementText="$(OutputDirPath)" />
+    <ReplaceFileText InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{REVIT_VERSION}" ReplacementText="$(RevitVersion)" />
+    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
+    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
 
   <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
