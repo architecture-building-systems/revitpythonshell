@@ -3,6 +3,12 @@ Source: "{OUTDIR}PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesame
 Source: "{OUTDIR}RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "{OUTDIR}RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "{OUTDIR}RevitPythonShell.addin"; DestDir: "{userappdata}\Autodesk\Revit\Addins\{REVIT_VERSION}"; Flags: replacesameversion
+Source: "{OUTDIR}ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
+Source: "{OUTDIR}IronPython.dll"; DestDir: "{app}"
+Source: "{OUTDIR}IronPython.Modules.dll"; DestDir: "{app}"
+Source: "{OUTDIR}Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
+Source: "{OUTDIR}Microsoft.Dynamic.dll"; DestDir: "{app}"
+Source: "{OUTDIR}Microsoft.Scripting.dll"; DestDir: "{app}"
 Source: "{OUTDIR}DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell\{REVIT_VERSION}"; Flags: onlyifdoesntexist
 Source: "{OUTDIR}DefaultConfig\init.py"; DestDir: {userappdata}\RevitPythonShell\{REVIT_VERSION}; Flags: confirmoverwrite; 
 Source: "{OUTDIR}DefaultConfig\startup.py"; DestDir: {userappdata}\RevitPythonShell\{REVIT_VERSION}; Flags: confirmoverwrite; 

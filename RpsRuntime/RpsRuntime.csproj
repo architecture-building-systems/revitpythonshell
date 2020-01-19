@@ -28,7 +28,7 @@
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net40</TargetFrameworks>
+    <TargetFrameworks>net471</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -103,16 +103,7 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.1.0" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
-    <PackageReference Include="AvalonEdit" Version="5.0.4">
-      <IncludeAssets>all</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="IronPython" Version="2.7.9" Condition=" '$(TargetFramework)' != 'net40' ">
-      <IncludeAssets>compile</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" Condition=" '$(TargetFramework)' != 'net40' ">
-      <IncludeAssets>compile</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition=" '$(TargetFramework)' != 'net40' " />
+    <PackageReference Include="AvalonEdit" Version="6.0.1"/>
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
@@ -121,26 +112,35 @@
       <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Autodesk.Revit.SDK'" />
     </ItemGroup>
   </Target>
-  
+
+  <!--<ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
+    <PackageReference Include="IronPython" Version="2.7.9" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0"/>
+  </ItemGroup>-->
+
   <ItemGroup>
-    <Reference Include="IronPython" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython.Modules" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="IronPython.Modules">
       <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Dynamic" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="Microsoft.Dynamic">
       <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="Microsoft.Scripting">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" Condition=" '$(TargetFramework)' == 'net40' ">
+    <Reference Include="Microsoft.CSharp">
       <HintPath>..\RequiredLibraries\Microsoft.CSharp.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />

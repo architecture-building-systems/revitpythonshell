@@ -43,7 +43,7 @@ namespace RevitPythonShell
 #else
                 dllfolder = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        APP_NAME + versionNumber);
+                        $"{APP_NAME}/{versionNumber}");
 #endif
                 var assemblyName = "CommandLoaderAssembly";
                 var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
