@@ -3,6 +3,12 @@ Source: "RevitPythonShell\bin\Release\2014\PythonConsoleControl.dll"; DestDir: "
 Source: "RevitPythonShell\bin\Release\2014\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "RevitPythonShell\bin\Release\2014\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
 Source: "RevitPythonShell\bin\Release\2014\RevitPythonShell.addin"; DestDir: "{userappdata}\Autodesk\Revit\Addins\2014"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2014\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\IronPython.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\IronPython.Modules.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Dynamic.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Scripting.dll"; DestDir: "{app}"
 Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell\2014"; Flags: onlyifdoesntexist
 Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\init.py"; DestDir: {userappdata}\RevitPythonShell\2014; Flags: confirmoverwrite; 
 Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\startup.py"; DestDir: {userappdata}\RevitPythonShell\2014; Flags: confirmoverwrite; 
