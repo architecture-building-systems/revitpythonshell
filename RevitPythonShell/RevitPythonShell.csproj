@@ -157,11 +157,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandLoaderBase.cs" />
-    <Compile Include="Manifests\AddinTemplate.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>AddinTemplate.addin</DependentUpon>
-    </Compile>
     <Compile Include="Views\CompletionToolTip.cs" />
     <Compile Include="RevitCommands\ConfigureCommand.cs" />
     <Compile Include="Views\ConfigureCommandsForm.cs">

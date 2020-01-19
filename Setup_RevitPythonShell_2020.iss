@@ -1,11 +1,11 @@
 [Files]
-Source: "RevitPythonShell\bin\Debug One\2020\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug One\2020\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug One\2020\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug One\2020\RevitPythonShell.addin"; DestDir: "{userappdata}\Autodesk\Revit\Addins\2020"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug One\2020\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell\2020"; Flags: onlyifdoesntexist
-Source: "RevitPythonShell\bin\Debug One\2020\DefaultConfig\init.py"; DestDir: {userappdata}\RevitPythonShell\2020; Flags: confirmoverwrite; 
-Source: "RevitPythonShell\bin\Debug One\2020\DefaultConfig\startup.py"; DestDir: {userappdata}\RevitPythonShell\2020; Flags: confirmoverwrite; 
+Source: "RevitPythonShell\bin\Release\2020\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2020\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2020\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2020\RevitPythonShell.addin"; DestDir: "{userappdata}\Autodesk\Revit\Addins\2020"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2020\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell\2020"; Flags: onlyifdoesntexist
+Source: "RevitPythonShell\bin\Release\2020\DefaultConfig\init.py"; DestDir: {userappdata}\RevitPythonShell\2020; Flags: confirmoverwrite; 
+Source: "RevitPythonShell\bin\Release\2020\DefaultConfig\startup.py"; DestDir: {userappdata}\RevitPythonShell\2020; Flags: confirmoverwrite; 
 
 
 [code]
@@ -24,7 +24,7 @@ begin
 
   AddinFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2020\RevitPythonShell.addin');
   LoadedFile := TStringList.Create;
-  SearchString := 'Assembly>W:\GitHub\revitpythonshell\RevitPythonShell\bin\x64\Debug One\RevitPythonShell.dll<';
+  SearchString := 'Assembly>RevitPythonShell.dll<';
   ReplaceString := 'Assembly>' + ExpandConstant('{app}') + '\RevitPythonShell.dll<';
 
   try
