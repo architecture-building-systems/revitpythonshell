@@ -110,12 +110,6 @@
     </ItemGroup>
   </Target>
 
-  <!--<ItemGroup Condition=" '$(TargetFramework)' != 'net40' ">
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0"/>
-    <PackageReference Include="IronPython" Version="2.7.9" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0"/>
-  </ItemGroup>-->
-
   <ItemGroup>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
