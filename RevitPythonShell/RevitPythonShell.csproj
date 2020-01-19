@@ -257,7 +257,7 @@
     <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
   
-  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild">
+  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <PropertyGroup>
       <OutputDirPath>$(SolutionName)\bin\$(Configuration)\$(RevitVersion)\</OutputDirPath>
     </PropertyGroup>
