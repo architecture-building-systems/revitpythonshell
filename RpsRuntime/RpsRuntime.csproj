@@ -28,7 +28,7 @@
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net471</TargetFrameworks>
+    <TargetFrameworks>net40</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -106,13 +106,13 @@
     <PackageReference Include="AvalonEdit" Version="5.0.4">
       <IncludeAssets>all</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="IronPython" Version="2.7.9">
+    <PackageReference Include="IronPython" Version="2.7.9" Condition=" '$(TargetFramework)' != 'net40' ">
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0">
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" Condition=" '$(TargetFramework)' != 'net40' ">
       <IncludeAssets>compile</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" Condition=" '$(TargetFramework)' != 'net40' " />
   </ItemGroup>
 
   <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
@@ -123,6 +123,24 @@
   </Target>
   
   <ItemGroup>
+    <Reference Include="IronPython" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting.Metadata" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" Condition=" '$(TargetFramework)' == 'net40' ">
+      <HintPath>..\RequiredLibraries\Microsoft.CSharp.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
