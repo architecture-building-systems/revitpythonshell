@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+
+  <AddIn Type="Application">
+    <FullClassName>RevitPythonShell.RevitPythonShellApplication</FullClassName>
+    <ClientId>3a7a1d24-51ed-462b-949f-1ddcca12008d</ClientId>
+    <Name>== Edit in project's properties ==</Name>
+    <Assembly>RevitPythonShell.dll</Assembly>
+    <VendorId>== Edit in project's properties ==</VendorId>
+    <VendorDescription>== Edit (company + authors + website) in project's properties ==</VendorDescription>
+  </AddIn>
+
+</RevitAddIns>

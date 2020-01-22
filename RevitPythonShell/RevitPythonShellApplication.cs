@@ -20,7 +20,9 @@ namespace RevitPythonShell
     [Transaction(TransactionMode.Manual)]
     class RevitPythonShellApplication : IExternalApplication
     {
+        private const string APP_NAME = "RevitPythonShell";
         private static string versionNumber;
+        private static string dllfolder;
 
         /// <summary>
         /// Hook into Revit to allow starting a command.
@@ -35,9 +37,14 @@ namespace RevitPythonShell
                 {
                     versionNumber = "_Vasari";
                 }
-                var dllfolder = Path.Combine(
+
+#if DEBUG
+                dllfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+#else
+                dllfolder = Path.Combine(
                         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        "RevitPythonShell" + versionNumber);
+                        $"{APP_NAME}/{versionNumber}");
+#endif
                 var assemblyName = "CommandLoaderAssembly";
                 var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
@@ -87,11 +94,11 @@ namespace RevitPythonShell
             var largeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Python-32.png");
             
 
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel("RevitPythonShell");
-            var splitButton = ribbonPanel.AddItem(new SplitButtonData("splitButtonRevitPythonShell", "RevitPythonShell")) as SplitButton;
+            RibbonPanel ribbonPanel = application.CreateRibbonPanel(APP_NAME);
+            var splitButton = ribbonPanel.AddItem(new SplitButtonData("splitButtonRevitPythonShell", APP_NAME)) as SplitButton;
 
             PushButtonData pbdOpenPythonShell = new PushButtonData(
-                            "RevitPythonShell", 
+                            APP_NAME, 
                             "Interactive\nPython Shell", 
                             assembly.Location, 
                             "RevitPythonShell.IronPythonConsoleCommand");
@@ -316,7 +323,11 @@ namespace RevitPythonShell
         /// </summary>
         private static string GetSettingsFolder()
         {
-            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RevitPythonShell" + versionNumber);
+#if DEBUG
+            return Path.Combine(dllfolder, "DefaultConfig");
+#else
+            return dllfolder;
+#endif
         }
 
         /// <summary>

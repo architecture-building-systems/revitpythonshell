@@ -1,217 +1,151 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug 2016</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7E37F14E-D840-42F8-8CA6-90FFC5497972}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RevitPythonShell</RootNamespace>
-    <AssemblyName>RevitPythonShell</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <Configurations>Debug;Debug One;Release</Configurations>
   </PropertyGroup>
+
   <PropertyGroup>
-    <!-- see: http://thebuildingcoder.typepad.com/blog/2013/06/processor-architecture-mismatch-warning.html -->
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-      None
-    </ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <!-- Please remove the targets you don't need in order
+      to exclude Revit versions your add-in won't support
+      use the list below for matching Revit version with .NET target
+              2014  |  net40
+              2015  |  net45
+              2016  |  net451
+              2017  |  net452
+              2018  |  net46
+              2019  |  net47
+              2020  |  net471
+      For example you can exclude Revit 2014, by simply removing net40 target belows
+      -->
+    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471</TargetFrameworks>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2014'">
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug One'">
+    <!-- You could debug just ONE addin version,
+         instead of building all the versions above.
+         Just put ONE target from the list above
+         e.g. if you want to debug ONLY Revit 2019,
+         put net47 below and switch to 'Debug One' configuration
+      -->
+    <TargetFrameworks>net471</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2015'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
+    <RevitVersion>2014</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2016'">
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <RevitVersion>2015</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2017'">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
+    <RevitVersion>2016</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2018'">
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
+    <RevitVersion>2017</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug 2019'">
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
+    <RevitVersion>2018</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
+    <RevitVersion>2019</RevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+    <RevitVersion>2020</RevitVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
+    <PlatformTarget>x64</PlatformTarget>
+    <Platforms>x64</Platforms>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+
+    <!-- Force the project to use the legacy debugger engine -->
+    <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
+
+    <!-- Invert the behavior of new .csproj format - exclude files by default -->
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+
+    <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
+    e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
+    <DefineConstants>REVIT$(RevitVersion);WINFORMS</DefineConstants>
+    <PreprocessorDefinitions>$(DefineConstants)</PreprocessorDefinitions>
+
+    <!-- Multiple targets can cause obj folder locking by concurrent builds -->
+    <BuildInParallel>false</BuildInParallel>
+
+    <!-- Override 'OutputPath' to Debug/Release + Revit version -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <OutDir>.\bin\$(Configuration)\$(RevitVersion)</OutDir>
+    <PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>
+    <Product>RevitPythonShell</Product>
+    <Authors>RIPS</Authors>
+    <Description>Revit Python Shell addin for Revit</Description>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DefineConstants>TRACE;REVIT2020;WINFORMS;DEBUG</DefineConstants>
     <DebugType>full</DebugType>
+    <OutputPath>.\bin\$(Configuration)\$(RevitVersion)</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net471|x64'">
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2014|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2014\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2015|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2015\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2016|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2016\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2017|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2017\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2018|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2018\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug 2019|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Debug 2019\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2016'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2016\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2016\RevitAPIUI.dll</HintPath>
-    </Reference>
+
+
+  <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2017'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2017\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2017\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2018'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2018\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2018\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup Condition="'$(Configuration)' == 'Debug 2019'">
-    <Reference Include="RevitAPI">
-      <HintPath>..\RequiredLibraries\Revit2019\RevitAPI.dll</HintPath>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\RequiredLibraries\Revit2019\RevitAPIUI.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2014.*" Condition=" '$(RevitVersion)' == '2014' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2015.*" Condition=" '$(RevitVersion)' == '2015' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2016.*" Condition=" '$(RevitVersion)' == '2016' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2017.*" Condition=" '$(RevitVersion)' == '2017' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
+    <PackageReference Include="AvalonEdit" Version="6.0.1"/>
+  </ItemGroup>
+
+  <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
+    <ItemGroup>
+      <!-- A temporary fix for Revit SDK files being copied to the output folder -->
+      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Autodesk.Revit.SDK'" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="IronPython.Modules">
       <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Dynamic">
       <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Scripting">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
-      <Private>True</Private>
     </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PythonConsoleControl">
-      <HintPath>..\PythonConsoleControl\bin\Debug 2018\PythonConsoleControl.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Controls.WpfPropertyGrid">
-      <HintPath>..\RequiredLibraries\System.Windows.Controls.WpfPropertyGrid.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WindowsBase" />
@@ -236,7 +170,6 @@
     </Compile>
     <Compile Include="RevitCommands\IronPythonConsoleCommand.cs" />
     <Compile Include="RevitCommands\NonModalConsoleCommand.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -254,7 +187,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="Manifests\AddinTemplate.addin">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </None>
+    <None Include="Manifests\SetupRPSTemplate.iss" />
     <Resource Include="Resources\Theme\Redo.png" />
     <Resource Include="Resources\Theme\Run.png" />
     <Resource Include="Resources\Theme\Save.png" />
@@ -268,9 +206,14 @@
     <EmbeddedResource Include="Resources\Python-32.png" />
     <EmbeddedResource Include="Resources\Settings-16.png" />
     <EmbeddedResource Include="Resources\Settings-32.png" />
-    <Content Include="DefaultConfig\startup.py" />
+    <Content Include="DefaultConfig\startup.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Properties\launchSettings.json" />
     <None Include="Examples\HelloWorld.iss" />
-    <Content Include="DefaultConfig\init.py" />
+    <Content Include="DefaultConfig\init.py">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
     <Content Include="Examples\HelloWorld.xml">
@@ -285,25 +228,9 @@
     <Resource Include="Resources\Theme\Paste.png" />
     <Content Include="DefaultConfig\RevitPythonShell.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Resources\Python.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\IronPythonConsole.xaml">
@@ -313,21 +240,95 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
-      <Project>{f1152d68-346b-4f48-8db7-be67b5cb1f49}</Project>
-      <Name>PythonConsoleControl</Name>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>all</IncludeAssets>
     </ProjectReference>
     <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
-      <Project>{c8446636-c663-409f-82d0-72c0d55bba1c}</Project>
-      <Name>RpsRuntime</Name>
+      <Private>true</Private>
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+      <IncludeAssets>all</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+
+  <Target Name="CreateAddinManifest" AfterTargets="AfterBuild">
+    <ItemGroup>
+      <AddinManifest Include="$(OutDir)\$(AssemblyName).addin" />
+    </ItemGroup>
+    <ReplaceFileText InputFilename="Manifests/AddinTemplate.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="FullClassName&gt;((.*?)\.)+" ReplacementText="FullClassName&gt;$(RootNamespace)." />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;Name&gt;(.*?)&lt;" ReplacementText="&lt;Name&gt;$(Product)&lt;" />
+    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
+    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
+    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
-  <Target Name="AfterBuild">
+  
+  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
+    <PropertyGroup>
+      <OutputDirPath>$(SolutionName)\bin\$(Configuration)\$(RevitVersion)\</OutputDirPath>
+    </PropertyGroup>
+    <ItemGroup>
+      <InnoSetup Include="$(SolutionDir)\Setup_$(AssemblyName)_$(RevitVersion).iss" />
+    </ItemGroup>
+    <ReplaceFileText InputFilename="Manifests/SetupRPSTemplate.iss" OutputFilename="@(InnoSetup)" MatchExpression="{OUTDIR}" ReplacementText="$(OutputDirPath)" />
+    <ReplaceFileText InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{REVIT_VERSION}" ReplacementText="$(RevitVersion)" />
+    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
+    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
-  -->
+
+  <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Reference Include="System.Core" />
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+              File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Core'" TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <InputFilename ParameterType="System.String" Required="true" />
+      <OutputFilename ParameterType="System.String" Required="true" />
+      <MatchExpression ParameterType="System.String" Required="true" />
+      <ReplacementText ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Using Namespace="System" />
+      <Using Namespace="System.IO" />
+      <Using Namespace="System.Text.RegularExpressions" />
+      <Code Type="Fragment" Language="cs">
+        <![CDATA[
+              File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
+        ]]>
+      </Code>
+    </Task>
+  </UsingTask>
+
+  <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="$(Configuration.Contains('Debug'))">
+    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
+    <Message Importance="high" Text="Copying addin file into Revit Addin folder" />
+    <ItemGroup>
+      <AddinFiles Include="$(OutputPath)\..\**\*.addin" />
+    </ItemGroup>
+    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
+  </Target>
+
+  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
+    <!-- Delete previously deployed to AppData folder add-in files -->
+    <ItemGroup>
+      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
+    </ItemGroup>
+    <Delete Files="@(AddinFiles)" />
+  </Target>
 </Project>

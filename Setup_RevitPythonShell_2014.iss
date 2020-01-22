@@ -1,43 +1,51 @@
 [Files]
-Source: "RevitPythonShell\bin\Debug 2014\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug 2014\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RevitPythonShell\bin\Debug 2014\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
-Source: "RequiredLibraries\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
-Source: "RequiredLibraries\IronPython.dll"; DestDir: "{app}"
-Source: "RequiredLibraries\IronPython.Modules.dll"; DestDir: "{app}"
-Source: "RequiredLibraries\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
-Source: "RequiredLibraries\Microsoft.Dynamic.dll"; DestDir: "{app}"
-Source: "RequiredLibraries\Microsoft.Scripting.dll"; DestDir: "{app}"
-Source: "RevitPythonShell\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell2014"; Flags: onlyifdoesntexist
-Source: RevitPythonShell\DefaultConfig\init.py; DestDir: {userappdata}\RevitPythonShell2014; Flags: confirmoverwrite; 
-Source: RevitPythonShell\DefaultConfig\startup.py; DestDir: {userappdata}\RevitPythonShell2014; Flags: confirmoverwrite; 
+Source: "RevitPythonShell\bin\Release\2014\PythonConsoleControl.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2014\RevitPythonShell.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2014\RpsRuntime.dll"; DestDir: "{app}"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2014\RevitPythonShell.addin"; DestDir: "{userappdata}\Autodesk\Revit\Addins\2014"; Flags: replacesameversion
+Source: "RevitPythonShell\bin\Release\2014\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\IronPython.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\IronPython.Modules.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Dynamic.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\Microsoft.Scripting.dll"; DestDir: "{app}"
+Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\RevitPythonShell.xml"; DestDir: "{userappdata}\RevitPythonShell\2014"; Flags: onlyifdoesntexist
+Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\init.py"; DestDir: {userappdata}\RevitPythonShell\2014; Flags: confirmoverwrite; 
+Source: "RevitPythonShell\bin\Release\2014\DefaultConfig\startup.py"; DestDir: {userappdata}\RevitPythonShell\2014; Flags: confirmoverwrite; 
+
 
 [code]
 { HANDLE INSTALL PROCESS STEPS }
 procedure CurStepChanged(CurStep: TSetupStep);
 var
   AddInFilePath: String;
+  LoadedFile : TStrings;
   AddInFileContents: String;
+  ReplaceString: String;
+  SearchString: String;
 begin
 
   if CurStep = ssPostInstall then
   begin
 
-	{ GET LOCATION OF USER AppData (Roaming) }
-	AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2014\RevitPythonShell2014.addin');
+  AddinFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2014\RevitPythonShell.addin');
+  LoadedFile := TStringList.Create;
+  SearchString := 'Assembly>RevitPythonShell.dll<';
+  ReplaceString := 'Assembly>' + ExpandConstant('{app}') + '\RevitPythonShell.dll<';
 
-	{ CREATE NEW ADDIN FILE }
-	AddInFileContents := '<?xml version="1.0" encoding="utf-16" standalone="no"?>' + #13#10;
-	AddInFileContents := AddInFileContents + '<RevitAddIns>' + #13#10;
-	AddInFileContents := AddInFileContents + '  <AddIn Type="Application">' + #13#10;
-  AddInFileContents := AddInFileContents + '    <Name>RevitPythonShell</Name>' + #13#10;
-	AddInFileContents := AddInFileContents + '    <Assembly>'  + ExpandConstant('{app}') + '\RevitPythonShell.dll</Assembly>' + #13#10;
-	AddInFileContents := AddInFileContents + '    <AddInId>3a7a1d24-51ed-462b-949f-1ddcca12008d</AddInId>' + #13#10;
-	AddInFileContents := AddInFileContents + '    <FullClassName>RevitPythonShell.RevitPythonShellApplication</FullClassName>' + #13#10;
-	AddInFileContents := AddInFileContents + '  <VendorId>RIPS</VendorId>' + #13#10;
-	AddInFileContents := AddInFileContents + '  </AddIn>' + #13#10;
-	AddInFileContents := AddInFileContents + '</RevitAddIns>' + #13#10;
-	SaveStringToFile(AddInFilePath, AddInFileContents, False);
+  try
+      LoadedFile.LoadFromFile(AddInFilePath);
+      AddInFileContents := LoadedFile.Text;
+
+      { Only save if text has been changed. }
+      if StringChangeEx(AddInFileContents, SearchString, ReplaceString, True) > 0 then
+      begin;
+        LoadedFile.Text := AddInFileContents;
+        LoadedFile.SaveToFile(AddInFilePath);
+      end;
+    finally
+      LoadedFile.Free;
+    end;
 
   end;
 end;
@@ -46,7 +54,7 @@ end;
 AppName=RevitPythonShell for Autodesk Revit 2014
 AppVerName=RevitPythonShell for Autodesk Revit 2014
 RestartIfNeededByRun=false
-DefaultDirName={pf32}\RevitPythonShell2014
+DefaultDirName={pf32}\RevitPythonShell\2014
 OutputBaseFilename=Setup_RevitPythonShell_2014
 ShowLanguageDialog=auto
 FlatComponentsList=false
@@ -56,4 +64,3 @@ AppVersion=2014.0
 VersionInfoVersion=2014.0
 VersionInfoDescription=RevitPythonShell for Autodesk Revit 2014
 VersionInfoTextVersion=RevitPythonShell for Autodesk Revit 2014
-
