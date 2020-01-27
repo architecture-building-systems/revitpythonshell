@@ -88,6 +88,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   * [@DanRumery](https://github.com/danrumery) improved autocompletion with PR #59
   * [Petr Mitev (@mitevpi)](https://github.com/mitevpi) ported to Revit 2019 with RP #86
   * [Alvaro Ortega Pickmans (@alvpickmans)](https://github.com/alvpickmans) refactor to sdk csproject and release for Revit 2020 PR #101
+  * [@hdm-dt-fb](https://github.com/hdm-dt-fb) added `set_font_sizes` function for presenting RPS ([PR #77](https://github.com/architecture-building-systems/revitpythonshell/pull/77))
   * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
