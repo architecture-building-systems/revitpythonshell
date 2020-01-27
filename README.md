@@ -21,7 +21,7 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 - `lookup()` function for snooping `Element`, `ElementSet` and `ElementId` objects in [RevitLookup](https://github.com/jeremytammik/RevitLookup)
 
 ## Installation
-
+- [Installer for Autodesk Revit 2020](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
 - [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
 - [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
 - [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.06/2017.04.06_Setup_RevitPythonShell_2017.exe)
@@ -87,6 +87,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   * [Ehsan Iran-Nejad (@eirannejad)](https://github.com/eirannejad) countless improvements, the awesome [pyRevit](https://github.com/eirannejad/pyRevit) tool and a special thanks for helping maintain RPS! 
   * [@DanRumery](https://github.com/danrumery) improved autocompletion with PR #59
   * [Petr Mitev (@mitevpi)](https://github.com/mitevpi) ported to Revit 2019 with RP #86
+  * [Alvaro Ortega Pickmans (@alvpickmans)](https://github.com/alvpickmans) refactor to sdk csproject and release for Revit 2020 PR #101
   * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
