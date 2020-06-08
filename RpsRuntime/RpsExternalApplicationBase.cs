@@ -103,7 +103,7 @@ namespace RevitPythonShell.RpsRuntime
             }
             else
             {
-                result.LargeImage = GetEmbeddedPng("RevitPythonShell.RpsRuntime.Resources.PythonScript32x32.png");
+                result.LargeImage = GetEmbeddedPng("RpsRuntime.Resources.PythonScript32x32.png");
             }
 
             if (IsValidPath(xmlPushButton.Attribute("smallImage")))
@@ -113,7 +113,7 @@ namespace RevitPythonShell.RpsRuntime
             }
             else
             {
-                result.Image = GetEmbeddedPng("RevitPythonShell.RpsRuntime.Resources.PythonScript16x16.png");
+                result.Image = GetEmbeddedPng("RpsRuntime.Resources.PythonScript16x16.png");
             }
 
             return result;
