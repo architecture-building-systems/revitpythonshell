@@ -24,7 +24,7 @@ begin
   begin
 
   	{ GET LOCATION OF USER AppData (Roaming) }
-  	AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2013\HelloWorld.addin');
+  	AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2020\HelloWorld.addin');
   
   	{ CREATE NEW ADDIN FILE }
   	AddInFileContents := '<?xml version="1.0" encoding="utf-8" standalone="no"?>' + #13#10;
@@ -54,7 +54,7 @@ var
 begin
   if CurUninstallStep = usPostUninstall then
   begin
-    AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2013\HelloWorld.addin');
+    AddInFilePath := ExpandConstant('{userappdata}\Autodesk\Revit\Addins\2020\HelloWorld.addin');
     
     if FileExists(AddInFilePath) then
     begin
