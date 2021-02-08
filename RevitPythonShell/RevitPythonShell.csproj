@@ -15,9 +15,10 @@
               2018  |  net46
               2019  |  net47
               2020  |  net471
+              2021  |  net48
       For example you can exclude Revit 2014, by simply removing net40 target belows
       -->
-    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471</TargetFrameworks>
+    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net48</TargetFrameworks>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
@@ -30,7 +31,7 @@
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net471</TargetFrameworks>
+    <TargetFrameworks>net48</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -51,10 +52,12 @@
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
     <RevitVersion>2019</RevitVersion>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net472' ">
     <RevitVersion>2020</RevitVersion>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <RevitVersion>2021</RevitVersion>
+  </PropertyGroup>
   <PropertyGroup>
     <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
     <PlatformTarget>x64</PlatformTarget>
@@ -91,7 +94,7 @@
     <OutputPath>.\bin\$(Configuration)\$(RevitVersion)</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net471|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net472|x64'">
     <Optimize>false</Optimize>
   </PropertyGroup>
 
@@ -108,6 +111,7 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2021.*" Condition=" '$(RevitVersion)' == '2021' " PrivateAssets="All" />
     <PackageReference Include="AvalonEdit" Version="6.0.1"/>
   </ItemGroup>
 
