@@ -94,7 +94,7 @@
     <OutputPath>.\bin\$(Configuration)\$(RevitVersion)</OutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net472|x64'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net48|x64'">
     <Optimize>false</Optimize>
   </PropertyGroup>
 
