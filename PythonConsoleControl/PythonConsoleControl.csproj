@@ -15,9 +15,10 @@
               2018  |  net46
               2019  |  net47
               2020  |  net471
+              2021  |  net48
       For example you can exclude Revit 2014, by simply removing net40 target belows
       -->
-    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471</TargetFrameworks>
+    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471;net48</TargetFrameworks>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
@@ -29,7 +30,7 @@
          e.g. if you want to debug ONLY Revit 2019,
          put net47 below and switch to 'Debug One' configuration
       -->
-    <TargetFrameworks>net40</TargetFrameworks>
+    <TargetFrameworks>net48</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -52,6 +53,9 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
     <RevitVersion>2020</RevitVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <RevitVersion>2021</RevitVersion>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -99,6 +103,7 @@
     <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
     <PackageReference Include="Autodesk.Revit.SDK" Version="2020.1.0" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
+    <PackageReference Include="Autodesk.Revit.SDK" Version="2021.*" Condition=" '$(RevitVersion)' == '2021' " PrivateAssets="All" />
     <PackageReference Include="AvalonEdit" Version="6.0.1"/>
  
   </ItemGroup>
