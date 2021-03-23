@@ -22,9 +22,8 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 
 ## Installation
 
-- [Installer for Autodesk Revit 2021](releases/download/2021.03.22/2021.03.22_Setup_RevitPythonShell_2021.exe)
 - [Installer for Autodesk Revit 2021](https://github.com/architecture-building-systems/revitpythonshell/blob/master/Output/2021.03.22_Setup_RevitPythonShell_2021.exe)
-- [Installer for Autodesk Revit 2020](/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
+- [Installer for Autodesk Revit 2020](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
 - [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
 - [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
 - [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.06/2017.04.06_Setup_RevitPythonShell_2017.exe)
