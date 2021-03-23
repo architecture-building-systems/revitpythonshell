@@ -21,6 +21,8 @@ writing your Revit Addins - use this in combination with the [RevitLookup](https
 - `lookup()` function for snooping `Element`, `ElementSet` and `ElementId` objects in [RevitLookup](https://github.com/jeremytammik/RevitLookup)
 
 ## Installation
+
+- [Installer for Autodesk Revit 2021](https://github.com/architecture-building-systems/revitpythonshell/blob/master/Output/2021.03.22_Setup_RevitPythonShell_2021.exe)
 - [Installer for Autodesk Revit 2020](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
 - [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
 - [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
