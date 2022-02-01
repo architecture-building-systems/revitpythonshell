@@ -339,7 +339,7 @@ namespace RevitPythonShell
             int i = 0;
             foreach (var commandNode in repository.Root.Descendants("Command") ?? new List<XElement>())
             {
-                var addinAssembly = typeof(RevitPythonShellApplication).Assembly;
+                var addinAssembly = typeof(RpsExternalApplicationBase).Assembly;
                 var commandName = commandNode.Attribute("name").Value;
                 var commandSrc = commandNode.Attribute("src").Value;
                 var group = commandNode.Attribute("group") == null ? "" : commandNode.Attribute("group").Value;
@@ -352,7 +352,7 @@ namespace RevitPythonShell
                 }
                 else
                 {
-                    largeImage = GetEmbeddedPng(addinAssembly, "RevitPythonShell.Resources.PythonScript32x32.png");
+                    largeImage = GetEmbeddedPng(addinAssembly, "RpsRuntime.Resources.PythonScript32x32.png");
                 }
 
                 ImageSource smallImage = null;
@@ -363,7 +363,7 @@ namespace RevitPythonShell
                 }
                 else
                 {
-                    smallImage = GetEmbeddedPng(addinAssembly, "RevitPythonShell.Resources.PythonScript16x16.png");
+                    smallImage = GetEmbeddedPng(addinAssembly, "RpsRuntime.Resources.PythonScript16x16.png");
                 }
                 
                 yield return new Command { 
