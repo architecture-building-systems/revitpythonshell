@@ -1,14 +1,14 @@
-﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Highlighting;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using System.Xml;
+using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Highlighting;
+using Microsoft.Win32;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.Views
 {
     /// <summary>
     /// Interaction logic for IronPythonConsole.xaml

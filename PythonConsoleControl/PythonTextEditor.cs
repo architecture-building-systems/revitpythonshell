@@ -2,14 +2,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Threading;

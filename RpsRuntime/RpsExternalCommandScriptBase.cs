@@ -1,14 +1,11 @@
-﻿using Autodesk.Revit.Attributes;
+﻿using System;
+using System.IO;
+using System.Xml.Linq;
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml.Linq;
-using System.Text;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// This class is very much like the RpsExternalCommandBase, but instead of looking for the

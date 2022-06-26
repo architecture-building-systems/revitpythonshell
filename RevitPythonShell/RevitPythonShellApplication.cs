@@ -12,7 +12,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using RevitPythonShell.RpsRuntime;
+using RpsRuntime;
 
 namespace RevitPythonShell
 {

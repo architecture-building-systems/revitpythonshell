@@ -5,10 +5,9 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting.Hosting;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// A stream to write output to...

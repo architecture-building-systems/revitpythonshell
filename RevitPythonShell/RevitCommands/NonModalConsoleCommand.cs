@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
 using System.Diagnostics;
-using Microsoft.Scripting;
 using System.Threading;
-using System.Windows.Threading;
-using RevitPythonShell.RpsRuntime;
-using System.Threading.Tasks;
-using IronPython.Runtime;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using RevitPythonShell.Views;
+using RpsRuntime;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RevitCommands
 {
     /// <summary>
     /// An object of this class is instantiated every time the user clicks on the

@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.UI;
 using System.IO;
 using System.Xml.Linq;
+using Autodesk.Revit.UI;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// An abstract base class for ExternalCommand instances created by the DeployRpsAddin projects.

@@ -4,7 +4,7 @@ using Autodesk.Revit;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.Attributes;
-using RevitPythonShell.RpsRuntime;
+using RpsRuntime;
 
 namespace RevitPythonShell
 {

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Xml.Linq;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// Provides access functions to those parts of the RevitPythonShell.xml file

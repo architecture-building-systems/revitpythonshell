@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
+﻿using System.Windows.Forms;
 using Autodesk.Revit.Attributes;
-using System.Windows.Forms;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using RevitPythonShell.Views;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RevitCommands
 {
     /// <summary>
     /// Open the configuration dialog.

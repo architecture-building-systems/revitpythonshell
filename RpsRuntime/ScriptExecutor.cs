@@ -1,15 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Autodesk.Revit;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using IronPython.Runtime.Exceptions;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
-using System.Collections.Generic;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// Executes a script scripts
@@ -181,7 +180,7 @@ namespace RevitPythonShell.RpsRuntime
             engine.Runtime.LoadAssembly(typeof(Autodesk.Revit.UI.TaskDialog).Assembly);
 
             // also, allow access to the RPS internals
-            engine.Runtime.LoadAssembly(typeof(RevitPythonShell.RpsRuntime.ScriptExecutor).Assembly);
+            engine.Runtime.LoadAssembly(typeof(ScriptExecutor).Assembly);
         }        
 
         /// <summary>
