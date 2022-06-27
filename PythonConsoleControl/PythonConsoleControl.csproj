@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configurations>Debug;Debug One;Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <PublishSingleFile>true</PublishSingleFile>
     <TargetFramework>net48</TargetFramework>
     <RevitVersion>2022</RevitVersion>
