@@ -39,13 +39,11 @@ namespace RevitPythonShell
                     versionNumber = "_Vasari";
                 }
 
-#if DEBUG
                 dllfolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-#else
-                dllfolder = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                        $"{APP_NAME}/{versionNumber}");
-#endif
+
+                // dllfolder = Path.Combine(
+                //         Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                //         $"{APP_NAME}/{versionNumber}");
                 var assemblyName = "CommandLoaderAssembly";
                 var dllfullpath = Path.Combine(dllfolder, assemblyName + ".dll");
 
@@ -102,40 +100,40 @@ namespace RevitPythonShell
                             APP_NAME, 
                             "Interactive\nPython Shell", 
                             assembly.Location, 
-                            "RevitPythonShell.IronPythonConsoleCommand");
+                            typeof(IronPythonConsoleCommand).FullName);
             pbdOpenPythonShell.Image = smallImage;
             pbdOpenPythonShell.LargeImage = largeImage;
-            pbdOpenPythonShell.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
+            pbdOpenPythonShell.AvailabilityClassName = typeof(IronPythonConsoleCommandAvail).FullName;
             splitButton.AddPushButton(pbdOpenPythonShell);
 
             PushButtonData pbdOpenNonModalShell = new PushButtonData(
                             "NonModalRevitPythonShell",
                             "Non-modal\nShell",
                             assembly.Location,
-                            "RevitPythonShell.NonModalConsoleCommand");
+                           typeof(NonModalConsoleCommand).FullName);
             pbdOpenNonModalShell.Image = smallImage;
             pbdOpenNonModalShell.LargeImage = largeImage;
-            pbdOpenNonModalShell.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
+            pbdOpenNonModalShell.AvailabilityClassName = typeof(IronPythonConsoleCommandAvail).FullName;
             splitButton.AddPushButton(pbdOpenNonModalShell);
 
             PushButtonData pbdConfigure = new PushButtonData(
                             "Configure", 
                             "Configure...", 
                             assembly.Location, 
-                            "RevitPythonShell.ConfigureCommand");
+                            typeof(ConfigureCommand).FullName);
             pbdConfigure.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-16.png");
             pbdConfigure.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Settings-32.png");
-            pbdConfigure.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
+            pbdConfigure.AvailabilityClassName = typeof(IronPythonConsoleCommandAvail).FullName;
             splitButton.AddPushButton(pbdConfigure);
 
             PushButtonData pbdDeployRpsAddin = new PushButtonData(
                 "DeployRpsAddin",
                 "Deploy RpsAddin",
                 assembly.Location,
-                "RevitPythonShell.DeployRpsAddinCommand");
+               typeof(DeployRpsAddinCommand).FullName);
             pbdDeployRpsAddin.Image = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-16.png");
             pbdDeployRpsAddin.LargeImage = GetEmbeddedPng(assembly, "RevitPythonShell.Resources.Deployment-32.png");
-            pbdDeployRpsAddin.AvailabilityClassName = "RevitPythonShell.IronPythonConsoleCommandAvail";
+            pbdDeployRpsAddin.AvailabilityClassName = typeof(IronPythonConsoleCommandAvail).FullName;
             splitButton.AddPushButton(pbdDeployRpsAddin);
 
             var commands = GetCommands(GetSettings()).ToList();
