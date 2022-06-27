@@ -32,14 +32,13 @@ namespace RevitPythonShell.Helpers
         /// Set process revert use revit
         /// </summary>
         /// <returns></returns>
-        public static bool SetActivateWindow()
+        public static void SetActivateWindow()
         {
             IntPtr ptr = GetActivateWindow();
             if (ptr != IntPtr.Zero)
             {
-                return SetForegroundWindow(ptr);
+                SetForegroundWindow(ptr);
             }
-            return false;
         }
 
         /// <summary>
