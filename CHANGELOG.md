@@ -1,5 +1,5 @@
 # Changelog
-- 2022-06-27 **2023.0.0**
+- 2022-06-27 **1.0.1**
   - Add Process CI/CD Automatic.
   - Fix Problem show owner window.
   - Upgrade process use SDK Style .NET6.
