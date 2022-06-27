@@ -129,7 +129,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="RevitPythonShell.addin" />
+    <None Include="RevitPythonShell.addin" />
     <None Include="Manifests\AddinTemplate.addin">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>

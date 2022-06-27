@@ -322,11 +322,8 @@ namespace RevitPythonShell
         /// </summary>
         private static string GetSettingsFolder()
         {
-#if DEBUG
-            return Path.Combine(dllfolder, "DefaultConfig");
-#else
+
             return dllfolder;
-#endif
         }
 
         /// <summary>
