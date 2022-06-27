@@ -23,7 +23,7 @@ database exploration tool to become a Revit API Ninja :)
     - autocompletion (press CTRL+SPACE after a period)
     - based on the [IronLab](http://code.google.com/p/ironlab/) project
 - batteries included! (Python standard library is bundled as a resource in the `RpsRuntime.dll`)
-- full access to the .NET framework and the Revit API
+- full access to the .NET framework and the Revit API~~~~
 - configurable "environment" variables that can be used in your scripts
 - save "external scripts" for reuse and start collecting your awesome hacks!
 - run scripts at Revit startup
