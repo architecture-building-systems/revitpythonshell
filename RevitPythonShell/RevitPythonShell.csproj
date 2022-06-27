@@ -11,13 +11,19 @@
     <Product>RevitPythonShell</Product>
     <Authors>RIPS</Authors>
     <Description>Revit Python Shell addin for Revit</Description>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <EnableDefaultItems>false</EnableDefaultItems>
     <Configurations>Debug R22;Debug R23</Configurations>
-    <Configurations>$(Configurations);Release R14;Release R15;Release R16;Release R17;Release R18;Release R19;Release R20;Release R21;Release R22;Release R23</Configurations>
+    <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23</Configurations>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('R18'))">
     <RevitVersion>2018</RevitVersion>
@@ -42,6 +48,14 @@
   <PropertyGroup Condition="$(Configuration.Contains('R23'))">
     <RevitVersion>2023</RevitVersion>
     <DefineConstants>$(DefineConstants);R23</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>$(RevitVersion)</Version>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Description>The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.</Description>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
@@ -214,6 +228,15 @@
       <ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
       <AddinItem Include="$(TargetDir)*.*" />
     </ItemGroup>
+    <PropertyGroup>
+      <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
+      <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
+    </PropertyGroup>
+
+    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
+    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AddinDir)" />
+    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
+    
     <Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
     <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
     <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />

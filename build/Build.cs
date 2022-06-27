@@ -58,7 +58,7 @@ internal partial class Build : NukeBuild
 
         var versionRegex = new Regex(@"^.*R\d+ ?");
         var addInsDirectory = directories
-            // .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
+            .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
             .Where(dir => dir.Name.Contains(BuildConfiguration))
             .GroupBy(dir => versionRegex.Replace(dir.Name, string.Empty));
 

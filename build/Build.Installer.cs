@@ -22,7 +22,6 @@ internal partial class Build
              {
                  var directories = directoryGroup.ToList();
                  var exeArguments = BuildExeArguments(directories.Select(info => info.FullName).ToList());
-                 Console.WriteLine($"Exe Arguments:{exeArguments}");
                  var exeFile = installerProject.GetExecutableFile(configurations, directories);
                  if (string.IsNullOrEmpty(exeFile))
                  {

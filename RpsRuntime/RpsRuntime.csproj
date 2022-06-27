@@ -7,11 +7,17 @@
         <EnableDefaultItems>false</EnableDefaultItems>
         <PlatformTarget>x64</PlatformTarget>
         <Configurations>Debug R22;Debug R23</Configurations>
-        <Configurations>$(Configurations);Release R14;Release R15;Release R16;Release R17;Release R18;Release R19;Release R20;Release R21;Release R22;Release R23</Configurations>
+        <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23</Configurations>
     </PropertyGroup>
     <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+        <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
+        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+        <Optimize>true</Optimize>
+        <DebugType>none</DebugType>
+        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition="$(Configuration.Contains('R18'))">
         <RevitVersion>2018</RevitVersion>
