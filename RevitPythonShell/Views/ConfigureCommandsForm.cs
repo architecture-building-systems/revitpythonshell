@@ -31,21 +31,21 @@ namespace RevitPythonShell.Views
         /// </summary>
         private void ConfigureCommandsForm_Load(object sender, EventArgs e)
         {
-            _commands = RevitPythonShellApplication.GetCommands(
-                RevitPythonShellApplication.GetSettings()).ToList();
+            _commands = App.GetCommands(
+                App.GetSettings()).ToList();
             lstCommands.DataSource = _commands;      
 
-            _searchPaths = RevitPythonShellApplication.GetConfig().GetSearchPaths().ToList();
+            _searchPaths = App.GetConfig().GetSearchPaths().ToList();
             lstSearchPaths.DataSource = _searchPaths;
 
-            _variables = RevitPythonShellApplication.GetConfig().GetVariables().AsEnumerable().ToList();
+            _variables = App.GetConfig().GetVariables().AsEnumerable().ToList();
             lstVariables.DataSource = _variables;
             lstVariables.DisplayMember = "Key";
 
-            string initScriptPath = RevitPythonShellApplication.GetInitScriptPath();
+            string initScriptPath = App.GetInitScriptPath();
             txtInitScript.Text = initScriptPath;
 
-            string startupScriptPath = RevitPythonShellApplication.GetStartupScriptPath();
+            string startupScriptPath = App.GetStartupScriptPath();
             txtStartupScript.Text = startupScriptPath;
         }
 
@@ -215,7 +215,7 @@ namespace RevitPythonShell.Views
         /// </summary>
         private void btnCommandSave_Click(object sender, EventArgs e)
         {
-            RevitPythonShellApplication.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text, txtStartupScript.Text);
+            App.WriteSettings(_commands, _searchPaths, _variables, txtInitScript.Text, txtStartupScript.Text);
             Close();
         }
 

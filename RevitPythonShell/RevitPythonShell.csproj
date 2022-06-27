@@ -81,7 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLoaderBase.cs" />
+    <Compile Include="RevitCommands\CommandLoaderBase.cs" />
     <Compile Include="Views\CompletionToolTip.cs" />
     <Compile Include="RevitCommands\ConfigureCommand.cs" />
     <Compile Include="Views\ConfigureCommandsForm.cs">
@@ -102,7 +102,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RevitPythonShellApplication.cs" />
+    <Compile Include="App.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ConfigureCommandsForm.resx">
@@ -114,6 +114,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RevitPythonShell.addin" />
     <None Include="Manifests\AddinTemplate.addin">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
@@ -133,14 +134,10 @@
     <EmbeddedResource Include="Resources\Python-32.png" />
     <EmbeddedResource Include="Resources\Settings-16.png" />
     <EmbeddedResource Include="Resources\Settings-32.png" />
-    <Content Include="DefaultConfig\startup.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="DefaultConfig\startup.py" />
     <Content Include="Properties\launchSettings.json" />
     <None Include="Examples\HelloWorld.iss" />
-    <Content Include="DefaultConfig\init.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="DefaultConfig\init.py" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
     <Content Include="Examples\HelloWorld.xml">
@@ -153,10 +150,9 @@
     <Resource Include="Resources\Theme\Open.png" />
     <Resource Include="Resources\Theme\Paragraph.png" />
     <Resource Include="Resources\Theme\Paste.png" />
-    <Content Include="DefaultConfig\RevitPythonShell.xml">
+    <None Include="DefaultConfig\RevitPythonShell.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <EmbeddedResource Include="Resources\Python.xshd" />
   </ItemGroup>
   <ItemGroup>
@@ -233,19 +229,31 @@
         ]]></Code>
     </Task>
   </UsingTask>
-  <Target Name="CopyFiles" AfterTargets="CoreBuild" Condition="$(Configuration.Contains('Debug'))">
-    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
-    <Message Importance="high" Text="Copying addin file into Revit Addin folder" />
+<!--  <Target Name="CopyFiles" AfterTargets="CoreBuild" Condition="$(Configuration.Contains('Debug'))">-->
+<!--    &lt;!&ndash; Copy newly compiled add-in files to AppData folder (before starting the debugger) &ndash;&gt;-->
+<!--    <Message Importance="high" Text="Copying addin file into Revit Addin folder" />-->
+<!--    <ItemGroup>-->
+<!--      <AddinFiles Include="$(OutputPath)\..\**\*.addin" />-->
+<!--    </ItemGroup>-->
+<!--    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />-->
+<!--  </Target>-->
+<!--  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">-->
+<!--    &lt;!&ndash; Delete previously deployed to AppData folder add-in files &ndash;&gt;-->
+<!--    <ItemGroup>-->
+<!--      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />-->
+<!--    </ItemGroup>-->
+<!--    <Delete Files="@(AddinFiles)" />-->
+<!--  </Target>-->
+  <Target Name="CopyFile" AfterTargets="CoreBuild">
+    <Message Importance="high" Text="Start Copy File To Addins Folder" />
     <ItemGroup>
-      <AddinFiles Include="$(OutputPath)\..\**\*.addin" />
+      <RootItem Include="$(ProjectDir)*.addin" />
+      <ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
+      <AddinItem Include="$(TargetDir)*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
-  </Target>
-  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
-    <!-- Delete previously deployed to AppData folder add-in files -->
-    <ItemGroup>
-      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
-    </ItemGroup>
-    <Delete Files="@(AddinFiles)" />
+    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+    <Message Importance="high" Text="@(AddinItem)" />
   </Target>
 </Project>

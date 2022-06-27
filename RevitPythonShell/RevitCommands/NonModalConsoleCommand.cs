@@ -33,13 +33,13 @@ namespace RevitPythonShell.RevitCommands
             {
                 // now that the console is created and initialized, the script scope should
                 // be accessible...
-                new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
+                new ScriptExecutor(App.GetConfig(), commandData, messageCopy, elements)
                     .SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
                 host.Console.ScriptScope.SetVariable("__window__", gui);
 
                 // run the initscript
-                var initScript = RevitPythonShellApplication.GetInitScript();
+                var initScript = App.GetInitScript();
                 if (initScript != null)
                 {
                     var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
