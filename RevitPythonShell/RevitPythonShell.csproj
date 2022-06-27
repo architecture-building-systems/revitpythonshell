@@ -81,6 +81,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ProcessManager.cs" />
     <Compile Include="RevitCommands\CommandLoaderBase.cs" />
     <Compile Include="Views\CompletionToolTip.cs" />
     <Compile Include="RevitCommands\ConfigureCommand.cs" />

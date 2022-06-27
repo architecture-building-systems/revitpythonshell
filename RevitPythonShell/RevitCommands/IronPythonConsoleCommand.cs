@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Scripting;
+using RevitPythonShell.Helpers;
 using RevitPythonShell.Views;
 using RpsRuntime;
 
@@ -75,6 +77,8 @@ namespace RevitPythonShell.RevitCommands
                     }
                 });
             });
+            gui.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            gui.SetRevitAsWindowOwner();
             gui.ShowDialog();
             return Result.Succeeded;
         }

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Scripting;
 using Microsoft.Scripting.Hosting;
+using RevitPythonShell.Helpers;
 using RevitPythonShell.Views;
 using RpsRuntime;
 
@@ -67,8 +69,9 @@ namespace RevitPythonShell.RevitCommands
                     commandCompletedEvent.WaitOne();                    
                 });
             });
-            gui.Topmost = true;
             gui.Title = gui.Title.Replace("RevitPythonShell", "RevitPythonShell (non-modal)");
+            gui.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            gui.SetRevitAsWindowOwner();
             gui.Show();
             return Result.Succeeded;
         }
