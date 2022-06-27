@@ -108,6 +108,8 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   Revit 2020 PR #101
 * [@hdm-dt-fb](https://github.com/hdm-dt-fb) added `set_font_sizes` function for presenting
   RPS ([PR #77](https://github.com/architecture-building-systems/revitpythonshell/pull/77))
+* [Nice 3 Point](https://github.com/Nice3point) for process CI/CD
+* [Chuong Mep](https://github.com/chuongmep/) a people like maintain for project open source.
 * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
