@@ -207,21 +207,6 @@
         ]]></Code>
     </Task>
   </UsingTask>
-<!--  <Target Name="CopyFiles" AfterTargets="CoreBuild" Condition="$(Configuration.Contains('Debug'))">-->
-<!--    &lt;!&ndash; Copy newly compiled add-in files to AppData folder (before starting the debugger) &ndash;&gt;-->
-<!--    <Message Importance="high" Text="Copying addin file into Revit Addin folder" />-->
-<!--    <ItemGroup>-->
-<!--      <AddinFiles Include="$(OutputPath)\..\**\*.addin" />-->
-<!--    </ItemGroup>-->
-<!--    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />-->
-<!--  </Target>-->
-<!--  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">-->
-<!--    &lt;!&ndash; Delete previously deployed to AppData folder add-in files &ndash;&gt;-->
-<!--    <ItemGroup>-->
-<!--      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />-->
-<!--    </ItemGroup>-->
-<!--    <Delete Files="@(AddinFiles)" />-->
-<!--  </Target>-->
   <Target Name="CopyFile" AfterTargets="CoreBuild">
     <Message Importance="high" Text="Start Copy File To Addins Folder Revit $(RevitVersion)" />
     <ItemGroup>
