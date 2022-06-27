@@ -18,7 +18,6 @@ internal partial class Build
              var installerProject = BuilderExtensions.GetProject(Solution, InstallerProject);
              var buildDirectories = GetBuildDirectories();
              var configurations = GetConfigurations(InstallerConfiguration);
-
              foreach (var directoryGroup in buildDirectories)
              {
                  var directories = directoryGroup.ToList();

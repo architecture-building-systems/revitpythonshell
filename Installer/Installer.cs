@@ -12,7 +12,7 @@ const string installationDir = @"%AppDataFolder%\Autodesk\Revit\Addins\";
 const string projectName = "RevitPythonShell";
 const string outputName = "RevitPythonShell";
 const string outputDir = "output";
-const string version = "2023.0.0";
+const string version = "1.0.1";
 
 var fileName = new StringBuilder().Append(outputName).Append("-").Append(version);
 var project = new Project
@@ -20,20 +20,20 @@ var project = new Project
     Name = projectName,
     OutDir = outputDir,
     Platform = Platform.x64,
-    Description = "Project Support Developer Work With Revit API",
+    Description = "The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.",
     UI = WUI.WixUI_InstallDir,
-    Version = new Version(version),
+    Version = new Version(),
     OutFileName = fileName.ToString(),
     InstallScope = InstallScope.perUser,
     MajorUpgrade = MajorUpgrade.Default,
-    GUID = new Guid("A0176A8B-2483-4073-B6BB-4A481D9B4439"),
+    GUID = new Guid("8A43E94C-B89C-4135-8D7C-B8E51DCE70D5"),
     BackgroundImage = @"Installer\Resources\Icons\BackgroundImage.png",
     BannerImage = @"Installer\Resources\Icons\BannerImage.png",
     ControlPanelInfo =
     {
-        Manufacturer = "Autodesk",
-        HelpLink = "https://github.com/chuongmep/RevitAddInManager/issues",
-        Comments = "Project Support Developer With Revit API",
+        Manufacturer = "architecture-building-systems",
+        HelpLink = "https://github.com/architecture-building-systems/revitpythonshell",
+        Comments = "The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.",
         ProductIcon = @"Installer\Resources\Icons\ShellIcon.ico",
     },
     Dirs = new Dir[]

@@ -246,7 +246,7 @@
 <!--    <Delete Files="@(AddinFiles)" />-->
 <!--  </Target>-->
   <Target Name="CopyFile" AfterTargets="CoreBuild">
-    <Message Importance="high" Text="Start Copy File To Addins Folder" />
+    <Message Importance="high" Text="Start Copy File To Addins Folder Revit $(RevitVersion)" />
     <ItemGroup>
       <RootItem Include="$(ProjectDir)*.addin" />
       <ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
@@ -255,6 +255,5 @@
     <Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
     <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
     <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
-    <Message Importance="high" Text="@(AddinItem)" />
   </Target>
 </Project>

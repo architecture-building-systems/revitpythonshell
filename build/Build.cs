@@ -50,6 +50,7 @@ internal partial class Build : NukeBuild
         {
             var project = BuilderExtensions.GetProject(Solution, projectName);
             var directoryInfo = new DirectoryInfo(project.GetBinDirectory()).GetDirectories();
+         
             directories.AddRange(directoryInfo);
         }
 
@@ -57,7 +58,7 @@ internal partial class Build : NukeBuild
 
         var versionRegex = new Regex(@"^.*R\d+ ?");
         var addInsDirectory = directories
-            .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
+            // .Where(dir => dir.Name.StartsWith(AddInBinPrefix))
             .Where(dir => dir.Name.Contains(BuildConfiguration))
             .GroupBy(dir => versionRegex.Replace(dir.Name, string.Empty));
 
