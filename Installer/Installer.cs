@@ -54,6 +54,7 @@ WixEntity[] GenerateWixEntities()
     foreach (var directory in args)
     {
         var directoryInfo = new DirectoryInfo(directory);
+        Console.WriteLine(directoryInfo.FullName);
         var fileVersion = versionRegex.Match(directoryInfo.Name).Value;
         var files = new Files($@"{directory}\*.*");
         if (versionStorages.ContainsKey(fileVersion))
