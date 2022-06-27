@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configurations>Debug;Debug One;Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
@@ -233,7 +233,7 @@
         ]]></Code>
     </Task>
   </UsingTask>
-  <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="$(Configuration.Contains('Debug'))">
+  <Target Name="CopyFiles" AfterTargets="CoreBuild" Condition="$(Configuration.Contains('Debug'))">
     <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
     <Message Importance="high" Text="Copying addin file into Revit Addin folder" />
     <ItemGroup>
