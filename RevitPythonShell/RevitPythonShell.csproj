@@ -185,18 +185,6 @@
     <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
     <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
   </Target>
-  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-    <PropertyGroup>
-      <OutputDirPath>$(SolutionName)\bin\$(Configuration)\$(RevitVersion)\</OutputDirPath>
-    </PropertyGroup>
-    <ItemGroup>
-      <InnoSetup Include="$(SolutionDir)\Setup_$(AssemblyName)_$(RevitVersion).iss" />
-    </ItemGroup>
-    <ReplaceFileText InputFilename="Manifests/SetupRPSTemplate.iss" OutputFilename="@(InnoSetup)" MatchExpression="{OUTDIR}" ReplacementText="$(OutputDirPath)" />
-    <ReplaceFileText InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{REVIT_VERSION}" ReplacementText="$(RevitVersion)" />
-    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
-    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
-  </Target>
   <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <InputFilename ParameterType="System.String" Required="true" />
