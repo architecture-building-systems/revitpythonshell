@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
-using Autodesk.Revit.DB;
-using System.Diagnostics;
-using Microsoft.Scripting;
 using System.Threading;
+using System.Windows;
 using System.Windows.Threading;
-using RevitPythonShell.RpsRuntime;
+using Autodesk.Revit.Attributes;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
+using Microsoft.Scripting;
+using RevitPythonShell.Helpers;
+using RevitPythonShell.Views;
+using RpsRuntime;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RevitCommands
 {
     /// <summary>
     /// Start an interactive shell in a modal window.
@@ -32,13 +31,13 @@ namespace RevitPythonShell
             {
                 // now that the console is created and initialized, the script scope should
                 // be accessible...
-                new ScriptExecutor(RevitPythonShellApplication.GetConfig(), commandData, messageCopy, elements)
+                new ScriptExecutor(App.GetConfig(), commandData, messageCopy, elements)
                     .SetupEnvironment(host.Engine, host.Console.ScriptScope);
 
                 host.Console.ScriptScope.SetVariable("__window__", gui);
 
                 // run the initscript
-                var initScript = RevitPythonShellApplication.GetInitScript();
+                var initScript = App.GetInitScript();
                 if (initScript != null)
                 {
                     var scriptSource = host.Engine.CreateScriptSourceFromString(initScript, SourceCodeKind.Statements);
@@ -78,6 +77,8 @@ namespace RevitPythonShell
                     }
                 });
             });
+            gui.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            gui.SetRevitAsWindowOwner();
             gui.ShowDialog();
             return Result.Succeeded;
         }

@@ -2,27 +2,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 using System.Threading;
 using Microsoft.Scripting.Hosting.Shell;
 using System.Windows.Input;
 using Microsoft.Scripting;
-using IronPython.Hosting;
-using IronPython.Runtime;
 using Microsoft.Scripting.Hosting;
-using Microsoft.Scripting.Hosting.Providers;
 using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Threading;
-using System.Windows.Documents;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
-using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Utils;
 using Style = Microsoft.Scripting.Hosting.Shell.Style;
 using System.Runtime.Remoting;
 

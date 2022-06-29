@@ -1,6 +1,5 @@
 ﻿// Copyright (c) 2010 Joe Moorhouse
 
-using System;
 using System.IO;
 using System.Text;
 

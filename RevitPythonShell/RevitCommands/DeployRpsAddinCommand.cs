@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.UI;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using Autodesk.Revit.Attributes;
-using System.Windows.Forms;
-using RevitPythonShell.RpsRuntime;
-using System.Security.AccessControl;
+using Autodesk.Revit.UI;
+using RpsRuntime;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.RevitCommands
 {
     /// <summary>
     /// Ask the user for an RpsAddin xml file. Create a subfolder

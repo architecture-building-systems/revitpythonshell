@@ -1,14 +1,11 @@
-﻿using Autodesk.Revit.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
-using System.Xml.Linq;
+using Autodesk.Revit.Attributes;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// The ExternalCommandAssemblyBuilder creates an assembly (.net dll) for

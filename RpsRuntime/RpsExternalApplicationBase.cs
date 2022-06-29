@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Autodesk.Revit.UI;
-using System.Reflection;
 using System.IO;
-using System.Xml.Linq;
-using System.Windows.Media.Imaging;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Xml.Linq;
+using Autodesk.Revit.UI;
 
-namespace RevitPythonShell.RpsRuntime
+namespace RpsRuntime
 {
     /// <summary>
     /// A base class for RpsAddins to inherit from.

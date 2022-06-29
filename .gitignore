@@ -1,7 +1,59 @@
+#Ignore thumbnails created by Windows
+Thumbs.db
+
+#Ignore files built by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.iref
+*.db
+*.ide
+*.opendb
+*.lock
+*.ide-shm
+*.ide-wal
+*.dll
+*.suo
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+.vs/
+
+#Rider
+.idea
+
+#Installer
+output
+
+#Nuget packages folder
+packages/
+*.html
+*.htm
+
 # Project specific files and folders to ignore
 PythonConsoleControl/obj/
 RevitPythonShell/obj/
 RpsRuntime/obj/
+
 
 
 # Byte-compiled / optimized / DLL files
@@ -15,7 +67,6 @@ __pycache__/
 .Python
 env/
 bin/
-build/
 develop-eggs/
 dist/
 eggs/
@@ -59,13 +110,6 @@ coverage.xml
 docs/_build/
 
 *.swp
-
-# project specific stuff 
-.DS_Store
-RevitPythonShell/Examples/Output
-RevitPythonShell/Examples/Output_HelloWorld
-*.suo
-
 
 # Visual Studio 2015 cache/options directory
 .vs/

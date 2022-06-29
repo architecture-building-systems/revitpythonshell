@@ -1,132 +1,65 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <Configurations>Debug;Debug One;Release</Configurations>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <!-- Please remove the targets you don't need in order
-      to exclude Revit versions your add-in won't support
-      use the list below for matching Revit version with .NET target
-              2014  |  net40
-              2015  |  net45
-              2016  |  net451
-              2017  |  net452
-              2018  |  net46
-              2019  |  net47
-              2020  |  net471
-              2021  |  net48
-              2022  |  net48
-      For example you can exclude Revit 2014, by simply removing net40 target belows
-      -->
-    <TargetFrameworks>net40;net45;net451;net452;net46;net47;net471;net48</TargetFrameworks>
+    <Configurations>Debug;Release</Configurations>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug One'">
-    <!-- You could debug just ONE addin version,
-         instead of building all the versions above.
-         Just put ONE target from the list above
-         e.g. if you want to debug ONLY Revit 2019,
-         put net47 below and switch to 'Debug One' configuration
-      -->
-    <TargetFrameworks>net48</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net40' ">
-    <RevitVersion>2014</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <RevitVersion>2015</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net451' ">
-    <RevitVersion>2016</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net452' ">
-    <RevitVersion>2017</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net46' ">
-    <RevitVersion>2018</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net47' ">
-    <RevitVersion>2019</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net471' ">
-    <RevitVersion>2020</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <RevitVersion>2021</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'net48' ">
-    <RevitVersion>2022</RevitVersion>
-  </PropertyGroup>
-  <PropertyGroup>
-    <!-- Forcibly set platform to 'x64' and ignore architecture-related problems -->
+    <TargetFramework>net48</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
-    <Platforms>x64</Platforms>
-    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
-
-    <!-- Force the project to use the legacy debugger engine -->
-    <DebugEngines>{351668CC-8477-4fbf-BFE3-5F1006E4DB1F}</DebugEngines>
-
-    <!-- Invert the behavior of new .csproj format - exclude files by default -->
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    <EnableDefaultItems>false</EnableDefaultItems>
-
-    <!-- Define handy symbols to use in the code in order to accommodate different Revit versions,
-    e.g. by wrapping legacy / deprecated API calls with #if REVIT2014 | REVIT2015 -->
-    <DefineConstants>REVIT$(RevitVersion);WINFORMS</DefineConstants>
-    <PreprocessorDefinitions>$(DefineConstants)</PreprocessorDefinitions>
-
-    <!-- Multiple targets can cause obj folder locking by concurrent builds -->
-    <BuildInParallel>false</BuildInParallel>
-
-    <!-- Override 'OutputPath' to Debug/Release + Revit version -->
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutDir>.\bin\$(Configuration)\$(RevitVersion)</OutDir>
     <PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>
     <Product>RevitPythonShell</Product>
     <Authors>RIPS</Authors>
     <Description>Revit Python Shell addin for Revit</Description>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <Configurations>Debug R22;Debug R23</Configurations>
+    <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23</Configurations>
   </PropertyGroup>
-
   <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-    <DefineConstants>TRACE;REVIT2020;WINFORMS;DEBUG</DefineConstants>
+    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <OutputPath>.\bin\$(Configuration)\$(RevitVersion)</OutputPath>
+    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug One|net48|x64'">
-    <Optimize>false</Optimize>
+  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
+    <Optimize>true</Optimize>
+    <DebugType>none</DebugType>
+    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
   </PropertyGroup>
-
-
-  <ItemGroup Condition="$(DefineConstants.Contains('WINFORMS'))">
-    <Reference Include="System.Windows.Forms" />
-  </ItemGroup>
-
+  <PropertyGroup Condition="$(Configuration.Contains('R18'))">
+    <RevitVersion>2018</RevitVersion>
+    <DefineConstants>$(DefineConstants);R18</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R19'))">
+    <RevitVersion>2019</RevitVersion>
+    <DefineConstants>$(DefineConstants);R19</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R20'))">
+    <RevitVersion>2020</RevitVersion>
+    <DefineConstants>$(DefineConstants);R20</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R21'))">
+    <RevitVersion>2021</RevitVersion>
+    <DefineConstants>$(DefineConstants);R21</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R22'))">
+    <RevitVersion>2022</RevitVersion>
+    <DefineConstants>$(DefineConstants);R22</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R23'))">
+    <RevitVersion>2023</RevitVersion>
+    <DefineConstants>$(DefineConstants);R23</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Version>$(RevitVersion)</Version>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Description>The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.</Description>
+    <PublishSingleFile>true</PublishSingleFile>
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2014.*" Condition=" '$(RevitVersion)' == '2014' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2015.*" Condition=" '$(RevitVersion)' == '2015' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2016.*" Condition=" '$(RevitVersion)' == '2016' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2017.*" Condition=" '$(RevitVersion)' == '2017' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2018.*" Condition=" '$(RevitVersion)' == '2018' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2019.*" Condition=" '$(RevitVersion)' == '2019' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2020.*" Condition=" '$(RevitVersion)' == '2020' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2021.*" Condition=" '$(RevitVersion)' == '2021' " PrivateAssets="All" />
-    <PackageReference Include="Autodesk.Revit.SDK" Version="2022.*" Condition=" '$(RevitVersion)' == '2022' " PrivateAssets="All" />
     <PackageReference Include="AvalonEdit" Version="6.0.1" />
   </ItemGroup>
-
-  <Target Name="PreventRevitSDKCopyLocal" AfterTargets="ResolveReferences">
-    <ItemGroup>
-      <!-- A temporary fix for Revit SDK files being copied to the output folder -->
-      <ReferenceCopyLocalPaths Remove="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.NuGetPackageId)' == 'Autodesk.Revit.SDK'" />
-    </ItemGroup>
-  </Target>
-
   <ItemGroup>
     <Reference Include="IronPython">
       <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
@@ -144,7 +77,6 @@
       <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
   </ItemGroup>
-
   <ItemGroup>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -163,7 +95,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandLoaderBase.cs" />
+    <Compile Include="Helpers\ProcessManager.cs" />
+    <Compile Include="RevitCommands\CommandLoaderBase.cs" />
     <Compile Include="Views\CompletionToolTip.cs" />
     <Compile Include="RevitCommands\ConfigureCommand.cs" />
     <Compile Include="Views\ConfigureCommandsForm.cs">
@@ -184,7 +117,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="RevitPythonShellApplication.cs" />
+    <Compile Include="App.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Views\ConfigureCommandsForm.resx">
@@ -196,6 +129,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="RevitPythonShell.addin" />
     <None Include="Manifests\AddinTemplate.addin">
       <Generator>MSDataSetGenerator</Generator>
       <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
@@ -215,14 +149,10 @@
     <EmbeddedResource Include="Resources\Python-32.png" />
     <EmbeddedResource Include="Resources\Settings-16.png" />
     <EmbeddedResource Include="Resources\Settings-32.png" />
-    <Content Include="DefaultConfig\startup.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="DefaultConfig\startup.py" />
     <Content Include="Properties\launchSettings.json" />
     <None Include="Examples\HelloWorld.iss" />
-    <Content Include="DefaultConfig\init.py">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="DefaultConfig\init.py" />
     <EmbeddedResource Include="Resources\CreateWall.png" />
     <Content Include="Examples\helloworld.py" />
     <Content Include="Examples\HelloWorld.xml">
@@ -235,10 +165,9 @@
     <Resource Include="Resources\Theme\Open.png" />
     <Resource Include="Resources\Theme\Paragraph.png" />
     <Resource Include="Resources\Theme\Paste.png" />
-    <Content Include="DefaultConfig\RevitPythonShell.xml">
+    <None Include="DefaultConfig\RevitPythonShell.xml">
       <SubType>Designer</SubType>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <EmbeddedResource Include="Resources\Python.xshd" />
   </ItemGroup>
   <ItemGroup>
@@ -259,32 +188,6 @@
       <IncludeAssets>all</IncludeAssets>
     </ProjectReference>
   </ItemGroup>
-
-  <Target Name="CreateAddinManifest" AfterTargets="AfterBuild">
-    <ItemGroup>
-      <AddinManifest Include="$(OutDir)\$(AssemblyName).addin" />
-    </ItemGroup>
-    <ReplaceFileText InputFilename="Manifests/AddinTemplate.addin" OutputFilename="@(AddinManifest)" MatchExpression="VendorDescription&gt;(.*?)&lt;" ReplacementText="VendorDescription&gt;$(Authors), $(Company), $(PackageProjectUrl)&lt;" />
-    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="FullClassName&gt;((.*?)\.)+" ReplacementText="FullClassName&gt;$(RootNamespace)." />
-    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;Name&gt;(.*?)&lt;" ReplacementText="&lt;Name&gt;$(Product)&lt;" />
-    <ReplaceFileText InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="&lt;VendorId&gt;(.*?)&lt;" ReplacementText="&lt;VendorId&gt;$(PackageId)&lt;" />
-    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
-    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(AddinManifest)" OutputFilename="@(AddinManifest)" MatchExpression="Assembly&gt;(.*?)&lt;" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
-  </Target>
-
-  <Target Name="CreateInnoSetupFile" AfterTargets="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-    <PropertyGroup>
-      <OutputDirPath>$(SolutionName)\bin\$(Configuration)\$(RevitVersion)\</OutputDirPath>
-    </PropertyGroup>
-    <ItemGroup>
-      <InnoSetup Include="$(SolutionDir)\Setup_$(AssemblyName)_$(RevitVersion).iss" />
-    </ItemGroup>
-    <ReplaceFileText InputFilename="Manifests/SetupRPSTemplate.iss" OutputFilename="@(InnoSetup)" MatchExpression="{OUTDIR}" ReplacementText="$(OutputDirPath)" />
-    <ReplaceFileText InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{REVIT_VERSION}" ReplacementText="$(RevitVersion)" />
-    <ReplaceFileText Condition="'$(Configuration)' == 'Release'" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$(AssemblyName).dll&lt;" />
-    <ReplaceFileText Condition="$(Configuration.Contains('Debug'))" InputFilename="@(InnoSetup)" OutputFilename="@(InnoSetup)" MatchExpression="{ASSEMBLY_PATH}" ReplacementText="Assembly&gt;$([System.IO.Path]::GetFullPath('$(OutputPath)'))$(AssemblyName).dll&lt;" />
-  </Target>
-
   <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
     <ParameterGroup>
       <InputFilename ParameterType="System.String" Required="true" />
@@ -297,14 +200,11 @@
       <Using Namespace="System" />
       <Using Namespace="System.IO" />
       <Using Namespace="System.Text.RegularExpressions" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
               File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
-        ]]>
-      </Code>
+        ]]></Code>
     </Task>
   </UsingTask>
-
   <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Core'" TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
     <ParameterGroup>
       <InputFilename ParameterType="System.String" Required="true" />
@@ -316,28 +216,29 @@
       <Using Namespace="System" />
       <Using Namespace="System.IO" />
       <Using Namespace="System.Text.RegularExpressions" />
-      <Code Type="Fragment" Language="cs">
-        <![CDATA[
+      <Code Type="Fragment" Language="cs"><![CDATA[
               File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
-        ]]>
-      </Code>
+        ]]></Code>
     </Task>
   </UsingTask>
-
-  <Target Name="CopyAddinsToAppData" AfterTargets="CreateAddinManifest" Condition="$(Configuration.Contains('Debug'))">
-    <!-- Copy newly compiled add-in files to AppData folder (before starting the debugger) -->
-    <Message Importance="high" Text="Copying addin file into Revit Addin folder" />
+  <Target Name="CopyFile" AfterTargets="CoreBuild">
+    <Message Importance="high" Text="Start Copy File To Addins Folder Revit $(RevitVersion)" />
     <ItemGroup>
-      <AddinFiles Include="$(OutputPath)\..\**\*.addin" />
+      <RootItem Include="$(ProjectDir)*.addin" />
+      <ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
+      <AddinItem Include="$(TargetDir)*.*" />
     </ItemGroup>
-    <Copy SourceFiles="@(AddinFiles)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\%(RecursiveDir)" SkipUnchangedFiles="true" OverwriteReadOnlyFiles="true" Retries="3" RetryDelayMilliseconds="300" />
-  </Target>
+    <PropertyGroup>
+      <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
+      <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
+    </PropertyGroup>
 
-  <Target Name="CleanAddinsInAppData" AfterTargets="AfterClean">
-    <!-- Delete previously deployed to AppData folder add-in files -->
-    <ItemGroup>
-      <AddinFiles Include="$(AppData)\Autodesk\Revit\Addins\**\$(AssemblyName).*" />
-    </ItemGroup>
-    <Delete Files="@(AddinFiles)" />
+    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
+    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AddinDir)" />
+    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
+    
+    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
   </Target>
 </Project>

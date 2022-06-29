@@ -1,4 +1,4 @@
-﻿namespace RevitPythonShell
+﻿namespace RevitPythonShell.Views
 {
     partial class ConfigureCommandsForm
     {

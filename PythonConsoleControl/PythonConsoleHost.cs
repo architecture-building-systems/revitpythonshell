@@ -1,10 +1,7 @@
 ﻿// Copyright (c) 2010 Joe Moorhouse
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Threading;
 using IronPython.Hosting;
 using IronPython.Runtime;

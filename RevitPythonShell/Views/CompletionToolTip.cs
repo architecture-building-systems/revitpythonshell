@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
 
-namespace RevitPythonShell
+namespace RevitPythonShell.Views
 {
     /// <summary>
     /// Display a listbox with a list of completions for a given string.
