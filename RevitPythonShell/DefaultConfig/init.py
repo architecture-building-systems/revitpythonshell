@@ -102,7 +102,7 @@ _revitlookup = RevitLookup(__revit__)
 
 
 def SnoopCurrentSelection():
-    _revitlookup.LookupCurrentSelection()
+    _revitlookup.SnoopCurrentSelection()
 '''
 ## Example :
 ## _revitlookup.SnoopElement(doc.ActiveView)
