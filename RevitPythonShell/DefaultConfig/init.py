@@ -59,9 +59,7 @@ class RevitLookup(object):
         clr.AddReference(rlapp.GetType().Assembly)
         import RevitLookup
         self.RevitLookup = RevitLookup
-        # See note in CollectorExt.cs in the RevitLookup source:
-        #self.RevitLookup.Snoop.CollectorExts.CollectorExt.m_app = uiApplication
-        #self.revit = uiApplication
+
     def IsInstalled(self):
         if not self.RevitLookup:
             print('RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.')
