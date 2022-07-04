@@ -20,7 +20,7 @@ def quit():
 exit = quit
 
 
-def get_selected_elements(doc):
+def getSelectedElements(doc):
     """API change in Revit 2016 makes old method throw an error"""
     try:
         # Revit 2016
@@ -60,18 +60,20 @@ class RevitLookup(object):
         import RevitLookup
         self.RevitLookup = RevitLookup
 
-    def IsInstalled(self):
+    def isInstalled(self):
         if not self.RevitLookup:
             print('RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.')
             return False
         return True
 
-    def SnoopCurrentSelection(self):
-        if self.IsInstalled()== True:
+    def snoopCurrentSelection(self):
+        if self.isInstalled():
             form = self.RevitLookup.Views.ObjectsView()
             form.SnoopAndShow(self.RevitLookup.Core.Selector.SnoopCurrentSelection)
-    def SnoopElement(self,element):
-        if self.IsInstalled()== True:
+
+    def snoopElement(self,
+                     element):
+        if self.isInstalled():
             if element is None:
                 print("element null object, Please input element to snoop")
                 return
@@ -83,14 +85,18 @@ class RevitLookup(object):
                 elementSet = ElementSet()
                 for e in element:
                     elementSet.Insert(e)
-                element = elementSet
+                form = self.RevitLookup.Views.ObjectsView(elementSet)
+                self.RevitLookup.Core.ModelessWindowFactory.Show(form)
+                pass
             form = self.RevitLookup.Views.ObjectsView(element)
             self.RevitLookup.Core.ModelessWindowFactory.Show(form)
-    def SnoopActiveView():
-        if self.IsInstalled()== True:
-            self.SnoopElement(doc.ActiveView)
-    def SnoopDB(self):
-        if self.IsInstalled()== True:
+
+    def snoopActiveView():
+        if self.isInstalled():
+            self.snoopElement(doc.ActiveView)
+
+    def snoopDB(self):
+        if self.isInstalled():
             form = self.RevitLookup.Views.ObjectsView()
             form.SnoopAndShow(self.RevitLookup.Core.Selector.SnoopDb)
 
@@ -99,20 +105,20 @@ _revitlookup = RevitLookup(__revit__)
 
 
 
-def SnoopCurrentSelection():
-    _revitlookup.SnoopCurrentSelection()
+def snoopCurrentSelection():
+    _revitlookup.snoopCurrentSelection()
 '''
 ## Example :
-## _revitlookup.SnoopElement(doc.ActiveView)
-## _revitlookup.SnoopElement(959510)
-## _revitlookup.SnoopElement(doc.ActiveView.Id)
+## _revitlookup.snoopElement(doc.ActiveView)
+## _revitlookup.snoopElement(959510)
+## _revitlookup.snoopElement(doc.ActiveView.Id)
 '''
-def SnoopElement(element):
-    _revitlookup.SnoopElement(element)
-def SnoopActiveView():
-    _revitlookup.SnoopActiveView()
-def SnoopDB():
-    _revitlookup.SnoopDB()
+def snoopElement(element):
+    _revitlookup.snoopElement(element)
+def snoopActiveView():
+    _revitlookup.snoopActiveView()
+def snoopDB():
+    _revitlookup.snoopDB()
 # ------------------------------------------------------------------------------
 
 
