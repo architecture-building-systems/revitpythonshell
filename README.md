@@ -36,11 +36,7 @@ database exploration tool to become a Revit API Ninja :)
 Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2023.
 
 Older versions:
-- [Installer for Autodesk Revit 2022](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.06.20/2021.06.20_Setup_RevitPythonShell_2022.exe)
-- [Installer for Autodesk Revit 2021](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.03.22/2021.03.22_Setup_RevitPythonShell_2021.exe)
-- [Installer for Autodesk Revit 2020](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
-- [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
-- [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
+- [Installer for Autodesk Revit 2018 to Revit 2023](https://github.com/architecture-building-systems/revitpythonshell/releases/tag/1.0.1)
 - [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.06/2017.04.06_Setup_RevitPythonShell_2017.exe)
 - [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2016.exe)
 - [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2015.exe)
@@ -69,7 +65,7 @@ Learn some python:
 
 Learn about the Revit API:
 
-* [Autodesk Developer Network](T)
+* [Autodesk Developer Network](https://www.autodesk.com/developer-network/open)
 * [Jeremy Tammiks blog "The Building Coder"](http://thebuildingcoder.typepad.com/)
 
 Tutorials recommended by the community:
