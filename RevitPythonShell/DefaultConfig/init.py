@@ -60,7 +60,10 @@ class RevitLookup(object):
         import RevitLookup
         self.RevitLookup = RevitLookup
         # See note in CollectorExt.cs in the RevitLookup source:
-        self.RevitLookup.Snoop.CollectorExts.CollectorExt.m_app = uiApplication
+        try:
+            self.RevitLookup.Snoop.CollectorExts.CollectorExt.m_app = uiApplication
+        except TypeError: # assigning m_app is now not required and even not possible
+            pass
         self.revit = uiApplication
 
     def lookup(self, element):
