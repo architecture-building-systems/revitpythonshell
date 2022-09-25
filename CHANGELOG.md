@@ -1,4 +1,6 @@
 # Changelog
+- 2022-09-22 **1.0.2**
+  - Fix set CollectorExt.m_app error. [#128](https://github.com/architecture-building-systems/revitpythonshell/pull/128)
 - 2022-06-27 **1.0.1**
   - Add Process CI/CD Automatic.
   - Fix Problem show owner window.
