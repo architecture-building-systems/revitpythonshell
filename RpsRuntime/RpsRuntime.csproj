@@ -131,4 +131,7 @@
     <ItemGroup>
         <Folder Include="Properties\" />
     </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="Resources\IronPython.3.4.0.zip" />
+    </ItemGroup>
 </Project>
