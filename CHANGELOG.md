@@ -1,5 +1,5 @@
 # Changelog
-- 2022-12-16 **1.0.3**
+- 2022-12-16 **2.0.0**
   - Add support IronPython 3.4 [#136](https://github.com/architecture-building-systems/revitpythonshell/pull/136)
 - 2022-09-22 **1.0.2**
   - Fix set CollectorExt.m_app error. [#128](https://github.com/architecture-building-systems/revitpythonshell/pull/128)
