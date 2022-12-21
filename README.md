@@ -69,7 +69,7 @@ Learn some python:
 
 Learn about the Revit API:
 
-* [Autodesk Developer Network](T)
+* [Autodesk Developer Network](https://www.autodesk.com/developer-network/open)
 * [Jeremy Tammiks blog "The Building Coder"](http://thebuildingcoder.typepad.com/)
 
 Tutorials recommended by the community:
