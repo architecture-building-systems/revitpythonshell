@@ -31,12 +31,24 @@ database exploration tool to become a Revit API Ninja :)
 - `lookup()` function for snooping `Element`, `ElementSet` and `ElementId` objects
   in [RevitLookup](https://github.com/jeremytammik/RevitLookup)
 
+## IronPython 3
+
+IronPython 3.4 uses Python 3.4 syntax and standard libraries and so your Python code will need to be updated accordingly. There are numerous tools and guides available on the web to help porting from Python 2 to 3.
+
+IronPython 3 targets Python 3, including the re-organized standard library, Unicode strings, and all of the other new features.with user upgrade from **IronPython 2** to **IronPython 3**, please follow [Upgrade from IronPython 2 to IronPython 3](https://github.com/IronLanguages/ironpython3/blob/master/Documentation/upgrading-from-ipy2.md).
+
+Various differences between IronPython and CPython can follow at [Differences IronPython and CPython](https://github.com/IronLanguages/ironpython3/blob/master/Documentation/differences-from-c-python.md).
+
 ## Installation
 
 Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2023.
 
 Older versions:
-- [Installer for Autodesk Revit 2018 to Revit 2023](https://github.com/architecture-building-systems/revitpythonshell/releases/tag/1.0.1)
+- [Installer for Autodesk Revit 2022](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.06.20/2021.06.20_Setup_RevitPythonShell_2022.exe)
+- [Installer for Autodesk Revit 2021](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.03.22/2021.03.22_Setup_RevitPythonShell_2021.exe)
+- [Installer for Autodesk Revit 2020](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2019.01.27/2020.01.19_Setup_RevitPythonShell_2020.exe)
+- [Installer for Autodesk Revit 2019](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2018.09.19/2018.09.19_Setup_RevitPythonShell_2019.exe)
+- [Installer for Autodesk Revit 2018 (and 2018.1)](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.07.24/2017.07.24_Setup_RevitPythonShell_2018.exe)
 - [Installer for Autodesk Revit 2017](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.04.06/2017.04.06_Setup_RevitPythonShell_2017.exe)
 - [Installer for Autodesk Revit 2016](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2016.exe)
 - [Installer for Autodesk Revit 2015](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2017.03.07/2017.03.07_Setup_RevitPythonShell_2015.exe)
