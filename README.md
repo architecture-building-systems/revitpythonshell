@@ -31,6 +31,14 @@ database exploration tool to become a Revit API Ninja :)
 - `lookup()` function for snooping `Element`, `ElementSet` and `ElementId` objects
   in [RevitLookup](https://github.com/jeremytammik/RevitLookup)
 
+## IronPython 3
+
+IronPython 3.4 uses Python 3.4 syntax and standard libraries and so your Python code will need to be updated accordingly. There are numerous tools and guides available on the web to help porting from Python 2 to 3.
+
+IronPython 3 targets Python 3, including the re-organized standard library, Unicode strings, and all of the other new features.with user upgrade from **IronPython 2** to **IronPython 3**, please follow [Upgrade from IronPython 2 to IronPython 3](https://github.com/IronLanguages/ironpython3/blob/master/Documentation/upgrading-from-ipy2.md).
+
+Various differences between IronPython and CPython can follow at [Differences IronPython and CPython](https://github.com/IronLanguages/ironpython3/blob/master/Documentation/differences-from-c-python.md).
+
 ## Installation
 
 Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2023.
@@ -69,7 +77,7 @@ Learn some python:
 
 Learn about the Revit API:
 
-* [Autodesk Developer Network](T)
+* [Autodesk Developer Network](https://www.autodesk.com/developer-network/open)
 * [Jeremy Tammiks blog "The Building Coder"](http://thebuildingcoder.typepad.com/)
 
 Tutorials recommended by the community:

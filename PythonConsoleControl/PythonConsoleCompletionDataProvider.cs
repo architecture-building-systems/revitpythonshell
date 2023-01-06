@@ -157,7 +157,7 @@ namespace PythonConsoleControl
             //string dirCommand = "dir(" + objectName + ")";
             string dirCommand = "sorted([m for m in dir(" + name + ") if not m.startswith('__')], key = str.lower) + sorted([m for m in dir(" + name + ") if m.startswith('__')])";
             object value = commandLine.ScriptScope.Engine.CreateScriptSourceFromString(dirCommand, SourceCodeKind.Expression).Execute(commandLine.ScriptScope);
-            foreach (object member in (value as IronPython.Runtime.List))
+            foreach (object member in (value as IronPython.Runtime.PythonList))
             {
                 bool isInstance = false;
 

@@ -17,10 +17,12 @@ def alert(msg):
 
 def quit():
     __window__.Close()
+
+
 exit = quit
 
 
-def get_selected_elements(doc):
+def GetSelectedElements(doc):
     """API change in Revit 2016 makes old method throw an error"""
     try:
         # Revit 2016
@@ -31,7 +33,7 @@ def get_selected_elements(doc):
         return list(__revit__.ActiveUIDocument.Selection.Elements)
 
 
-selection = get_selected_elements(doc)
+selection = GetSelectedElements(doc)
 # convenience variable for first element in selection
 if len(selection):
     s0 = selection[0]
@@ -51,7 +53,7 @@ class RevitLookup(object):
         try:
             rlapp = [app for app in uiApplication.LoadedApplications
                      if app.GetType().Namespace == 'RevitLookup'
-                     and app.GetType().Name == 'App'][0]
+                     and app.GetType().Name == 'Application'][0]
         except IndexError:
             self.RevitLookup = None
             return
@@ -59,35 +61,73 @@ class RevitLookup(object):
         clr.AddReference(rlapp.GetType().Assembly)
         import RevitLookup
         self.RevitLookup = RevitLookup
-        # See note in CollectorExt.cs in the RevitLookup source:
-        try:
-            self.RevitLookup.Snoop.CollectorExts.CollectorExt.m_app = uiApplication
-        except TypeError: # assigning m_app is now not required and even not possible
-            pass
-        self.revit = uiApplication
 
-    def lookup(self, element):
+    def IsInstalled(self):
         if not self.RevitLookup:
             print('RevitLookup not installed. Visit https://github.com/jeremytammik/RevitLookup to install.')
-            return
-        if isinstance(element, int):
-            element = self.revit.ActiveUIDocument.Document.GetElement(ElementId(element))
-        if isinstance(element, ElementId):
-            element = self.revit.ActiveUIDocument.Document.GetElement(element)
-        if isinstance(element, list):
-            elementSet = ElementSet()
-            for e in element:
-                elementSet.Insert(e)
-            element = elementSet
-        form = self.RevitLookup.Snoop.Forms.Objects(element)
-        form.ShowDialog()
+            return False
+        return True
+
+    def SnoopCurrentSelection(self):
+        if self.IsInstalled():
+            form = self.RevitLookup.Views.ObjectsView()
+            form.SnoopAndShow(self.RevitLookup.Core.Selector.SnoopCurrentSelection)
+
+    def SnoopElement(self,element):
+        if self.IsInstalled():
+            if element is None:
+                print("element null object, Please input element to snoop")
+                return
+            if isinstance(element, int):
+                element = doc.GetElement(ElementId(element))
+            if isinstance(element, ElementId):
+                element = doc.GetElement(element)
+            if isinstance(element, list):
+                elementSet = ElementSet()
+                for e in element:
+                    elementSet.Insert(e)
+                form = self.RevitLookup.Views.ObjectsView(elementSet)
+                self.RevitLookup.Core.ModelessWindowFactory.Show(form)
+                pass
+            form = self.RevitLookup.Views.ObjectsView(element)
+            self.RevitLookup.Core.ModelessWindowFactory.Show(form)
+
+    def SnoopActiveView():
+        if self.IsInstalled():
+            self.SnoopElement(doc.ActiveView)
+
+    def SnoopDb(self):
+        if self.IsInstalled():
+            form = self.RevitLookup.Views.ObjectsView()
+            form.SnoopAndShow(self.RevitLookup.Core.Selector.SnoopDb)
 
 
 _revitlookup = RevitLookup(__revit__)
 
 
-def lookup(element):
-    _revitlookup.lookup(element)
+def SnoopCurrentSelection():
+    _revitlookup.SnoopCurrentSelection()
+
+
+'''
+## Example :
+## _revitlookup.SnoopElement(doc.ActiveView)
+## _revitlookup.SnoopElement(959510)
+## _revitlookup.SnoopElement(doc.ActiveView.Id)
+'''
+
+
+def SnoopElement(element):
+    _revitlookup.SnoopElement(element)
+
+
+def SnoopActiveView():
+    _revitlookup.SnoopActiveView()
+
+
+def SnoopDb():
+    _revitlookup.SnoopDb()
+
 
 # ------------------------------------------------------------------------------
 
