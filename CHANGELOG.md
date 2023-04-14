@@ -1,4 +1,6 @@
 # Changelog
+- 2023-04-14 **2.0.1**
+  - Support Autodesk Revit version 2024.
 - 2022-12-16 **2.0.0**
   - Add support IronPython 3.4 [#136](https://github.com/architecture-building-systems/revitpythonshell/pull/136)
   - Please follow [Upgrade from IronPython2 to IronPython 3](https://github.com/IronLanguages/ironpython3/blob/master/Documentation/upgrading-from-ipy2.md) to upgrade your code.
