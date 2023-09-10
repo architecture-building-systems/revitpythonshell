@@ -62,7 +62,7 @@
     <PublishTrimmed>true</PublishTrimmed>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.0.1" />
+    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="IronPython">
