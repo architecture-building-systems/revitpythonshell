@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls.Ribbon;
 using System.Windows.Input;
 using System.Xml;
 using ICSharpCode.AvalonEdit;
@@ -53,7 +54,11 @@ namespace RevitPythonShell.Views
             //propertyGridComboBox.SelectedIndex = 1;
             textEditor.ShowLineNumbers = true;
         }
-
+        private void newFileClick(object sender, RoutedEventArgs e)
+        {
+            currentFileName = null;
+            textEditor.Text = string.Empty;
+        }
         private void openFileClick(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dlg = new OpenFileDialog();
@@ -65,13 +70,23 @@ namespace RevitPythonShell.Views
                 //textEditor.SyntaxHighlighting = HighlightingManager.Instance.GetDefinitionByExtension(Path.GetExtension(currentFileName));
             }
         }
-
+        private void saveAsFileClick(object sender, EventArgs e)
+        {
+            currentFileName = null;
+            SaveFile();
+        }
         private void saveFileClick(object sender, EventArgs e)
+        {
+           SaveFile();
+        }
+        private void SaveFile()
         {
             if (currentFileName == null)
             {
                 SaveFileDialog dlg = new SaveFileDialog();
-                dlg.DefaultExt = ".txt";
+                dlg.Filter = "Save Files (*.py)|*.py";
+                dlg.DefaultExt = "py";
+                dlg.AddExtension = true;
                 if (dlg.ShowDialog() ?? false)
                 {
                     currentFileName = dlg.FileName;
@@ -116,5 +131,6 @@ namespace RevitPythonShell.Views
                 tb.GotFocus -= textEditor_GotFocus;
             }
         }
+
     }
 }

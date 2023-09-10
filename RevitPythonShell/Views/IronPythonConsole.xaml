@@ -14,7 +14,7 @@
     -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="20*" />
             <RowDefinition Height="10" />
             <RowDefinition Height="12*" />
@@ -24,105 +24,105 @@
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0">
-            <ToolBar DockPanel.Dock="Top">
-                <ToolBar.Resources>
+            <Ribbon Margin="0,-22,0,0" 
+                    KeyboardNavigation.TabIndex="0"
+                    ContextMenu="{x:Null}"
+                    AllowDrop="False">
+                <Ribbon.Resources>
                     <Style TargetType="{x:Type Image}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}" Value="False">
+                            <DataTrigger
+                                Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ButtonBase}, AncestorLevel=1}, Path=IsEnabled}"
+                                Value="False">
                                 <Setter Property="Opacity" Value="0.30" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </ToolBar.Resources>
-                <Button Click="openFileClick">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Open.png"
-                  ToolTip="Open Python Script" />
-                </Button>
-                <Button Click="saveFileClick">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Save.png"
-                  ToolTip="Save This Script Into File" />
-                </Button>
-                <Separator />
-                <Button Command="Cut">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Cut.png"
-                  ToolTip="Cut Selected" />
-                </Button>
-                <Button Command="Copy">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Copy.png"
-                  ToolTip="Copy Selected" />
-                </Button>
-                <Button Command="Paste">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Paste.png"
-                  ToolTip="Paste Into Script Editor" />
-                </Button>
-                <Button Command="Delete">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Delete.png"
-                  ToolTip="Delete Selected" />
-                </Button>
-                <Separator />
-                <Button Command="Undo">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Undo.png"
-                  ToolTip="Undo" />
-                </Button>
-                <Button Command="Redo">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Redo.png"
-                  ToolTip="Redo" />
-                </Button>
-                <Separator />
-                <CheckBox IsChecked="{Binding ElementName=textEditor, Path=WordWrap}">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/WordWrap.png"
-                  ToolTip="Toggle Word Wrap" />
-                </CheckBox>
-                <CheckBox IsChecked="{Binding ElementName=textEditor, Path=ShowLineNumbers}">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Number.png"
-                  ToolTip="Toggle Line Numbers" />
-                </CheckBox>
-                <CheckBox IsChecked="{Binding ElementName=textEditor, Path=Options.ShowEndOfLine}">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Paragraph.png"
-                  ToolTip="Toggle Show End of Line" />
-                </CheckBox>
-                <Separator />
-                <Button Click="runClick">
-                    <Image
-                  Height="16"
-                  SnapsToDevicePixels="True"
-                  Source="/RevitPythonShell;component/Resources/Theme/Run.png"
-                  ToolTip="Run Script. Results will be displayed in the IronPython prompt." />
-                </Button>
-            </ToolBar>
+                </Ribbon.Resources>
+                <Ribbon.ApplicationMenu>
+                    <RibbonApplicationMenu Visibility="Collapsed">
+                    </RibbonApplicationMenu>
+                </Ribbon.ApplicationMenu>
+                <RibbonTab Header="Home" ContextMenu="{x:Null}">
+                    <RibbonGroup Header="File">
+                        <RibbonButton Label="New" LargeImageSource="../Resources/Theme/New.png"
+                                      ToolTip="New (Ctrl + N)"
+                                      SnapsToDevicePixels="True"
+                                     Click="newFileClick" />
+                        <RibbonButton Label="Open" LargeImageSource="../Resources/Theme/Open.png"
+                                      ToolTip="Open Python Script"
+                                      Click="openFileClick" />
+                        <RibbonButton Label="Save" LargeImageSource="../Resources/Theme/Save.png"
+                                      ToolTip="Save This Script Into File"
+                                      Click="saveFileClick"
+                                      SnapsToDevicePixels="True" />
+                        <RibbonButton Label="Save As" LargeImageSource="../Resources/Theme/SaveAs.png"
+                                      ToolTip="Save As"
+                                      SnapsToDevicePixels="True"
+                                      Click="saveAsFileClick" />
+                    </RibbonGroup>
+                    <RibbonGroup Header="Modify">
+                        <RibbonButton Label="Cut" SmallImageSource="../Resources/Theme/Cut.png"
+                                      ToolTip="Cut Selected"
+                                      SnapsToDevicePixels="True"
+                                      Command="Cut" />
+                        <RibbonButton Label="Copy" SmallImageSource="../Resources/Theme/Save.png"
+                                      ToolTip="Copy Selected"
+                                      SnapsToDevicePixels="True"
+                                      Command="Copy" />
+                        <RibbonButton Label="Paste" SmallImageSource="../Resources/Theme/Paste.png"
+                                      ToolTip="Paste Into Script Editor"
+                                      SnapsToDevicePixels="True"
+                                      Command="Paste" />
+                    </RibbonGroup>
+                    <RibbonGroup Header="Edit">
+                        <RibbonToggleButton Label="Undo"
+                                            SmallImageSource="../Resources/Theme/Undo.png"
+                                            SnapsToDevicePixels="True"
+                                            ToolTip="Undo"
+                                            Command="Undo" />
+                        <RibbonButton Label="Redo" SmallImageSource="../Resources/Theme/Redo.png"
+                                      ToolTip="Redo"
+                                      SnapsToDevicePixels="True"
+                                      Command="Redo" />
+                        <RibbonButton Label="Delete" SmallImageSource="../Resources/Theme/Delete.png"
+                                      ToolTip="Delete Selected"
+                                      SnapsToDevicePixels="True"
+                                      Command="Delete" />
+                    </RibbonGroup>
+                    <RibbonGroup Header="Cell">
+                        <RibbonCheckBox Label="WordWrap" SmallImageSource="../Resources/Theme/WordWrap.png"
+                                        ToolTip="Toggle Word Wrap"
+                                        SnapsToDevicePixels="True"
+                                        IsChecked="{Binding ElementName=textEditor, Path=WordWrap}" />
+                        <RibbonCheckBox Label="Paragraph" SmallImageSource="../Resources/Theme/Paragraph.png"
+                                        ToolTip="Toggle Show End of Line"
+                                        SnapsToDevicePixels="True"
+                                        IsChecked="{Binding ElementName=textEditor, Path=Options.ShowEndOfLine}"
+                                        />
+                        <RibbonCheckBox Label="Number" SmallImageSource="../Resources/Theme/Number.png"
+                                        IsChecked="{Binding ElementName=textEditor, Path=ShowLineNumbers}"
+                                        ToolTip="Toggle Line Numbers"
+                                        SnapsToDevicePixels="True"/>
+                    </RibbonGroup>
+                    <RibbonGroup Header="Execute">
+                        <RibbonButton Label="Run" LargeImageSource="../Resources/Theme/Run.png"
+                                      SnapsToDevicePixels="True"
+                                      Click="runClick"
+                                      ToolTip="Run Script. Results will be displayed in the IronPython prompt." />
+                    </RibbonGroup>
+                </RibbonTab>
+            </Ribbon>
+            <!-- <ToolBar DockPanel.Dock="Top"> -->
+            <!--     <Separator /> -->
+            <!--     <CheckBox IsChecked="{Binding ElementName=textEditor, Path=ShowLineNumbers}"> -->
+            <!--         <Image -->
+            <!--             Height="16" -->
+            <!--             SnapsToDevicePixels="True" -->
+            <!--             Source="/RevitPythonShell;component/Resources/Theme/Number.png" -->
+            <!--             ToolTip="Toggle Line Numbers" /> -->
+            <!--     </CheckBox> -->
+            <!-- </ToolBar> -->
         </DockPanel>
         <Grid Grid.Column="0" Grid.Row="1">
             <avalonEdit:TextEditor
@@ -135,10 +135,11 @@
         </Grid>
         <GridSplitter
             Grid.Row="2"
+            Grid.Column="0"
             Height="10"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center" />
-      
+
         <Grid Grid.Row="3" MinHeight="20">
             <console:IronPythonConsoleControl Name="consoleControl" />
         </Grid>
