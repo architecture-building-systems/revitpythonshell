@@ -51,6 +51,7 @@ namespace RevitPythonShell.Views
         private void MainWindow_Initialized(object sender, EventArgs e)
         {
             //propertyGridComboBox.SelectedIndex = 1;
+            textEditor.ShowLineNumbers = true;
         }
 
         private void openFileClick(object sender, RoutedEventArgs e)

@@ -14,23 +14,16 @@
     -->
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="30*" />
+            <RowDefinition Height="30" />
+            <RowDefinition Height="20*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="12*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0" Grid.Row="0">
-            <console:IronPythonConsoleControl Name="consoleControl" />
-        </Grid>
-        <GridSplitter
-            Grid.Row="1"
-            Height="10"
-            HorizontalAlignment="Stretch"
-            VerticalAlignment="Center" />
-        <DockPanel Grid.Column="0" Grid.Row="2">
+        <DockPanel Grid.Column="0" Grid.Row="0">
             <ToolBar DockPanel.Dock="Top">
                 <ToolBar.Resources>
                     <Style TargetType="{x:Type Image}">
@@ -43,103 +36,112 @@
                 </ToolBar.Resources>
                 <Button Click="openFileClick">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Open.png"
-                        ToolTip="Open Python Script" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Open.png"
+                  ToolTip="Open Python Script" />
                 </Button>
                 <Button Click="saveFileClick">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Save.png"
-                        ToolTip="Save This Script Into File" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Save.png"
+                  ToolTip="Save This Script Into File" />
                 </Button>
                 <Separator />
                 <Button Command="Cut">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Cut.png"
-                        ToolTip="Cut Selected" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Cut.png"
+                  ToolTip="Cut Selected" />
                 </Button>
                 <Button Command="Copy">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Copy.png"
-                        ToolTip="Copy Selected" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Copy.png"
+                  ToolTip="Copy Selected" />
                 </Button>
                 <Button Command="Paste">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Paste.png"
-                        ToolTip="Paste Into Script Editor" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Paste.png"
+                  ToolTip="Paste Into Script Editor" />
                 </Button>
                 <Button Command="Delete">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Delete.png"
-                        ToolTip="Delete Selected" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Delete.png"
+                  ToolTip="Delete Selected" />
                 </Button>
                 <Separator />
                 <Button Command="Undo">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Undo.png"
-                        ToolTip="Undo" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Undo.png"
+                  ToolTip="Undo" />
                 </Button>
                 <Button Command="Redo">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Redo.png"
-                        ToolTip="Redo" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Redo.png"
+                  ToolTip="Redo" />
                 </Button>
                 <Separator />
                 <CheckBox IsChecked="{Binding ElementName=textEditor, Path=WordWrap}">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/WordWrap.png"
-                        ToolTip="Toggle Word Wrap" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/WordWrap.png"
+                  ToolTip="Toggle Word Wrap" />
                 </CheckBox>
                 <CheckBox IsChecked="{Binding ElementName=textEditor, Path=ShowLineNumbers}">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Number.png"
-                        ToolTip="Toggle Line Numbers" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Number.png"
+                  ToolTip="Toggle Line Numbers" />
                 </CheckBox>
                 <CheckBox IsChecked="{Binding ElementName=textEditor, Path=Options.ShowEndOfLine}">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Paragraph.png"
-                        ToolTip="Toggle Show End of Line" />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Paragraph.png"
+                  ToolTip="Toggle Show End of Line" />
                 </CheckBox>
                 <Separator />
                 <Button Click="runClick">
                     <Image
-                        Height="16"
-                        SnapsToDevicePixels="True"
-                        Source="/RevitPythonShell;component/Resources/Theme/Run.png"
-                        ToolTip="Run Script. Results will be displayed in the IronPython prompt." />
+                  Height="16"
+                  SnapsToDevicePixels="True"
+                  Source="/RevitPythonShell;component/Resources/Theme/Run.png"
+                  ToolTip="Run Script. Results will be displayed in the IronPython prompt." />
                 </Button>
             </ToolBar>
-            <Grid DockPanel.Dock="Bottom">
-                <avalonEdit:TextEditor
-                    FontFamily="Consolas"
-                    FontSize="10pt"
-                    GotFocus="textEditor_GotFocus"
-                    Name="textEditor">
-                    # IronPython Pad. Write code snippets here and F5 to run.
-                </avalonEdit:TextEditor>
-            </Grid>
         </DockPanel>
+        <Grid Grid.Column="0" Grid.Row="1">
+            <avalonEdit:TextEditor
+                FontFamily="Consolas"
+                FontSize="10pt"
+                GotFocus="textEditor_GotFocus"
+                Name="textEditor">
+                # IronPython Pad. Write code snippets here and F5 to run.
+            </avalonEdit:TextEditor>
+        </Grid>
+        <GridSplitter
+            Grid.Row="2"
+            Height="10"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Center" />
+      
+        <Grid Grid.Row="3" MinHeight="20">
+            <console:IronPythonConsoleControl Name="consoleControl" />
+        </Grid>
 
     </Grid>
 </Window>
