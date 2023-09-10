@@ -1,7 +1,9 @@
 ﻿// Copyright (c) 2010 Joe Moorhouse
 
+using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace PythonConsoleControl
 {
@@ -63,8 +65,18 @@ namespace PythonConsoleControl
         /// </summary>
         public override void Write(byte[] buffer, int offset, int count)
         {
-            string text = UTF8Encoding.UTF8.GetString(buffer, offset, count);
+            string text = Encoding.UTF8.GetString(buffer, offset, count);
+            text = DecodeUnicodeEscapes(text);
             textEditor.Write(text);
+        }
+        private string DecodeUnicodeEscapes(string input)
+        {
+            return Regex.Replace(input, @"\\u[0-9a-fA-F]{4}", match =>
+            {
+                var hex = match.Value.Substring(2);
+                int charValue = Convert.ToInt32(hex, 16);
+                return char.ConvertFromUtf32(charValue);
+            });
         }
     }
 }
