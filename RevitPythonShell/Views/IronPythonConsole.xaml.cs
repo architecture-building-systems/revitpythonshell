@@ -107,6 +107,12 @@ namespace RevitPythonShell.Views
         private void textEditor_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.F5) RunStatements();
+            if (e.Key == Key.S && Keyboard.Modifiers == ModifierKeys.Control) SaveFile();
+            if (e.Key == Key.S && Keyboard.Modifiers == (ModifierKeys.Control | ModifierKeys.Shift)) saveAsFileClick(sender, e);
+            if (e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control) openFileClick(sender, e);
+            if (e.Key == Key.N && Keyboard.Modifiers == ModifierKeys.Control) newFileClick(sender, e);
+            if (e.Key == Key.F4 && Keyboard.Modifiers == ModifierKeys.Control) Close();
+            
         }
 
         private void RunStatements()

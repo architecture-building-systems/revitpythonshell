@@ -50,14 +50,14 @@
                                       SnapsToDevicePixels="True"
                                      Click="newFileClick" />
                         <RibbonButton Label="Open" LargeImageSource="../Resources/Theme/Open.png"
-                                      ToolTip="Open Python Script"
+                                      ToolTip="Open (Ctrl + O)"
                                       Click="openFileClick" />
                         <RibbonButton Label="Save" LargeImageSource="../Resources/Theme/Save.png"
-                                      ToolTip="Save This Script Into File"
+                                      ToolTip="Save (Ctrl + S)"
                                       Click="saveFileClick"
                                       SnapsToDevicePixels="True" />
                         <RibbonButton Label="Save As" LargeImageSource="../Resources/Theme/SaveAs.png"
-                                      ToolTip="Save As"
+                                      ToolTip="Save As (Ctrl + Shift + S)"
                                       SnapsToDevicePixels="True"
                                       Click="saveAsFileClick" />
                     </RibbonGroup>
@@ -109,7 +109,7 @@
                         <RibbonButton Label="Run" LargeImageSource="../Resources/Theme/Run.png"
                                       SnapsToDevicePixels="True"
                                       Click="runClick"
-                                      ToolTip="Run Script. Results will be displayed in the IronPython prompt." />
+                                      ToolTip="(F5) Run Script. Results will be displayed in the IronPython prompt." />
                     </RibbonGroup>
                 </RibbonTab>
             </Ribbon>
