@@ -61,11 +61,11 @@
         <Reference Include="WindowsBase" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="DynamicLanguageRuntime" Version="1.3.3" />
-        <PackageReference Include="IronPython" Version="3.4.0" />
+        <PackageReference Include="DynamicLanguageRuntime" Version="1.3.4" />
+        <PackageReference Include="IronPython" Version="3.4.1" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
-        <PackageReference Include="AvalonEdit" Version="6.0.1" />
+        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
     </ItemGroup>
     <ItemGroup>
         <Reference Include="IronPython">

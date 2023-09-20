@@ -1,4 +1,11 @@
 # Changelog
+- 2023-09-13 **2.0.2**
+  - Improvement user interface and user experience with coding.
+  - Add new button create new file
+  - Add new button save as file
+  - Fix bug output with language is chines or Japanese
+  - Follow up package IronPython latest.
+  - Add more shortcut default.
 - 2023-04-14 **2.0.1**
   - Support Autodesk Revit version 2024.
 - 2022-12-16 **2.0.0**
