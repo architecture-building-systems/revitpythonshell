@@ -4,7 +4,7 @@
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
     <PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>

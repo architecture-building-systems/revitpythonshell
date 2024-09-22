@@ -2,7 +2,8 @@
   <PropertyGroup>
     <Configurations>Debug;Release</Configurations>
     <PublishSingleFile>true</PublishSingleFile>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
+	<UseWPF>true</UseWPF> 
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
@@ -72,5 +73,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj" />
   </ItemGroup>
 </Project>
