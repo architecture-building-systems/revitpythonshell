@@ -3,6 +3,8 @@
     <Configurations>Debug;Release</Configurations>
     <PublishSingleFile>true</PublishSingleFile>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <PublishTrimmed>false</PublishTrimmed>
+    <EnableComHosting>true</EnableComHosting>
 	<UseWPF>true</UseWPF> 
     <PlatformTarget>x64</PlatformTarget>
     <LangVersion>latest</LangVersion>

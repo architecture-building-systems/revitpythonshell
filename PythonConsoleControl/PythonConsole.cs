@@ -381,12 +381,7 @@ namespace PythonConsoleControl
                     }
                     else
                     {
-                        ObjectHandle wrapexception = null;
-                        GetCommandDispatcher()(() => scriptSource.ExecuteAndWrap(commandLine.ScriptScope, out wrapexception));
-                        if (wrapexception != null)
-                        {
-                            error = "Exception : " + wrapexception.Unwrap().ToString() + "\n";
-                        }
+                        GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
                     }                    
                 }
                 catch (ThreadAbortException tae)

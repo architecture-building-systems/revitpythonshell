@@ -3,7 +3,8 @@
     <Configurations>Debug;Release</Configurations>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <PublishTrimmed>false</PublishTrimmed>
+    <EnableComHosting>true</EnableComHosting>
     <TargetFramework>net8.0-windows</TargetFramework>
     <LangVersion>latest</LangVersion>
     <PlatformTarget>x64</PlatformTarget>
@@ -11,7 +12,7 @@
     <Product>RevitPythonShell</Product>
     <Authors>RIPS</Authors>
     <Description>Revit Python Shell addin for Revit</Description>
-    <EnableDefaultItems>false</EnableDefaultItems>
+    <EnableDefaultItems>false</EnableDefaultItems>    
     <Configurations>Debug R22;Debug R23;Debug R24</Configurations>
     <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24</Configurations>
   </PropertyGroup>
@@ -51,6 +52,10 @@
   </PropertyGroup>
   <PropertyGroup Condition="$(Configuration.Contains('R24'))">
     <RevitVersion>2024</RevitVersion>
+    <DefineConstants>$(DefineConstants);R24</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(Configuration.Contains('R25'))">
+    <RevitVersion>2025</RevitVersion>
     <DefineConstants>$(DefineConstants);R24</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>

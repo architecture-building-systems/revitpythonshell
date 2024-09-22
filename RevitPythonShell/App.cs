@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text;
 using System.Xml.Linq;
 using Autodesk.Revit;
 using Autodesk.Revit.UI;
@@ -252,41 +253,12 @@ namespace RevitPythonShell
         /// </summary>
         private static void CreateCommandLoaderAssembly(XDocument repository, string dllfolder, string dllname)
         {
-            var assemblyName = new AssemblyName { Name = dllname + ".dll", Version = new Version(1, 0, 0, 0) };
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllfolder);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", dllname + ".dll");
+            var dllPath = Path.Combine(dllfolder, $"{dllname}.dll");
+            IDictionary<string, string> classNamesToScriptPaths = GetCommands(repository)
+                .ToDictionary(command => $"Command{command.Index}", command => command.Source);
 
-            foreach (var command in GetCommands(repository))
-            {
-                var typebuilder = moduleBuilder.DefineType("Command" + command.Index,
-                                                        TypeAttributes.Class | TypeAttributes.Public,
-                                                        typeof(CommandLoaderBase));
-
-                // add RegenerationAttribute to type
-                var regenerationConstrutorInfo = typeof(RegenerationAttribute).GetConstructor(new Type[] { typeof(RegenerationOption) });                
-                var regenerationAttributeBuilder = new CustomAttributeBuilder(regenerationConstrutorInfo, new object[] {RegenerationOption.Manual});
-                typebuilder.SetCustomAttribute(regenerationAttributeBuilder);
-
-                // add TransactionAttribute to type
-                var transactionConstructorInfo = typeof(TransactionAttribute).GetConstructor(new Type[] { typeof(TransactionMode) });
-                var transactionAttributeBuilder = new CustomAttributeBuilder(transactionConstructorInfo, new object[] { TransactionMode.Manual });
-                typebuilder.SetCustomAttribute(transactionAttributeBuilder);
-
-                // call base constructor with script path
-                var ci = typeof(CommandLoaderBase).GetConstructor(new[] { typeof(string) });
-
-                var constructorBuilder = typebuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, new Type[0]);
-                var gen = constructorBuilder.GetILGenerator();
-                gen.Emit(OpCodes.Ldarg_0);                // Load "this" onto eval stack
-                gen.Emit(OpCodes.Ldstr, command.Source);  // Load the path to the command as a string onto stack
-                gen.Emit(OpCodes.Call, ci);               // call base constructor (consumes "this" and the string)
-                gen.Emit(OpCodes.Nop);                    // Fill some space - this is how it is generated for equivalent C# code
-                gen.Emit(OpCodes.Nop);
-                gen.Emit(OpCodes.Nop);
-                gen.Emit(OpCodes.Ret);                    // return from constructor
-                typebuilder.CreateType();
-            }
-            assemblyBuilder.Save(dllname + ".dll");
+            var externalCommandAssemblyBuilder = new ExternalCommandAssemblyBuilder();
+            externalCommandAssemblyBuilder.BuildExternalCommandAssembly(dllPath, classNamesToScriptPaths);
         }
 
         Result IExternalApplication.OnShutdown(UIControlledApplication application)

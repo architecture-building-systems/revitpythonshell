@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Emit;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
+using Microsoft.CodeAnalysis;
 using RpsRuntime;
+using TaskDialog = Autodesk.Revit.UI.TaskDialog;
 
 namespace RevitPythonShell.RevitCommands
 {
@@ -23,11 +25,45 @@ namespace RevitPythonShell.RevitCommands
     [Regeneration(RegenerationOption.Manual)]
     public class DeployRpsAddinCommand: IExternalCommand
     {
+        private const string FileHeaderTemplate = """
+                                                  using Autodesk.Revit.Attributes;
+                                                  using RevitPythonShell.RevitCommands;
+
+                                                  #nullable disable
+                                                  """;
+
+        private const string ExternalCommandTemplate = """
+                                             using Autodesk.Revit.Attributes;
+                                             using RevitPythonShell.RevitCommands;
+
+                                             #nullable disable
+
+                                             [Regeneration]
+                                             [Transaction]
+                                             public class CLASSNAME : RpsExternalCommandBase
+                                             {
+                                             }
+                                             """;
+
+        private const string ExternalApplicationTemplate = """
+                                                           using Autodesk.Revit.Attributes;
+                                                           using RevitPythonShell.RevitCommands;
+
+                                                           #nullable disable
+
+                                                           [Regeneration]
+                                                           [Transaction]
+                                                           public class CLASSNAME : RpsExternalApplicationBase
+                                                           {
+                                                           }
+                                                           """;
+
         private string _outputFolder;
         private string _rootFolder;
         private string _addinName;
         private XDocument _doc;
 
+        [UnconditionalSuppressMessage("SingleFile", "IL3000:Avoid accessing Assembly file path when publishing as a single file", Justification = "<Pending>")]
         Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, Autodesk.Revit.DB.ElementSet elements)
         {
             try
@@ -46,8 +82,8 @@ namespace RevitPythonShell.RevitCommands
                 // copy static stuff (rpsaddin runtime, ironpython dlls etc., addin installation utilities)
                 CopyFile(typeof(RpsExternalApplicationBase).Assembly.Location);          // RpsRuntime.dll
 
-                var ironPythonPath = Path.GetDirectoryName(this.GetType().Assembly.Location);
-                CopyFile(Path.Combine(ironPythonPath, "IronPython.dll"));                    // IronPython.dll
+                var ironPythonPath = Path.GetDirectoryName(GetType().Assembly.Location);
+                CopyFile(Path.Combine(ironPythonPath!, "IronPython.dll"));                    // IronPython.dll
                 CopyFile(Path.Combine(ironPythonPath, "IronPython.Modules.dll"));            // IronPython.Modules.dll            
                 CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.dll"));           // Microsoft.Scripting.dll
                 CopyFile(Path.Combine(ironPythonPath, "Microsoft.Scripting.Metadata.dll"));  // Microsoft.Scripting.Metadata.dll
@@ -68,7 +104,7 @@ namespace RevitPythonShell.RevitCommands
             catch (Exception exception)
             {
 
-                TaskDialog.Show("Deploy RpsAddin", "Error deploying addin: " + exception.ToString());
+                TaskDialog.Show("Deploy RpsAddin", $"Error deploying addin: {exception}");
                 return Result.Failed;
             }
         }
@@ -84,8 +120,6 @@ namespace RevitPythonShell.RevitCommands
         /// </summary>
         private void CopyIcons()
         {
-            HashSet<string> copiedIcons = new HashSet<string>();
-
             foreach (var pb in _doc.Descendants("PushButton"))
             {
                 CopyReferencedFileToOutputFolder(pb.Attribute("largeImage"));
@@ -108,7 +142,7 @@ namespace RevitPythonShell.RevitCommands
         {
             foreach (var xmlFile in _doc.Descendants("Files").SelectMany(f => f.Descendants("File")))
             {
-                var source = xmlFile.Attribute("src").Value;
+                var source = xmlFile.Attribute("src")!.Value;
                 var sourcePath = GetRootedPath(_rootFolder, source);
 
                 if (!File.Exists(sourcePath))
@@ -122,7 +156,7 @@ namespace RevitPythonShell.RevitCommands
                 File.Copy(sourcePath, Path.Combine(_outputFolder, fileName));
 
                 // remove path information for deployment
-                xmlFile.Attribute("src").Value = fileName;
+                xmlFile.Attribute("src")!.Value = fileName;
             }
         }
 
@@ -166,7 +200,7 @@ namespace RevitPythonShell.RevitCommands
             dialog.CheckPathExists = true;
             dialog.Multiselect = false;
             dialog.DefaultExt = "xml";
-            dialog.Filter = "RpsAddin xml files (*.xml)|*.xml";
+            dialog.Filter = @"RpsAddin xml files (*.xml)|*.xml";
 
             dialog.ShowDialog();
             return dialog.FileName;
@@ -180,63 +214,76 @@ namespace RevitPythonShell.RevitCommands
         /// </summary>
         private void CreateAssembly()
         {
-            var assemblyName = new AssemblyName { Name = _addinName + ".dll", Version = new Version(1, 0, 0, 0) }; // FIXME: read version from doc
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, _outputFolder);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule("RpsAddinModule", _addinName + ".dll");
+            string dllPath = Path.Combine(_outputFolder, $"{_addinName}.dll");
+            
+            StringBuilder sourceCode = new StringBuilder();
+            sourceCode.Append(FileHeaderTemplate);
+            sourceCode.Append(ExternalApplicationTemplate.Replace("CLASSNAME", _addinName));
 
+            List<ResourceDescription> resources = new List<ResourceDescription>();
+            
             foreach (var xmlPushButton in _doc.Descendants("PushButton"))
             {
                 string scriptFileName;
                 if (xmlPushButton.Attribute("src") != null)
                 {                    
-                    scriptFileName = xmlPushButton.Attribute("src").Value;
+                    scriptFileName = xmlPushButton.Attribute("src")!.Value;
                 }
                 else if (xmlPushButton.Attribute("script") != null)  // Backwards compatibility
                 {
-                    scriptFileName = xmlPushButton.Attribute("script").Value;
+                    scriptFileName = xmlPushButton.Attribute("script")!.Value;
                 }
                 else
                 {
                     throw new ApplicationException("<PushButton/> tag missing a src attribute in addin manifest");
                 }
 
-                var scriptFile = GetRootedPath(_rootFolder, scriptFileName);             // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
-                var newScriptFile = Path.GetFileName(scriptFile);                        // e.g. "helloworld.py" - strip path for embedded resource
-                var className = "ec_" + Path.GetFileNameWithoutExtension(newScriptFile); // e.g. "ec_helloworld", "ec" stands for ExternalCommand
+                var scriptFilePath = GetRootedPath(_rootFolder, scriptFileName);   // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
+                var embeddedScriptFileName = Path.GetFileName(scriptFilePath);                     // e.g. "helloworld.py" - strip path for embedded resource
+                var className = "ec_" + Path.GetFileNameWithoutExtension(embeddedScriptFileName);  // e.g. "ec_helloworld", "ec" stands for ExternalCommand
 
-                var scriptStream = File.OpenRead(scriptFile);
-                moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
-
+                var resourceDescription = new ResourceDescription(
+                    embeddedScriptFileName,
+                    () => new FileStream(scriptFilePath, FileMode.Open, FileAccess.Read),
+                    isPublic: true);
+                resources.Add(resourceDescription);
+                
                 // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                xmlPushButton.Attribute("src").Value = newScriptFile;
+                xmlPushButton.Attribute("src")!.Value = embeddedScriptFileName;
 
-                var typeBuilder = moduleBuilder.DefineType(
-                    className,
-                    TypeAttributes.Class | TypeAttributes.Public,
-                    typeof(RpsExternalCommandBase));
-
-                AddRegenerationAttributeToType(typeBuilder);
-                AddTransactionAttributeToType(typeBuilder);
-
-                typeBuilder.CreateType();            
+                sourceCode.Append(ExternalCommandTemplate.Replace("CLASSNAME", className));
             }
 
             // add StartupScript to addin assembly
-            if (_doc.Descendants("StartupScript").Count() > 0)
+            if (_doc.Descendants("StartupScript").Any())
             {
                 var tag = _doc.Descendants("StartupScript").First();
-                var scriptFile = GetRootedPath(_rootFolder, tag.Attribute("src").Value);
-                var newScriptFile = Path.GetFileName(scriptFile);
-                var scriptStream = File.OpenRead(scriptFile);
-                moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
-
+                var scriptFilePath = GetRootedPath(_rootFolder, tag.Attribute("src")!.Value);
+                var embeddedScriptFileName = Path.GetFileName(scriptFilePath);
+                
+                var resourceDescription = new ResourceDescription(
+                    embeddedScriptFileName,
+                    () => new FileStream(scriptFilePath, FileMode.Open, FileAccess.Read),
+                    isPublic: true);
+                resources.Add(resourceDescription);
+                
                 // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                tag.Attribute("src").Value = newScriptFile;
+                tag.Attribute("src")!.Value = embeddedScriptFileName;
             }
 
-            AddRpsAddinXmlToAssembly(_addinName, _doc, moduleBuilder);
-            AddExternalApplicationToAssembly(_addinName, moduleBuilder);
-            assemblyBuilder.Save(_addinName + ".dll");
+            resources.Add(new ResourceDescription($"{_addinName}.xml", () =>
+            {
+                var stream = new MemoryStream();
+                using (var writer = new StreamWriter(stream))
+                {
+                    writer.Write(_doc.ToString());
+                    writer.Flush();
+                }
+                stream.Position = 0;
+                return stream;
+            }, isPublic: true));
+            
+            DynamicAssemblyCompiler.CompileAndSave(sourceCode.ToString(), dllPath, resources.ToArray());
         }
 
         /// <summary>
@@ -259,52 +306,6 @@ namespace RevitPythonShell.RevitCommands
         }
 
         /// <summary>
-        /// Adds a subclass of RpsExternalApplicationBase to make the assembly
-        /// work as an external application.
-        /// </summary>
-        private void AddExternalApplicationToAssembly(string addinName, ModuleBuilder moduleBuilder)
-        {
-            var typeBuilder = moduleBuilder.DefineType(
-                addinName,
-                TypeAttributes.Class | TypeAttributes.Public,
-                typeof(RpsExternalApplicationBase));
-            AddRegenerationAttributeToType(typeBuilder);
-            AddTransactionAttributeToType(typeBuilder);
-            typeBuilder.CreateType();
-        }
-
-        /// <summary>
-        /// Adds the [Transaction(TransactionMode.Manual)] attribute to the type.        
-        /// </summary>
-        private void AddTransactionAttributeToType(TypeBuilder typeBuilder)
-        {
-            var transactionConstructorInfo = typeof(TransactionAttribute).GetConstructor(new Type[] { typeof(TransactionMode) });
-            var transactionAttributeBuilder = new CustomAttributeBuilder(transactionConstructorInfo, new object[] { TransactionMode.Manual });
-            typeBuilder.SetCustomAttribute(transactionAttributeBuilder);
-        }
-
-        /// <summary>
-        /// Adds the [Transaction(TransactionMode.Manual)] attribute to the type.
-        /// </summary>
-        /// <param name="typeBuilder"></param>
-        private void AddRegenerationAttributeToType(TypeBuilder typeBuilder)
-        {
-            var regenerationConstrutorInfo = typeof(RegenerationAttribute).GetConstructor(new Type[] { typeof(RegenerationOption) });
-            var regenerationAttributeBuilder = new CustomAttributeBuilder(regenerationConstrutorInfo, new object[] { RegenerationOption.Manual });
-            typeBuilder.SetCustomAttribute(regenerationAttributeBuilder);
-        }
-
-        private void AddRpsAddinXmlToAssembly(string addinName, XDocument doc, ModuleBuilder moduleBuilder)
-        {
-            var stream = new MemoryStream();
-            var writer = new StreamWriter(stream);
-            writer.Write(doc.ToString());
-            writer.Flush();
-            stream.Position = 0;
-            moduleBuilder.DefineManifestResource(addinName + ".xml", stream, ResourceAttributes.Public);
-        }
-
-        /// <summary>
         /// Creates a subfolder in rootFolder with the basename of the
         /// RpsAddin xml file and returns the name of that folder.
         /// 
@@ -314,7 +315,7 @@ namespace RevitPythonShell.RevitCommands
         /// </summary>
         private string CreateOutputFolder()
         {
-            var folderName = string.Format("{0}_{1}", "Output", _addinName);
+            var folderName = $"Output_{_addinName}";
             var folderPath = Path.Combine(_rootFolder, folderName);
 
             if (Directory.Exists(folderPath))
@@ -323,7 +324,7 @@ namespace RevitPythonShell.RevitCommands
                 Directory.Delete(folderPath, true);
             }
 
-            Directory.CreateDirectory(folderPath, Directory.GetAccessControl(_rootFolder));
+            Directory.CreateDirectory(folderPath);
             return folderPath;
         }
     }

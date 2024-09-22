@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text;
 using Autodesk.Revit.Attributes;
 
 namespace RpsRuntime
@@ -17,47 +19,47 @@ namespace RpsRuntime
         /// <summary>
         /// Build a new assembly and save it to disk as "pathToDll". Create a type (implementing IExternalCommand) for
         /// each class name in classNamesToScriptPaths that, when "Execute()" is called on it, will load the corresponding python script
-        /// from disk and execute it.
+        /// from disk and execute it. By deriving from RpsExternalCommandScriptBase, our dynamically generated types only need to
+        /// implement a public default constructor that calls the base constructor providing the path to the script.
         /// </summary>
         public void BuildExternalCommandAssembly(string pathToDll, IDictionary<string, string> classNamesToScriptPaths)
         {
-            var dllName = Path.GetFileNameWithoutExtension(pathToDll);
-            var dllFolder = Path.GetDirectoryName(pathToDll);
-            var assemblyName = new AssemblyName { Name = dllName + ".dll", Version = new Version(1, 0, 0, 0) };
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllFolder);
-            var moduleBuilder = assemblyBuilder.DefineDynamicModule(dllName + "Module", dllName + ".dll");
 
-            foreach (var className in classNamesToScriptPaths.Keys)
+            const string fileHeaderTemplate = """
+                                    using Autodesk.Revit.Attributes;
+                                    using RevitPythonShell.RevitCommands;
+                                
+                                    #nullable disable
+                                    """;
+            
+            const string classTemplate = """
+                                              using Autodesk.Revit.Attributes;
+                                              using RevitPythonShell.RevitCommands;
+
+                                              #nullable disable
+
+                                              [Regeneration]
+                                              [Transaction]
+                                              public class CLASSNAME : CommandLoaderBase
+                                              {
+                                                public CLASSNAME}()
+                                                  : base("SCRIPTPATH")
+                                                {
+                                                }
+                                              }
+                                              """;
+
+            StringBuilder sourceCode = new StringBuilder();
+            sourceCode.Append(fileHeaderTemplate);
+            
+            
+            foreach (var (className, scriptPath) in classNamesToScriptPaths)
             {
-                var typebuilder = moduleBuilder.DefineType(className,
-                                                        TypeAttributes.Class | TypeAttributes.Public,
-                                                        typeof(RpsExternalCommandScriptBase));
-
-                // add RegenerationAttribute to type
-                var regenerationConstrutorInfo = typeof(RegenerationAttribute).GetConstructor(new Type[] { typeof(RegenerationOption) });
-                var regenerationAttributeBuilder = new CustomAttributeBuilder(regenerationConstrutorInfo, new object[] { RegenerationOption.Manual });
-                typebuilder.SetCustomAttribute(regenerationAttributeBuilder);
-
-                // add TransactionAttribute to type
-                var transactionConstructorInfo = typeof(TransactionAttribute).GetConstructor(new Type[] { typeof(TransactionMode) });
-                var transactionAttributeBuilder = new CustomAttributeBuilder(transactionConstructorInfo, new object[] { TransactionMode.Manual });
-                typebuilder.SetCustomAttribute(transactionAttributeBuilder);
-
-                // call base constructor with script path
-                var ci = typeof(RpsExternalCommandScriptBase).GetConstructor(new[] { typeof(string) });
-
-                var constructorBuilder = typebuilder.DefineConstructor(MethodAttributes.Public, CallingConventions.Standard, new Type[0]);
-                var gen = constructorBuilder.GetILGenerator();
-                gen.Emit(OpCodes.Ldarg_0);                // Load "this" onto eval stack
-                gen.Emit(OpCodes.Ldstr, classNamesToScriptPaths[className]);  // Load the path to the command as a string onto stack
-                gen.Emit(OpCodes.Call, ci);               // call base constructor (consumes "this" and the string)
-                gen.Emit(OpCodes.Nop);                    // Fill some space - this is how it is generated for equivalent C# code
-                gen.Emit(OpCodes.Nop);
-                gen.Emit(OpCodes.Nop);
-                gen.Emit(OpCodes.Ret);                    // return from constructor
-                typebuilder.CreateType();
+                var classCode = classTemplate.Replace("CLASSNAME", className).Replace("SCRIPTPATH", scriptPath);
+                sourceCode.Append(classTemplate);
             }
-            assemblyBuilder.Save(dllName + ".dll");
+
+            DynamicAssemblyCompiler.CompileAndSave(sourceCode.ToString(), pathToDll);
         }
     }
 }
