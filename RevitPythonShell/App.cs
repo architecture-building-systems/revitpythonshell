@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using RevitPythonShell.RevitCommands;
 using RpsRuntime;
+using Microsoft.Scripting.Utils;
 
 namespace RevitPythonShell
 {
@@ -253,8 +254,15 @@ namespace RevitPythonShell
         private static void CreateCommandLoaderAssembly(XDocument repository, string dllfolder, string dllname)
         {
             var assemblyName = new AssemblyName { Name = dllname + ".dll", Version = new Version(1, 0, 0, 0) };
+
+#if NET8_0
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule(dllname + "Module");
+#else
             var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllfolder);
             var moduleBuilder = assemblyBuilder.DefineDynamicModule("CommandLoaderModule", dllname + ".dll");
+#endif
+
 
             foreach (var command in GetCommands(repository))
             {
@@ -286,7 +294,12 @@ namespace RevitPythonShell
                 gen.Emit(OpCodes.Ret);                    // return from constructor
                 typebuilder.CreateType();
             }
+#if NET8_0
+
+#else
             assemblyBuilder.Save(dllname + ".dll");
+#endif
+
         }
 
         Result IExternalApplication.OnShutdown(UIControlledApplication application)

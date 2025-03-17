@@ -1,251 +1,333 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <Configurations>Debug;Release</Configurations>
-    <RuntimeIdentifiers>win</RuntimeIdentifiers>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-    <TargetFramework>net48</TargetFramework>
-    <LangVersion>latest</LangVersion>
-    <PlatformTarget>x64</PlatformTarget>
-    <PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>
-    <Product>RevitPythonShell</Product>
-    <Authors>RIPS</Authors>
-    <Description>Revit Python Shell addin for Revit</Description>
-    <EnableDefaultItems>false</EnableDefaultItems>
-    <Configurations>Debug R22;Debug R23;Debug R24</Configurations>
-    <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24</Configurations>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('Release'))">
-    <Optimize>true</Optimize>
-    <DebugType>none</DebugType>
-    <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R18'))">
-    <RevitVersion>2018</RevitVersion>
-    <DefineConstants>$(DefineConstants);R18</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R19'))">
-    <RevitVersion>2019</RevitVersion>
-    <DefineConstants>$(DefineConstants);R19</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R20'))">
-    <RevitVersion>2020</RevitVersion>
-    <DefineConstants>$(DefineConstants);R20</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R21'))">
-    <RevitVersion>2021</RevitVersion>
-    <DefineConstants>$(DefineConstants);R21</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R22'))">
-    <RevitVersion>2022</RevitVersion>
-    <DefineConstants>$(DefineConstants);R22</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R23'))">
-    <RevitVersion>2023</RevitVersion>
-    <DefineConstants>$(DefineConstants);R23</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup Condition="$(Configuration.Contains('R24'))">
-    <RevitVersion>2024</RevitVersion>
-    <DefineConstants>$(DefineConstants);R24</DefineConstants>
-  </PropertyGroup>
-  <PropertyGroup>
-    <Version>$(RevitVersion)</Version>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Description>The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.</Description>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="IronPython">
-      <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="IronPython.Modules">
-      <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Dynamic">
-      <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting">
-      <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Scripting.Metadata">
-      <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Controls.Ribbon" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
-    <Reference Include="WPG">
-      <HintPath>..\RequiredLibraries\WPG.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Helpers\ProcessManager.cs" />
-    <Compile Include="RevitCommands\CommandLoaderBase.cs" />
-    <Compile Include="Views\CompletionToolTip.cs" />
-    <Compile Include="RevitCommands\ConfigureCommand.cs" />
-    <Compile Include="Views\ConfigureCommandsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\ConfigureCommandsForm.Designer.cs">
-      <DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ConsoleOptions.cs" />
-    <Compile Include="RevitCommands\DeployRpsAddinCommand.cs" />
-    <Compile Include="Views\IronPythonConsole.xaml.cs">
-      <DependentUpon>IronPythonConsole.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RevitCommands\IronPythonConsoleCommand.cs" />
-    <Compile Include="RevitCommands\NonModalConsoleCommand.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Views\ConfigureCommandsForm.resx">
-      <DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Theme\SaveAs.png" />
-    <Resource Include="Resources\Theme\New.png" />
-    <None Include="RevitPythonShell.addin" />
-    <None Include="Manifests\AddinTemplate.addin">
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
-    <None Include="Manifests\SetupRPSTemplate.iss" />
-    <Resource Include="Resources\Theme\Redo.png" />
-    <Resource Include="Resources\Theme\Run.png" />
-    <Resource Include="Resources\Theme\Save.png" />
-    <Resource Include="Resources\Theme\Undo.png" />
-    <Resource Include="Resources\Theme\WordWrap.png" />
-    <EmbeddedResource Include="Resources\Console-16.png" />
-    <EmbeddedResource Include="Resources\Console-32.png" />
-    <EmbeddedResource Include="Resources\Deployment-16.png" />
-    <EmbeddedResource Include="Resources\Deployment-32.png" />
-    <EmbeddedResource Include="Resources\Python-16.png" />
-    <EmbeddedResource Include="Resources\Python-32.png" />
-    <EmbeddedResource Include="Resources\Settings-16.png" />
-    <EmbeddedResource Include="Resources\Settings-32.png" />
-    <None Include="DefaultConfig\startup.py" />
-    <Content Include="Properties\launchSettings.json" />
-    <None Include="Examples\HelloWorld.iss" />
-    <None Include="DefaultConfig\init.py" />
-    <EmbeddedResource Include="Resources\CreateWall.png" />
-    <Content Include="Examples\helloworld.py" />
-    <Content Include="Examples\HelloWorld.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Resource Include="Resources\Theme\Copy.png" />
-    <Resource Include="Resources\Theme\Cut.png" />
-    <Resource Include="Resources\Theme\Delete.png" />
-    <Resource Include="Resources\Theme\Number.png" />
-    <Resource Include="Resources\Theme\Open.png" />
-    <Resource Include="Resources\Theme\Paragraph.png" />
-    <Resource Include="Resources\Theme\Paste.png" />
-    <None Include="DefaultConfig\RevitPythonShell.xml">
-      <SubType>Designer</SubType>
-    </None>
-    <EmbeddedResource Include="Resources\Python.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Views\IronPythonConsole.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>all</IncludeAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
-      <Private>true</Private>
-      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
-      <IncludeAssets>all</IncludeAssets>
-    </ProjectReference>
-  </ItemGroup>
-  <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
-    <ParameterGroup>
-      <InputFilename ParameterType="System.String" Required="true" />
-      <OutputFilename ParameterType="System.String" Required="true" />
-      <MatchExpression ParameterType="System.String" Required="true" />
-      <ReplacementText ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Reference Include="System.Core" />
-      <Using Namespace="System" />
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Text.RegularExpressions" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-              File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
+	<PropertyGroup>
+		<Configurations>Debug;Release</Configurations>
+		<RuntimeIdentifiers>win</RuntimeIdentifiers>
+		<PublishSingleFile>true</PublishSingleFile>
+		<LangVersion>latest</LangVersion>
+		<PlatformTarget>x64</PlatformTarget>
+		<PackageId>3a7a1d24-51ed-462b-949f-1ddcca12008d</PackageId>
+		<Product>RevitPythonShell</Product>
+		<Authors>RIPS</Authors>
+		<Description>Revit Python Shell addin for Revit</Description>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
+		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
+		<Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R18'))">
+		<RevitVersion>2018</RevitVersion>
+		<TargetFramework>net46</TargetFramework>
+		<DefineConstants>$(DefineConstants);R18</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R19'))">
+		<RevitVersion>2019</RevitVersion>
+		<TargetFramework>net47</TargetFramework>
+		<DefineConstants>$(DefineConstants);R19</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R20'))">
+		<RevitVersion>2020</RevitVersion>
+		<TargetFramework>net47</TargetFramework>
+		<DefineConstants>$(DefineConstants);R20</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R21'))">
+		<RevitVersion>2021</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R21</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R22'))">
+		<RevitVersion>2022</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R22</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R23'))">
+		<RevitVersion>2023</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R23</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R24'))">
+		<RevitVersion>2024</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R24</DefineConstants>
+	</PropertyGroup>
+	<PropertyGroup Condition="$(Configuration.Contains('R25'))">
+		<RevitVersion>2025</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<DefineConstants>$(DefineConstants);R25</DefineConstants>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+	<Choose>
+		<When Condition="$(Configuration.Contains('R20'))">
+			<ItemGroup>
+				<Reference Include="System" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Core" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Forms" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2020.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R21'))">
+			<ItemGroup>
+				<Reference Include="System" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Core" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Forms" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2021.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R22'))">
+			<ItemGroup>
+				<Reference Include="System" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Core" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Forms" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2022.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R23'))">
+			<ItemGroup>
+				<Reference Include="System" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Core" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Forms" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2023.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R24'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp">
+					<HintPath>..\RequiredLibraries\Microsoft.CSharp.dll</HintPath>
+				</Reference>
+				<Reference Include="PresentationCore" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="System" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Core" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Forms" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2024.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R25'))">
+			<ItemGroup>
+				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+	</Choose>
+	<PropertyGroup>
+		<Version>$(RevitVersion)</Version>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Description>The RevitPythonShell adds an IronPython interpreter to Autodesk Revit and Vasari.</Description>
+		<PublishSingleFile>true</PublishSingleFile>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="IronPython">
+			<HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
+		</Reference>
+		<Reference Include="IronPython.Modules">
+			<HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Dynamic">
+			<HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Scripting">
+			<HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
+		</Reference>
+		<Reference Include="Microsoft.Scripting.Metadata">
+			<HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="PresentationCore" />
+		<Reference Include="PresentationFramework" />
+		<Reference Include="System" />
+		<Reference Include="System.Core" />
+		<Reference Include="System.Drawing" />
+		<Reference Include="System.Windows.Controls.Ribbon" />
+		<Reference Include="System.Windows.Forms" />
+		<Reference Include="System.Xaml" />
+		<Reference Include="System.Xml.Linq" />
+		<Reference Include="System.Data.DataSetExtensions" />
+		<Reference Include="System.Data" />
+		<Reference Include="System.Xml" />
+		<Reference Include="WindowsBase" />
+		<Reference Include="WPG">
+			<HintPath>..\RequiredLibraries\WPG.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="Helpers\ProcessManager.cs" />
+		<Compile Include="RevitCommands\CommandLoaderBase.cs" />
+		<Compile Include="Views\CompletionToolTip.cs" />
+		<Compile Include="RevitCommands\ConfigureCommand.cs" />
+		<Compile Include="Views\ConfigureCommandsForm.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="Views\ConfigureCommandsForm.Designer.cs">
+			<DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
+		</Compile>
+		<Compile Include="Views\ConsoleOptions.cs" />
+		<Compile Include="RevitCommands\DeployRpsAddinCommand.cs" />
+		<Compile Include="Views\IronPythonConsole.xaml.cs">
+			<DependentUpon>IronPythonConsole.xaml</DependentUpon>
+		</Compile>
+		<Compile Include="RevitCommands\IronPythonConsoleCommand.cs" />
+		<Compile Include="RevitCommands\NonModalConsoleCommand.cs" />
+		<Compile Include="Properties\Resources.Designer.cs">
+			<AutoGen>True</AutoGen>
+			<DesignTime>True</DesignTime>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Include="App.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Views\ConfigureCommandsForm.resx">
+			<DependentUpon>ConfigureCommandsForm.cs</DependentUpon>
+		</EmbeddedResource>
+		<EmbeddedResource Include="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Resource Include="Resources\Theme\SaveAs.png" />
+		<Resource Include="Resources\Theme\New.png" />
+		<None Include="RevitPythonShell.addin" />
+		<None Include="Manifests\AddinTemplate.addin">
+			<Generator>MSDataSetGenerator</Generator>
+			<LastGenOutput>AddinTemplate.Designer.cs</LastGenOutput>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
+		<None Include="Manifests\SetupRPSTemplate.iss" />
+		<Resource Include="Resources\Theme\Redo.png" />
+		<Resource Include="Resources\Theme\Run.png" />
+		<Resource Include="Resources\Theme\Save.png" />
+		<Resource Include="Resources\Theme\Undo.png" />
+		<Resource Include="Resources\Theme\WordWrap.png" />
+		<EmbeddedResource Include="Resources\Console-16.png" />
+		<EmbeddedResource Include="Resources\Console-32.png" />
+		<EmbeddedResource Include="Resources\Deployment-16.png" />
+		<EmbeddedResource Include="Resources\Deployment-32.png" />
+		<EmbeddedResource Include="Resources\Python-16.png" />
+		<EmbeddedResource Include="Resources\Python-32.png" />
+		<EmbeddedResource Include="Resources\Settings-16.png" />
+		<EmbeddedResource Include="Resources\Settings-32.png" />
+		<None Include="DefaultConfig\startup.py" />
+		<Content Include="Properties\launchSettings.json" />
+		<None Include="Examples\HelloWorld.iss" />
+		<None Include="DefaultConfig\init.py" />
+		<EmbeddedResource Include="Resources\CreateWall.png" />
+		<Content Include="Examples\helloworld.py" />
+		<Content Include="Examples\HelloWorld.xml">
+			<SubType>Designer</SubType>
+		</Content>
+		<Resource Include="Resources\Theme\Copy.png" />
+		<Resource Include="Resources\Theme\Cut.png" />
+		<Resource Include="Resources\Theme\Delete.png" />
+		<Resource Include="Resources\Theme\Number.png" />
+		<Resource Include="Resources\Theme\Open.png" />
+		<Resource Include="Resources\Theme\Paragraph.png" />
+		<Resource Include="Resources\Theme\Paste.png" />
+		<None Include="DefaultConfig\RevitPythonShell.xml">
+			<SubType>Designer</SubType>
+		</None>
+		<EmbeddedResource Include="Resources\Python.xshd" />
+	</ItemGroup>
+	<ItemGroup>
+		<Page Include="Views\IronPythonConsole.xaml">
+			<SubType>Designer</SubType>
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\PythonConsoleControl\PythonConsoleControl.csproj">
+			<Private>true</Private>
+			<CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+			<IncludeAssets>all</IncludeAssets>
+		</ProjectReference>
+		<ProjectReference Include="..\RpsRuntime\RpsRuntime.csproj">
+			<Private>true</Private>
+			<CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+			<IncludeAssets>all</IncludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+	<UsingTask Condition="'$(MSBuildRuntimeType)' == 'Full'" TaskName="ReplaceFileText" TaskFactory="CodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v4.0.dll">
+		<ParameterGroup>
+			<InputFilename ParameterType="System.String" Required="true" />
+			<OutputFilename ParameterType="System.String" Required="true" />
+			<MatchExpression ParameterType="System.String" Required="true" />
+			<ReplacementText ParameterType="System.String" Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Reference Include="System.Core" />
+			<Using Namespace="System" />
+			<Using Namespace="System.IO" />
+			<Using Namespace="System.Text.RegularExpressions" />
+			<Code Type="Fragment" Language="cs"><![CDATA[
+			  File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
         ]]></Code>
-    </Task>
-  </UsingTask>
-  <UsingTask Condition="'$(MSBuildRuntimeType)' == 'Core'" TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
-    <ParameterGroup>
-      <InputFilename ParameterType="System.String" Required="true" />
-      <OutputFilename ParameterType="System.String" Required="true" />
-      <MatchExpression ParameterType="System.String" Required="true" />
-      <ReplacementText ParameterType="System.String" Required="true" />
-    </ParameterGroup>
-    <Task>
-      <Using Namespace="System" />
-      <Using Namespace="System.IO" />
-      <Using Namespace="System.Text.RegularExpressions" />
+		</Task>
+	</UsingTask>
+	<UsingTask Condition="'$(MSBuildRuntimeType)' == 'Core'" TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup>
+			<InputFilename ParameterType="System.String" Required="true" />
+			<OutputFilename ParameterType="System.String" Required="true" />
+			<MatchExpression ParameterType="System.String" Required="true" />
+			<ReplacementText ParameterType="System.String" Required="true" />
+		</ParameterGroup>
+		<Task>
+			<Using Namespace="System" />
+			<Using Namespace="System.IO" />
+			<Using Namespace="System.Text.RegularExpressions" />
       <Code Type="Fragment" Language="cs"><![CDATA[
-              File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
+			  File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
         ]]></Code>
-    </Task>
-  </UsingTask>
-  <Target Name="CopyFile" AfterTargets="CoreBuild">
-    <Message Importance="high" Text="Start Copy File To Addins Folder Revit $(RevitVersion)" />
-    <ItemGroup>
-      <RootItem Include="$(ProjectDir)*.addin" />
-      <ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
-      <AddinItem Include="$(TargetDir)*.*" />
-    </ItemGroup>
-    <PropertyGroup>
-      <RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
-      <AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
-    </PropertyGroup>
+		</Task>
+	</UsingTask>
+	<Target Name="CopyFile" AfterTargets="CoreBuild">
+		<Message Importance="high" Text="Start Copy File To Addins Folder Revit $(RevitVersion)" />
+		<ItemGroup>
+			<RootItem Include="$(ProjectDir)*.addin" />
+			<ConfigItem Include="$(ProjectDir)DefaultConfig\*.*" />
+			<AddinItem Include="$(TargetDir)*.*" />
+		</ItemGroup>
+		<PropertyGroup>
+			<RootDir>bin\AddIn $(RevitVersion) $(Configuration)\</RootDir>
+			<AddinDir>$(RootDir)$(AssemblyName)\</AddinDir>
+		</PropertyGroup>
 
-    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
-    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AddinDir)" />
-    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
-    
-    <Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
-    <Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
-    <Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
-  </Target>
+		<Copy SourceFiles="@(RootItem)" DestinationFolder="$(RootDir)" />
+		<Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AddinDir)" />
+		<Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AddinDir)" />
+
+		<Copy SourceFiles="@(RootItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+		<Copy SourceFiles="@(AddinItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+		<Copy SourceFiles="@(ConfigItem)" DestinationFolder="$(AppData)\Autodesk\Revit\Addins\$(RevitVersion)\$(AssemblyName)\%(RecursiveDir)" Condition="$(Configuration.Contains('Debug'))" />
+	</Target>
 </Project>

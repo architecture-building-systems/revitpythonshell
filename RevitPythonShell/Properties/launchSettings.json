@@ -43,11 +43,11 @@
     "Revit 2021": {
       "commandName": "Executable",
       "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2021\\Revit.exe"
-    }     ,
+    },
     "Revit 2022": {
       "commandName": "Executable",
       "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2022\\Revit.exe"
-    }     ,
+    },
     "Revit 2023": {
       "commandName": "Executable",
       "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2023\\Revit.exe"
@@ -55,6 +55,10 @@
     "Revit 2024": {
       "commandName": "Executable",
       "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2024\\Revit.exe"
+    },
+    "Revit 2025": {
+      "commandName": "Executable",
+      "executablePath": "%ProgramW6432%\\Autodesk\\Revit 2025\\Revit.exe"
     }
   }
 }
