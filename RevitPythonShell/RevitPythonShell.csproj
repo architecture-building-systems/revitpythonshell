@@ -10,107 +10,83 @@
 		<Authors>RIPS</Authors>
 		<Description>Revit Python Shell addin for Revit</Description>
 		<EnableDefaultItems>false</EnableDefaultItems>
+		<StartAction>Program</StartAction>
 		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
 		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>full</DebugType>
 		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
 		<Optimize>true</Optimize>
 		<DebugType>none</DebugType>
 		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R18'))">
 		<RevitVersion>2018</RevitVersion>
-		<TargetFramework>net46</TargetFramework>
+		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R18</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2018\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R19'))">
 		<RevitVersion>2019</RevitVersion>
-		<TargetFramework>net47</TargetFramework>
+		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R19</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2019\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R20'))">
 		<RevitVersion>2020</RevitVersion>
-		<TargetFramework>net47</TargetFramework>
+		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R20</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2020\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R21'))">
 		<RevitVersion>2021</RevitVersion>
 		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R21</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2021\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R22'))">
 		<RevitVersion>2022</RevitVersion>
 		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R22</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2022\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R23'))">
 		<RevitVersion>2023</RevitVersion>
 		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R23</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2023\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R24'))">
 		<RevitVersion>2024</RevitVersion>
 		<TargetFramework>net48</TargetFramework>
 		<DefineConstants>$(DefineConstants);R24</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2024\Revit.exe</StartProgram>
 	</PropertyGroup>
+	
 	<PropertyGroup Condition="$(Configuration.Contains('R25'))">
 		<RevitVersion>2025</RevitVersion>
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<DefineConstants>$(DefineConstants);R25</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 	<Choose>
-		<When Condition="$(Configuration.Contains('R20'))">
+		<When Condition="$(Configuration.Contains('R18'))">
 			<ItemGroup>
-				<Reference Include="System" />
-				<Reference Include="System.Configuration" />
-				<Reference Include="System.Core" />
-				<Reference Include="PresentationFramework" />
-				<Reference Include="System.Windows.Forms" />
-				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2020.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(Configuration.Contains('R21'))">
-			<ItemGroup>
-				<Reference Include="System" />
-				<Reference Include="System.Configuration" />
-				<Reference Include="System.Core" />
-				<Reference Include="PresentationFramework" />
-				<Reference Include="System.Windows.Forms" />
-				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2021.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(Configuration.Contains('R22'))">
-			<ItemGroup>
-				<Reference Include="System" />
-				<Reference Include="System.Configuration" />
-				<Reference Include="System.Core" />
-				<Reference Include="PresentationFramework" />
-				<Reference Include="System.Windows.Forms" />
-				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2022.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(Configuration.Contains('R23'))">
-			<ItemGroup>
-				<Reference Include="System" />
-				<Reference Include="System.Configuration" />
-				<Reference Include="System.Core" />
-				<Reference Include="PresentationFramework" />
-				<Reference Include="System.Windows.Forms" />
-				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2023.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
-			</ItemGroup>
-		</When>
-		<When Condition="$(Configuration.Contains('R24'))">
-			<ItemGroup>
-				<Reference Include="Microsoft.CSharp">
-					<HintPath>..\RequiredLibraries\Microsoft.CSharp.dll</HintPath>
-				</Reference>
-				<Reference Include="PresentationCore" />
+				<Reference Include="Microsoft.CSharp" />
 				<Reference Include="System" />
 				<Reference Include="System.Core" />
 				<Reference Include="System.Drawing" />
@@ -120,12 +96,139 @@
 				<Reference Include="System.Data.DataSetExtensions" />
 				<Reference Include="System.Data" />
 				<Reference Include="System.Xml" />
-				<Reference Include="WindowsBase" />
-				<Reference Include="System" />
 				<Reference Include="System.Configuration" />
-				<Reference Include="System.Core" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
 				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2018.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R19'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
 				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2019.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R20'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2020.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+
+		<When Condition="$(Configuration.Contains('R21'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2021.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R22'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2022.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R23'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2023.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R24'))">
+			<ItemGroup>
+				<Reference Include="Microsoft.CSharp" />
+				<Reference Include="System" />
+				<Reference Include="System.Core" />
+				<Reference Include="System.Drawing" />
+				<Reference Include="System.Windows.Forms" />
+				<Reference Include="System.Xaml" />
+				<Reference Include="System.Xml.Linq" />
+				<Reference Include="System.Data.DataSetExtensions" />
+				<Reference Include="System.Data" />
+				<Reference Include="System.Xml" />
+				<Reference Include="System.Configuration" />
+				<Reference Include="System.Windows" />
+				<Reference Include="WindowsBase" />
+				<Reference Include="PresentationCore" />
+				<Reference Include="PresentationFramework" />
+				<Reference Include="System.Windows.Controls.Ribbon" />
 				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2024.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
 			</ItemGroup>
 		</When>
@@ -161,24 +264,6 @@
 		</Reference>
 		<Reference Include="Microsoft.Scripting.Metadata">
 			<HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
-		</Reference>
-	</ItemGroup>
-	<ItemGroup>
-		<Reference Include="PresentationCore" />
-		<Reference Include="PresentationFramework" />
-		<Reference Include="System" />
-		<Reference Include="System.Core" />
-		<Reference Include="System.Drawing" />
-		<Reference Include="System.Windows.Controls.Ribbon" />
-		<Reference Include="System.Windows.Forms" />
-		<Reference Include="System.Xaml" />
-		<Reference Include="System.Xml.Linq" />
-		<Reference Include="System.Data.DataSetExtensions" />
-		<Reference Include="System.Data" />
-		<Reference Include="System.Xml" />
-		<Reference Include="WindowsBase" />
-		<Reference Include="WPG">
-			<HintPath>..\RequiredLibraries\WPG.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
@@ -239,7 +324,6 @@
 		<EmbeddedResource Include="Resources\Settings-16.png" />
 		<EmbeddedResource Include="Resources\Settings-32.png" />
 		<None Include="DefaultConfig\startup.py" />
-		<Content Include="Properties\launchSettings.json" />
 		<None Include="Examples\HelloWorld.iss" />
 		<None Include="DefaultConfig\init.py" />
 		<EmbeddedResource Include="Resources\CreateWall.png" />
@@ -289,9 +373,7 @@
 			<Using Namespace="System" />
 			<Using Namespace="System.IO" />
 			<Using Namespace="System.Text.RegularExpressions" />
-			<Code Type="Fragment" Language="cs"><![CDATA[
-			  File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
-        ]]></Code>
+			<Code Type="Fragment" Language="cs"><![CDATA[File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));]]></Code>
 		</Task>
 	</UsingTask>
 	<UsingTask Condition="'$(MSBuildRuntimeType)' == 'Core'" TaskName="ReplaceFileText" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
@@ -305,9 +387,7 @@
 			<Using Namespace="System" />
 			<Using Namespace="System.IO" />
 			<Using Namespace="System.Text.RegularExpressions" />
-      <Code Type="Fragment" Language="cs"><![CDATA[
-			  File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));
-        ]]></Code>
+			<Code Type="Fragment" Language="cs"><![CDATA[File.WriteAllText(OutputFilename,Regex.Replace(File.ReadAllText(InputFilename),MatchExpression,ReplacementText));]]></Code>
 		</Task>
 	</UsingTask>
 	<Target Name="CopyFile" AfterTargets="CoreBuild">
