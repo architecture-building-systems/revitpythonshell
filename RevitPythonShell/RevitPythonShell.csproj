@@ -82,6 +82,7 @@
 		<DefineConstants>$(DefineConstants);R25</DefineConstants>
 		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
 		<UseWPF>true</UseWPF>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
 	<Choose>
 		<When Condition="$(Configuration.Contains('R18'))">

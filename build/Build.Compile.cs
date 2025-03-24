@@ -21,7 +21,7 @@ internal partial class Build
                          .SetTargets("Rebuild")
                          .SetProcessToolPath(MsBuildPath.Value)
                          .SetConfiguration(configuration)
-                         .SetVerbosity(MSBuildVerbosity.Diagnostic) // Increased verbosity
+                         //.SetVerbosity(MSBuildVerbosity.Diagnostic) // Increased verbosity
                          .DisableNodeReuse()
                          .EnableRestore());
                  }
