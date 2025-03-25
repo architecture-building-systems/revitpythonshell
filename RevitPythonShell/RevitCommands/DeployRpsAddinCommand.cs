@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Resources;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using Autodesk.Revit.Attributes;
@@ -61,14 +62,14 @@ namespace RevitPythonShell.RevitCommands
                 // create addin assembly
                 CreateAssembly();
 
-                TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
+                Autodesk.Revit.UI.TaskDialog.Show("Deploy RpsAddin", "Deployment complete - see folder: " + _outputFolder);
 
                 return Result.Succeeded;
             }
             catch (Exception exception)
             {
 
-                TaskDialog.Show("Deploy RpsAddin", "Error deploying addin: " + exception.ToString());
+                Autodesk.Revit.UI.TaskDialog.Show("Deploy RpsAddin", "Error deploying addin: " + exception.ToString());
                 return Result.Failed;
             }
         }
@@ -178,66 +179,64 @@ namespace RevitPythonShell.RevitCommands
         /// as embedded resources, plus, for each such script, add a subclass of
         /// RpsExternalCommand to load the script from.    
         /// </summary>
+
         private void CreateAssembly()
         {
-            var assemblyName = new AssemblyName { Name = _addinName + ".dll", Version = new Version(1, 0, 0, 0) }; // FIXME: read version from doc
+            var assemblyName = new AssemblyName { Name = _addinName + ".dll", Version = new Version(1, 0, 0, 0) };
+
+#if !NET8_0
             var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, _outputFolder);
             var moduleBuilder = assemblyBuilder.DefineDynamicModule("RpsAddinModule", _addinName + ".dll");
+#else
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule("RpsAddinModule");
+            var resourceFilePath = Path.Combine(_outputFolder, $"{_addinName}.resources");
+#endif
 
+#if !NET8_0
             foreach (var xmlPushButton in _doc.Descendants("PushButton"))
             {
-                string scriptFileName;
-                if (xmlPushButton.Attribute("src") != null)
-                {                    
-                    scriptFileName = xmlPushButton.Attribute("src").Value;
-                }
-                else if (xmlPushButton.Attribute("script") != null)  // Backwards compatibility
-                {
-                    scriptFileName = xmlPushButton.Attribute("script").Value;
-                }
-                else
+                string scriptFileName = xmlPushButton.Attribute("src")?.Value ?? xmlPushButton.Attribute("script")?.Value;
+                if (scriptFileName == null)
                 {
                     throw new ApplicationException("<PushButton/> tag missing a src attribute in addin manifest");
                 }
 
-                var scriptFile = GetRootedPath(_rootFolder, scriptFileName);             // e.g. "C:\projects\helloworld\helloworld.py" or "..\helloworld.py"
-                var newScriptFile = Path.GetFileName(scriptFile);                        // e.g. "helloworld.py" - strip path for embedded resource
-                var className = "ec_" + Path.GetFileNameWithoutExtension(newScriptFile); // e.g. "ec_helloworld", "ec" stands for ExternalCommand
-
-                var scriptStream = File.OpenRead(scriptFile);
-                moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
-
-                // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                xmlPushButton.Attribute("src").Value = newScriptFile;
-
-                var typeBuilder = moduleBuilder.DefineType(
-                    className,
-                    TypeAttributes.Class | TypeAttributes.Public,
-                    typeof(RpsExternalCommandBase));
-
-                AddRegenerationAttributeToType(typeBuilder);
-                AddTransactionAttributeToType(typeBuilder);
-
-                typeBuilder.CreateType();            
-            }
-
-            // add StartupScript to addin assembly
-            if (_doc.Descendants("StartupScript").Count() > 0)
-            {
-                var tag = _doc.Descendants("StartupScript").First();
-                var scriptFile = GetRootedPath(_rootFolder, tag.Attribute("src").Value);
+                var scriptFile = GetRootedPath(_rootFolder, scriptFileName);
                 var newScriptFile = Path.GetFileName(scriptFile);
-                var scriptStream = File.OpenRead(scriptFile);
-                moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
-
-                // script has new path inside assembly, rename it for the RpsAddin xml file we intend to save as a resource
-                tag.Attribute("src").Value = newScriptFile;
+                using (var scriptStream = File.OpenRead(scriptFile))
+                {
+                    moduleBuilder.DefineManifestResource(newScriptFile, scriptStream, ResourceAttributes.Public);
+                }
+                xmlPushButton.Attribute("src").Value = newScriptFile;
             }
+#else
+            using (var resWriter = new ResourceWriter(resourceFilePath))
+            {
+                foreach (var xmlPushButton in _doc.Descendants("PushButton"))
+                {
+                    string scriptFileName = xmlPushButton.Attribute("src")?.Value ?? xmlPushButton.Attribute("script")?.Value;
+                    if (scriptFileName == null)
+                    {
+                        throw new ApplicationException("<PushButton/> tag missing a src attribute in addin manifest");
+                    }
 
-            AddRpsAddinXmlToAssembly(_addinName, _doc, moduleBuilder);
+                    var scriptFile = GetRootedPath(_rootFolder, scriptFileName);
+                    var newScriptFile = Path.GetFileName(scriptFile);
+                    using (var scriptStream = File.OpenRead(scriptFile))
+                    {
+                        resWriter.AddResource(newScriptFile, scriptStream);
+                    }
+                    xmlPushButton.Attribute("src").Value = newScriptFile;
+                }
+                resWriter.Generate();
+            }
+#endif
+
             AddExternalApplicationToAssembly(_addinName, moduleBuilder);
-            assemblyBuilder.Save(_addinName + ".dll");
         }
+
+
 
         /// <summary>
         /// Returns the possiblyRelativePath rooted in sourceFolder,
@@ -301,7 +300,17 @@ namespace RevitPythonShell.RevitCommands
             writer.Write(doc.ToString());
             writer.Flush();
             stream.Position = 0;
+
+#if !NET8_0
             moduleBuilder.DefineManifestResource(addinName + ".xml", stream, ResourceAttributes.Public);
+#else
+            var resourceFilePath = Path.Combine(_outputFolder, $"{_addinName}.resources");
+            using (var resWriter = new ResourceWriter(resourceFilePath))
+            {
+                resWriter.AddResource(addinName + ".xml", stream);
+                resWriter.Generate();
+            }
+#endif
         }
 
         /// <summary>
@@ -314,16 +323,17 @@ namespace RevitPythonShell.RevitCommands
         /// </summary>
         private string CreateOutputFolder()
         {
-            var folderName = string.Format("{0}_{1}", "Output", _addinName);
+            var folderName = $"Output_{_addinName}";
             var folderPath = Path.Combine(_rootFolder, folderName);
-
             if (Directory.Exists(folderPath))
             {
-                // delete existing folder
                 Directory.Delete(folderPath, true);
             }
-
+#if !NET8_0
             Directory.CreateDirectory(folderPath, Directory.GetAccessControl(_rootFolder));
+#else
+            Directory.CreateDirectory(folderPath);
+#endif
             return folderPath;
         }
     }

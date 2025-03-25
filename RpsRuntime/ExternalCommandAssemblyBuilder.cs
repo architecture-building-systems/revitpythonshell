@@ -24,8 +24,13 @@ namespace RpsRuntime
             var dllName = Path.GetFileNameWithoutExtension(pathToDll);
             var dllFolder = Path.GetDirectoryName(pathToDll);
             var assemblyName = new AssemblyName { Name = dllName + ".dll", Version = new Version(1, 0, 0, 0) };
-            var assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave, dllFolder);
+#if NET8_0
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndCollect);
+            var moduleBuilder = assemblyBuilder.DefineDynamicModule(dllName + "Module");
+#else
+            var assemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.RunAndSave);
             var moduleBuilder = assemblyBuilder.DefineDynamicModule(dllName + "Module", dllName + ".dll");
+#endif
 
             foreach (var className in classNamesToScriptPaths.Keys)
             {
@@ -57,7 +62,9 @@ namespace RpsRuntime
                 gen.Emit(OpCodes.Ret);                    // return from constructor
                 typebuilder.CreateType();
             }
+#if !NET8_0
             assemblyBuilder.Save(dllName + ".dll");
+#endif
         }
     }
 }

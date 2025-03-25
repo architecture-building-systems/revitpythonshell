@@ -1,141 +1,200 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <Configurations>Debug;Release</Configurations>
-        <TargetFramework>net48</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <EnableDefaultItems>false</EnableDefaultItems>
-        <PlatformTarget>x64</PlatformTarget>
-        <Configurations>Debug R22;Debug R23;Debug R24</Configurations>
-        <Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24</Configurations>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('Debug'))">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('Release'))">
-        <Optimize>true</Optimize>
-        <DebugType>none</DebugType>
-        <DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R18'))">
-        <RevitVersion>2018</RevitVersion>
-        <DefineConstants>$(DefineConstants);R18</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R19'))">
-        <RevitVersion>2019</RevitVersion>
-        <DefineConstants>$(DefineConstants);R19</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R20'))">
-        <RevitVersion>2020</RevitVersion>
-        <DefineConstants>$(DefineConstants);R20</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R21'))">
-        <RevitVersion>2021</RevitVersion>
-        <DefineConstants>$(DefineConstants);R21</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R22'))">
-        <RevitVersion>2022</RevitVersion>
-        <DefineConstants>$(DefineConstants);R22</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R23'))">
-        <RevitVersion>2023</RevitVersion>
-        <DefineConstants>$(DefineConstants);R23</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup Condition="$(Configuration.Contains('R24'))">
-        <RevitVersion>2024</RevitVersion>
-        <DefineConstants>$(DefineConstants);R24</DefineConstants>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Version>$(RevitVersion)</Version>
-        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-        <Description>A Project Support for developer in revit </Description>
-        <PublishSingleFile>true</PublishSingleFile>
-        <PublishTrimmed>true</PublishTrimmed>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="PresentationCore" />
-        <Reference Include="PresentationFramework" />
-        <Reference Include="WindowsBase" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="DynamicLanguageRuntime" Version="1.3.4" />
-        <PackageReference Include="IronPython" Version="3.4.1" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
-        <PackageReference Include="AvalonEdit" Version="6.3.0.90" />
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="IronPython">
-            <HintPath>..\RequiredLibraries\IronPython.dll</HintPath>
-        </Reference>
-        <Reference Include="IronPython.Modules">
-            <HintPath>..\RequiredLibraries\IronPython.Modules.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Dynamic">
-            <HintPath>..\RequiredLibraries\Microsoft.Dynamic.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Scripting">
-            <HintPath>..\RequiredLibraries\Microsoft.Scripting.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.Scripting.Metadata">
-            <HintPath>..\RequiredLibraries\Microsoft.Scripting.Metadata.dll</HintPath>
-        </Reference>
-        <Reference Include="Microsoft.CSharp">
-            <HintPath>..\RequiredLibraries\Microsoft.CSharp.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Reference Include="PresentationCore" />
-        <Reference Include="System" />
-        <Reference Include="System.Core" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xaml" />
-        <Reference Include="System.Xml.Linq" />
-        <Reference Include="System.Data.DataSetExtensions" />
-        <Reference Include="System.Data" />
-        <Reference Include="System.Xml" />
-        <Reference Include="WindowsBase" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="ExternalCommandAssemblyBuilder.cs" />
-        <Compile Include="IRpsConfig.cs" />
-        <Compile Include="RpsConfig.cs" />
-        <Compile Include="RpsExternalApplicationBase.cs" />
-        <Compile Include="RpsExternalCommandBase.cs" />
-        <Compile Include="RpsExternalCommandScriptBase.cs" />
-        <Compile Include="ScriptExecutor.cs" />
-        <Compile Include="ScriptOutput.cs">
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="ScriptOutput.Designer.cs">
-            <DependentUpon>ScriptOutput.cs</DependentUpon>
-        </Compile>
-        <Compile Include="ScriptOutputStream.cs" />
-        <Compile Include="SettingsDictionary.cs" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="ScriptOutput.resx">
-            <DependentUpon>ScriptOutput.cs</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Resources\PythonScript16x16.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Resources\PythonScript32x32.png" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Resources\python_27_lib.zip" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Properties\" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="Resources\IronPython.3.4.0.zip" />
-    </ItemGroup>
+	<PropertyGroup>
+		<Configurations>Debug;Release</Configurations>
+		<LangVersion>latest</LangVersion>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<EnableDefaultItems>false</EnableDefaultItems>
+		<PlatformTarget>x64</PlatformTarget>
+		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
+		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<!-- TargetFramework Mapping for Each Revit Version -->
+	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('Release'))">
+		<Optimize>true</Optimize>
+		<DebugType>none</DebugType>
+		<DefineConstants>$(DefineConstants);RELEASE</DefineConstants>
+		<TargetFramework>net48</TargetFramework>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R18'))">
+		<RevitVersion>2018</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R18</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R19'))">
+		<RevitVersion>2019</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R19</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R20'))">
+		<RevitVersion>2020</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R20</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R21'))">
+		<RevitVersion>2021</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R21</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R22'))">
+		<RevitVersion>2022</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R22</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R23'))">
+		<RevitVersion>2023</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R23</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R24'))">
+		<RevitVersion>2024</RevitVersion>
+		<TargetFramework>net48</TargetFramework>
+		<DefineConstants>$(DefineConstants);R24</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R25'))">
+		<RevitVersion>2025</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<DefineConstants>$(DefineConstants);R25</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>$(RevitVersion)</Version>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<Description>A Project Support for developer in revit</Description>
+		<PublishSingleFile>true</PublishSingleFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="ExternalCommandAssemblyBuilder.cs" />
+		<Compile Include="IRpsConfig.cs" />
+		<Compile Include="RpsConfig.cs" />
+		<Compile Include="RpsExternalApplicationBase.cs" />
+		<Compile Include="RpsExternalCommandBase.cs" />
+		<Compile Include="RpsExternalCommandScriptBase.cs" />
+		<Compile Include="ScriptExecutor.cs" />
+		<Compile Include="ScriptOutput.cs">
+			<SubType>Form</SubType>
+		</Compile>
+		<Compile Include="ScriptOutput.Designer.cs">
+			<DependentUpon>ScriptOutput.cs</DependentUpon>
+		</Compile>
+		<Compile Include="ScriptOutputStream.cs" />
+		<Compile Include="SettingsDictionary.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="ScriptOutput.resx">
+			<DependentUpon>ScriptOutput.cs</DependentUpon>
+			<SubType>Designer</SubType>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\PythonScript16x16.png" />
+		<EmbeddedResource Include="Resources\PythonScript32x32.png" />
+		<EmbeddedResource Include="Resources\python_27_lib.zip" />
+		<EmbeddedResource Include="Resources\IronPython.3.4.0.zip" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Properties\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AvalonEdit" Version="6.3.0.90" />
+	</ItemGroup>
+	<Choose>
+		<When Condition="$(Configuration.Contains('R18'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2018.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R19'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2019.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R20'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2020.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R21'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2021.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R22'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2022.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R23'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2023.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R24'))">
+			<ItemGroup>
+				<Reference Include="PresentationCore" CopyLocal="true" />
+				<Reference Include="PresentationFramework" CopyLocal="true" />
+				<Reference Include="Microsoft.CSharp" CopyLocal="true" />
+				<Reference Include="WindowsBase" CopyLocal="true" />
+				<PackageReference Include="IronPython" Version="3.4.1" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2024.0.0"  IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R25'))">
+			<ItemGroup>
+				<PackageReference Include="IronPython" Version="3.4.2" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0"  IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+	</Choose>
 </Project>

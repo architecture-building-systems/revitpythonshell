@@ -14,7 +14,6 @@ using System.Windows.Threading;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Document;
 using Style = Microsoft.Scripting.Hosting.Shell.Style;
-using System.Runtime.Remoting;
 
 namespace PythonConsoleControl
 {
@@ -381,13 +380,17 @@ namespace PythonConsoleControl
                     }
                     else
                     {
-                        ObjectHandle wrapexception = null;
-                        GetCommandDispatcher()(() => scriptSource.ExecuteAndWrap(commandLine.ScriptScope, out wrapexception));
-                        if (wrapexception != null)
+                        try
                         {
-                            error = "Exception : " + wrapexception.Unwrap().ToString() + "\n";
+                            executing = true;
+                            GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
                         }
-                    }                    
+                        catch (Exception ex)
+                        {
+                            ExceptionOperations eo = commandLine.ScriptScope.Engine.GetService<ExceptionOperations>();
+                            error = eo.FormatException(ex) + Environment.NewLine;
+                        }
+                    }
                 }
                 catch (ThreadAbortException tae)
                 {
