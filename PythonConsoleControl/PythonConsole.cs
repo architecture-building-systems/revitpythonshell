@@ -25,6 +25,28 @@ namespace PythonConsoleControl
     /// </summary>
     public class PythonConsole : IConsole, IDisposable
     {
+
+        Action<Action> commandDispatcher;
+        public Action<Action> GetCommandDispatcherSafe()
+        {
+            if (commandDispatcher == null)
+            {
+                try
+                {
+                    var languageContext = Microsoft.Scripting.Hosting.Providers.HostingHelpers.GetLanguageContext(commandLine.ScriptScope.Engine);
+                    var pythonContext = (IronPython.Runtime.PythonContext)languageContext;
+                    commandDispatcher = pythonContext.GetSetCommandDispatcher(null);
+                    pythonContext.GetSetCommandDispatcher(commandDispatcher);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine("Failed to get dispatcher: " + ex.Message);
+                    commandDispatcher = action => action(); // fallback dispatcher
+                }
+            }
+            return commandDispatcher;
+        }
+
         bool allowFullAutocompletion = true;
         public bool AllowFullAutocompletion
         {
@@ -380,15 +402,33 @@ namespace PythonConsoleControl
                     }
                     else
                     {
-                        try
+                        Exception capturedEx = null;
+                        var dispatcher = GetCommandDispatcherSafe();
+
+                        ManualResetEventSlim done = new ManualResetEventSlim();
+
+                        dispatcher(() =>
                         {
-                            executing = true;
-                            GetCommandDispatcher()(() => scriptSource.Execute(commandLine.ScriptScope));
-                        }
-                        catch (Exception ex)
+                            try
+                            {
+                                scriptSource.Execute(commandLine.ScriptScope);
+                            }
+                            catch (Exception ex)
+                            {
+                                capturedEx = ex;
+                            }
+                            finally
+                            {
+                                done.Set();
+                            }
+                        });
+
+                        done.Wait();
+
+                        if (capturedEx != null)
                         {
-                            ExceptionOperations eo = commandLine.ScriptScope.Engine.GetService<ExceptionOperations>();
-                            error = eo.FormatException(ex) + Environment.NewLine;
+                            var eo = commandLine.ScriptScope.Engine.GetService<ExceptionOperations>();
+                            error = eo.FormatException(capturedEx) + Environment.NewLine;
                         }
                     }
                 }
