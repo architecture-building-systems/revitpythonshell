@@ -12,7 +12,7 @@ const string installationDir = @"%AppDataFolder%\Autodesk\Revit\Addins\";
 const string projectName = "RevitPythonShell";
 const string outputName = "RevitPythonShell";
 const string outputDir = "output";
-const string version = "2.1.0";
+const string version = "2.2.0";
 
 var fileName = new StringBuilder().Append(outputName).Append("-").Append(version);
 var project = new Project
