@@ -14,21 +14,21 @@ namespace PythonConsoleControl
     /// </summary>
     public partial class IronPythonConsoleControl : UserControl
     {
-        PythonConsolePad pad;                
+        PythonConsolePad _pad;                
 
         /// <summary>
         /// Perform the action on an already instantiated PythonConsoleHost.
         /// </summary>
         public void WithConsoleHost(Action<PythonConsoleHost> action)
         {
-            pad.Host.WhenConsoleCreated(action);
+            _pad.Host.WhenConsoleCreated(action);
         }
 
         public IronPythonConsoleControl()
         {
             InitializeComponent();
-            pad = new PythonConsolePad();
-            grid.Children.Add(pad.Control);
+            _pad = new PythonConsolePad();
+            Grid.Children.Add(_pad.Control);
             // Load our custom highlighting definition
             IHighlightingDefinition pythonHighlighting;
             using (Stream s = typeof(IronPythonConsoleControl).Assembly.GetManifestResourceStream("PythonConsoleControl.Resources.Python.xshd"))
@@ -43,17 +43,17 @@ namespace PythonConsoleControl
             }
             // and register it in the HighlightingManager
             HighlightingManager.Instance.RegisterHighlighting("Python Highlighting", new string[] { ".cool" }, pythonHighlighting);
-            pad.Control.SyntaxHighlighting = pythonHighlighting;
-            IList<IVisualLineTransformer> transformers = pad.Control.TextArea.TextView.LineTransformers;
+            _pad.Control.SyntaxHighlighting = pythonHighlighting;
+            IList<IVisualLineTransformer> transformers = _pad.Control.TextArea.TextView.LineTransformers;
             for (int i = 0; i < transformers.Count; ++i)
             {
-                if (transformers[i] is HighlightingColorizer) transformers[i] = new PythonConsoleHighlightingColorizer(pythonHighlighting, pad.Control.Document);
+                if (transformers[i] is HighlightingColorizer) transformers[i] = new PythonConsoleHighlightingColorizer(pythonHighlighting, _pad.Control.Document);
             }
         }
 
         public PythonConsolePad Pad
         {
-            get { return pad; }
+            get { return _pad; }
         }
     }
 }
