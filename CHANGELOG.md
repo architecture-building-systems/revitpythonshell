@@ -1,4 +1,6 @@
 # Changelog
+- 2025-03-04 **2.1.0**
+  - Support Autodesk Revit version 2025.
 - 2023-09-13 **2.0.2**
   - Improvement user interface and user experience with coding.
   - Add new button create new file

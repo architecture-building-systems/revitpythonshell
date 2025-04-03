@@ -1,5 +1,5 @@
 # RevitPythonShell
-![Revit API](https://img.shields.io/badge/Revit%20API%202024-blue.svg) ![Platform](https://img.shields.io/badge/platform-Windows-lightgray.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Revit API](https://img.shields.io/badge/Revit%20API%202024-blue.svg) ![Revit API](https://img.shields.io/badge/Revit%20API%202025-blue.svg)  ![Platform](https://img.shields.io/badge/platform-Windows-lightgray.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![ReSharper](https://img.shields.io/badge/ReSharper-2021.3.3-yellow) ![Rider](https://img.shields.io/badge/Rider-2021.3.3-yellow) ![Visual Studio 2022](https://img.shields.io/badge/Visual_Studio_2022_Preview_2.0-17.1.0-yellow) ![.NET Framework](https://img.shields.io/badge/.NET_6.0-yellow)
 
@@ -41,7 +41,7 @@ Various differences between IronPython and CPython can follow at [Differences Ir
 
 ## Installation
 
-Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2024.
+Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2025.
 
 Older versions:
 - [Installer for Autodesk Revit 2022](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.06.20/2021.06.20_Setup_RevitPythonShell_2022.exe)
@@ -118,6 +118,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
   RPS ([PR #77](https://github.com/architecture-building-systems/revitpythonshell/pull/77))
 * [Nice3Point](https://github.com/Nice3point) for process CI/CD
 * [Chuong Mep](https://github.com/chuongmep/) a people like maintain for project open source.
+* [Roman Golev](https://github.com/romangolev/) (port to Revit 2025)
 * many, many users with questions, bug reports etc!
 
 Also, many thanks to the
