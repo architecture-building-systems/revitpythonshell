@@ -13,12 +13,12 @@ internal partial class Build
              configurations.ForEach(configuration =>
              {
                  MSBuild(s => s
-                     .SetTargets("Rebuild")
-                     .SetProcessToolPath(MsBuildPath.Value)
-                     .SetConfiguration(configuration)
-                     .SetVerbosity(MSBuildVerbosity.Minimal)
-                     .DisableNodeReuse()
-                     .EnableRestore());
+                    .SetTargets("Rebuild")
+                    .SetProcessToolPath(MsBuildPath.Value)
+                    .SetConfiguration(configuration)
+                    .SetVerbosity(MSBuildVerbosity.Minimal)
+                    .DisableNodeReuse()
+                    .EnableRestore());
              });
          });
 }

@@ -74,9 +74,10 @@ namespace PythonConsoleControl
 
         public void Write(string text, bool allowSynchronous, bool moveToEnd)
         {
-            //text = text.Replace("\r\r\n", "\r\n");
-            text = text.Replace("\r\r\n", "\r");
-            text = text.Replace("\r\n", "\r");
+            text = text.Replace("\r\r\n", "\r\n"); // Normalize Windows-style newlines
+            text = text.Replace("\r\n", "\n"); // Or "\r" if needed
+            text = text.Replace("\0", ""); // Remove NUL characters
+
             if (allowSynchronous)
             {
                 if (moveToEnd)

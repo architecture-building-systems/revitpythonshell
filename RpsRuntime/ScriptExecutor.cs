@@ -146,9 +146,20 @@ namespace RpsRuntime
         /// </summary>
         public ScriptScope SetupEnvironment(ScriptEngine engine)
         {
-            var scope = IronPython.Hosting.Python.CreateModule(engine, "__main__");
-
-            SetupEnvironment(engine, scope);
+            var scope = (ScriptScope)null;
+            try
+            {
+                scope = IronPython.Hosting.Python.CreateModule(engine, "__main__");
+                SetupEnvironment(engine, scope);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Failed to create module: " + ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                scope = engine.CreateScope();
+                scope.SetVariable("__name__", "__main__");
+                SetupEnvironment(engine, scope);
+            }
 
             return scope;
         }
