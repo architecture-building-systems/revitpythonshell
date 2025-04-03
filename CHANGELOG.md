@@ -1,5 +1,7 @@
 # Changelog
-- 2025-03-04 **2.1.0**
+- 2025-04-03 **2.2.0**
+  - Support Autodesk Revit version 2026.
+- 2025-04-03 **2.1.0**
   - Support Autodesk Revit version 2025.
 - 2023-09-13 **2.0.2**
   - Improvement user interface and user experience with coding.
