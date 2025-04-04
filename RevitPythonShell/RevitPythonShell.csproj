@@ -11,8 +11,8 @@
 		<Description>Revit Python Shell addin for Revit</Description>
 		<EnableDefaultItems>false</EnableDefaultItems>
 		<StartAction>Program</StartAction>
-		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
-		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
+		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25;Debug R26</Configurations>
+		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25;Release R26</Configurations>
 	</PropertyGroup>
 	
 	<PropertyGroup Condition="$(Configuration.Contains('Debug'))">
@@ -81,6 +81,15 @@
 		<TargetFramework>net8.0-windows</TargetFramework>
 		<DefineConstants>$(DefineConstants);R25</DefineConstants>
 		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
+		<UseWPF>true</UseWPF>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="$(Configuration.Contains('R26'))">
+		<RevitVersion>2026</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<DefineConstants>$(DefineConstants);R26</DefineConstants>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2026\Revit.exe</StartProgram>
 		<UseWPF>true</UseWPF>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
@@ -237,6 +246,12 @@
 			<ItemGroup>
 				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
 				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R26'))">
+			<ItemGroup>
+				<FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2026.0.0" IncludeAssets="build; compile" PrivateAssets="All" />
 			</ItemGroup>
 		</When>
 	</Choose>

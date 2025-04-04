@@ -41,7 +41,7 @@ Various differences between IronPython and CPython can follow at [Differences Ir
 
 ## Installation
 
-Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2025.
+Please follow last release at section [Release](https://github.com/architecture-building-systems/revitpythonshell/releases/latest) support version Support From Revit 2018-2026.
 
 Older versions:
 - [Installer for Autodesk Revit 2022](https://github.com/architecture-building-systems/revitpythonshell/releases/download/2021.06.20/2021.06.20_Setup_RevitPythonShell_2022.exe)
@@ -119,6 +119,7 @@ This project is licensed under the terms of the [MIT License](http://opensource.
 * [Nice3Point](https://github.com/Nice3point) for process CI/CD
 * [Chuong Mep](https://github.com/chuongmep/) a people like maintain for project open source.
 * [Roman Golev](https://github.com/romangolev/) (port to Revit 2025)
+* [Jean-Marc Couffin](https://github.com/jmcouffin/) (port to Revit 2026)
 * many, many users with questions, bug reports etc!
 
 Also, many thanks to the

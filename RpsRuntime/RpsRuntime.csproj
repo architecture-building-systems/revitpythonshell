@@ -5,8 +5,8 @@
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 		<EnableDefaultItems>false</EnableDefaultItems>
 		<PlatformTarget>x64</PlatformTarget>
-		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
-		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
+		<Configurations>Debug R22;Debug R23;Debug R24;Debug R25;Debug R26</Configurations>
+		<Configurations>$(Configurations);Release R18;Release R19;Release R20;Release R21;Release R22;Release R23;Release R24;Release R25;Release R26</Configurations>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 	</PropertyGroup>
 
@@ -73,6 +73,12 @@
 		<DefineConstants>$(DefineConstants);R25</DefineConstants>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="$(Configuration.Contains('R26'))">
+		<RevitVersion>2026</RevitVersion>
+		<TargetFramework>net8.0-windows</TargetFramework>
+		<DefineConstants>$(DefineConstants);R26</DefineConstants>
+	</PropertyGroup>
+	
 	<PropertyGroup>
 		<Version>$(RevitVersion)</Version>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
@@ -194,6 +200,12 @@
 			<ItemGroup>
 				<PackageReference Include="IronPython" Version="3.4.2" PrivateAssets="None" />
 				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2025.0.0"  IncludeAssets="build; compile" PrivateAssets="All" />
+			</ItemGroup>
+		</When>
+		<When Condition="$(Configuration.Contains('R26'))">
+			<ItemGroup>
+				<PackageReference Include="IronPython" Version="3.4.2" PrivateAssets="None" />
+				<PackageReference Include="Revit_All_Main_Versions_API_x64" Version="2026.0.0"  IncludeAssets="build; compile" PrivateAssets="All" />
 			</ItemGroup>
 		</When>
 	</Choose>
