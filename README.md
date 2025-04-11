@@ -1,5 +1,5 @@
 # RevitPythonShell
-![Revit API](https://img.shields.io/badge/Revit%20API%202024-blue.svg) ![Revit API](https://img.shields.io/badge/Revit%20API%202025-blue.svg)  ![Platform](https://img.shields.io/badge/platform-Windows-lightgray.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Revit API](https://img.shields.io/badge/Revit%20API%202024-blue.svg) ![Revit API](https://img.shields.io/badge/Revit%20API%202025-blue.svg) ![Revit API](https://img.shields.io/badge/Revit%20API%202026-blue.svg) ![Platform](https://img.shields.io/badge/platform-Windows-lightgray.svg) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![ReSharper](https://img.shields.io/badge/ReSharper-2021.3.3-yellow) ![Rider](https://img.shields.io/badge/Rider-2021.3.3-yellow) ![Visual Studio 2022](https://img.shields.io/badge/Visual_Studio_2022_Preview_2.0-17.1.0-yellow) ![.NET Framework](https://img.shields.io/badge/.NET_6.0-yellow)
 
